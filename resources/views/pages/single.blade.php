@@ -57,15 +57,7 @@
                 <img src="{{ $article['image'] }}" class="w-100 h-100 object-fit-cover" alt="Article banner">
             </div>
 
-            <!-- Table of Contents (Inline Mobile) -->
-            <div class="toc-box d-lg-none">
-                <div class="toc-title">Quick Highlights</div>
-                <ul>
-                    <li><a href="#section1">Fiscal Reforms & Standard Deductions</a></li>
-                    <li><a href="#section2">National AI Initiatives & Computing Grid</a></li>
-                    <li><a href="#section3">Green Hydrogen Capital Investment</a></li>
-                </ul>
-            </div>
+
 
             <!-- Article Body Content -->
             <article class="article-container font-size-md" id="articleBodyContainer">
@@ -155,15 +147,7 @@
         <!-- Right Column Sidebar (4 Grid Units) -->
         <div class="col-lg-4">
             
-            <!-- Table of Contents (Desktop Only) -->
-            <div class="toc-box d-none d-lg-block mb-4 shadow-sm">
-                <div class="toc-title"><i class="fas fa-list me-1 text-primary"></i> Article Sections</div>
-                <ul class="list-unstyled d-flex flex-column gap-2 mb-0">
-                    <li><a href="#articleBodyContainer" class="text-reset hover-primary"><i class="fas fa-chevron-right text-primary me-1 fs-9"></i> 1. Standard Deductions Revisions</a></li>
-                    <li><a href="#articleBodyContainer" class="text-reset hover-primary"><i class="fas fa-chevron-right text-primary me-1 fs-9"></i> 2. Green Energy Custom Duties</a></li>
-                    <li><a href="#articleBodyContainer" class="text-reset hover-primary"><i class="fas fa-chevron-right text-primary me-1 fs-9"></i> 3. National AI Grids & GPUs</a></li>
-                </ul>
-            </div>
+
 
             @include('components.widgets', ['type' => 'latest_videos'])
             @include('components.widgets', ['type' => 'trending'])

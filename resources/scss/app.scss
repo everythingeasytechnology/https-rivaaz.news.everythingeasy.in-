@@ -5,7 +5,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@400;500;600;700;800&display=swap');
 
 // 2. Bootstrap Core Variables overrides (Must be static compile-time values)
-$primary: #E50000;
+$primary: #FF4E4E;
 $secondary: #111111;
 $success: #2ec4b6;
 $danger: #e71d36;
@@ -16,8 +16,8 @@ $font-family-sans-serif: 'Inter', sans-serif;
 
 // 3. Rivaaz Theme & overrides (Using browser CSS variables)
 :root {
-  --primary-color: #E50000;
-  --primary-hover: #C00000;
+  --primary-color: #FF4E4E;
+  --primary-hover: #FF6B6B;
   --accent-color: #111111;
   --accent-hover: #222222;
   --success-color: #2ec4b6;
@@ -51,8 +51,8 @@ $font-family-sans-serif: 'Inter', sans-serif;
 }
 
 [data-bs-theme="dark"] {
-  --primary-color: #FF2E2E;
-  --primary-hover: #E50000;
+  --primary-color: #FF6B6B;
+  --primary-hover: #FF4E4E;
   --accent-color: #FFFFFF;
   --accent-hover: #E5E7EB;
 
@@ -178,6 +178,22 @@ a {
   &:hover {
     background-color: var(--primary-color);
     color: #FFFFFF !important;
+  }
+}
+
+.category-label {
+  color: var(--accent-color) !important;
+  font-family: var(--font-interface);
+  font-weight: 700;
+  text-transform: uppercase;
+  font-size: 0.65rem;
+  letter-spacing: 0.5px;
+  text-decoration: none;
+  display: inline-block;
+  transition: color 0.2s ease;
+  
+  &:hover {
+    color: var(--primary-color) !important;
   }
 }
 

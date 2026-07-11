@@ -62,7 +62,7 @@
                 <a href="/news/{{ $article['slug'] }}" class="text-reset hover-primary">{{ $article['title'] }}</a>
             </h6>
             <div class="d-flex align-items-center gap-2 text-uppercase fw-bold text-muted" style="font-size:0.65rem; letter-spacing:0.5px;">
-                <a href="/category/{{ $article['category'] }}" class="text-primary text-decoration-none">{{ $article['category'] }}</a>
+                <a href="/category/{{ $article['category'] }}" class="category-label">{{ $article['category'] }}</a>
                 <span>|</span>
                 <span><i class="far fa-comment me-1"></i></span>
             </div>
