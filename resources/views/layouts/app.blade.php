@@ -104,7 +104,7 @@
     </header>
 
     <!-- 2. Main Navigation Header -->
-    <nav class="navbar navbar-expand-lg main-header py-3">
+    <nav class="navbar navbar-expand-lg main-header py-2 py-lg-3">
         <div class="container-xl">
             <a class="navbar-brand py-0" href="/">
                 RIVAAZ<span>CHRONICLE</span>
@@ -112,10 +112,10 @@
             
             <div class="d-flex d-lg-none align-items-center gap-2">
                 <button class="btn btn-sm btn-outline-secondary border-0" id="mobileSearchBtn" data-bs-toggle="collapse" data-bs-target="#searchCollapse" aria-label="Search">
-                    <i class="fas fa-search fs-5"></i>
+                    <i class="fas fa-search fs-6"></i>
                 </button>
                 <button class="btn btn-sm btn-outline-secondary border-0 theme-toggle-btn" aria-label="Toggle theme">
-                    <i class="fas fa-moon fs-5"></i>
+                    <i class="fas fa-moon fs-6"></i>
                 </button>
                 <button class="navbar-toggler border-0 shadow-none p-0" type="button" data-bs-toggle="collapse" data-bs-target="#mainMenu">
                     <span class="navbar-toggler-icon"></span>

@@ -5,57 +5,80 @@
 @section('content')
 <div class="container-xl">
     
-    <!-- 1. Web Stories Section (Instagram Style) -->
-    <section class="mb-4">
-        <h5 class="headline-font mb-3 fw-bold text-uppercase d-flex align-items-center gap-2">
-            <span class="d-inline-block bg-primary rounded-circle" style="width:8px; height:8px;"></span>
-            Web Stories
-        </h5>
-        <div class="stories-container">
-            @foreach($webStories as $story)
-            <div class="story-card" data-story-id="{{ $story['id'] }}">
-                <img src="{{ $story['image'] }}" alt="{{ $story['title'] }}">
-                <div class="story-avatar-container">
-                    <img src="{{ $story['avatar'] }}" alt="{{ $story['user'] }}">
-                </div>
-                <div class="story-caption">{{ $story['title'] }}</div>
-            </div>
-            @endforeach
-        </div>
-    </section>
-
-    <!-- 2. Hero Section -->
+    <!-- 1. Hero Section (3-Column Content Hierarchy) -->
     <section class="mb-5">
         <div class="row g-4">
-            <!-- Left Hero Featured Card (Large News) -->
-            <div class="col-lg-8">
-                <div class="hero-featured-card">
-                    <img src="{{ $featured['image'] }}" alt="{{ $featured['title'] }}">
-                    <div class="hero-gradient">
-                        <div class="mb-2">
-                            <span class="badge-category badge-gold animate-pulse me-2">Breaking</span>
-                            <span class="badge-category">{{ $featured['category'] }}</span>
-                        </div>
-                        <h1 class="hero-title">
-                            <a href="/news/{{ $featured['slug'] }}">{{ $featured['title'] }}</a>
-                        </h1>
-                        <p class="d-none d-md-block opacity-90 small mb-3">{{ $featured['summary'] }}</p>
-                        <div class="d-flex align-items-center gap-3 small text-white-50">
-                            <span><i class="far fa-user me-1"></i> {{ $featured['author']['name'] }}</span>
-                            <span><i class="far fa-clock me-1"></i> {{ $featured['published_at'] }}</span>
-                            <span><i class="far fa-eye me-1"></i> {{ $featured['views'] }} views</span>
-                        </div>
+            <!-- Left Column: TOP NEWS (Large Story + horizontal items) -->
+            <div class="col-lg-5 col-md-12">
+                <h5 class="headline-font mb-3 fw-bold text-uppercase border-bottom pb-2 border-dark border-2" style="font-size:0.95rem; letter-spacing:0.5px;">Top News</h5>
+                <div class="mb-4 d-flex flex-column">
+                    <a href="/news/{{ $featured['slug'] }}" class="order-2 order-md-1">
+                        <img src="{{ $featured['image'] }}" class="w-100 rounded-3 mb-3" style="aspect-ratio: 16/10; object-fit: cover;" alt="{{ $featured['title'] }}">
+                    </a>
+                    <h3 class="fw-extrabold mb-2 order-1 order-md-2" style="font-size: 1.6rem; line-height: 1.25;">
+                        <a href="/news/{{ $featured['slug'] }}" class="text-reset hover-primary">{{ $featured['title'] }}</a>
+                    </h3>
+                    <p class="text-muted small mb-2 order-3">{{ $featured['summary'] }}</p>
+                    <div class="d-flex align-items-center gap-2 text-uppercase fw-bold text-muted mb-2 order-4" style="font-size:0.65rem; letter-spacing:0.5px;">
+                        <a href="/category/{{ $featured['category'] }}" class="text-primary text-decoration-none">{{ $featured['category'] }}</a>
+                        <span>|</span>
+                        <span><i class="far fa-comment me-1"></i></span>
                     </div>
                 </div>
+
+                @foreach(array_slice($others, 0, 2) as $article)
+                <div class="news-horizontal-row border-0 border-top py-3 border-secondary-subtle">
+                    <div class="row-content">
+                        @if($article['is_breaking'])
+                        <span class="text-danger fw-bold fs-9 me-1"><i class="fas fa-circle me-1" style="font-size: 6px; vertical-align: middle;"></i> LIVE</span>
+                        @endif
+                        <h6 class="fw-bold fs-7 mb-2 lh-base">
+                            <a href="/news/{{ $article['slug'] }}" class="text-reset hover-primary">{{ $article['title'] }}</a>
+                        </h6>
+                        <div class="d-flex align-items-center gap-2 text-uppercase fw-bold text-muted" style="font-size:0.65rem; letter-spacing:0.5px;">
+                            <a href="/category/{{ $article['category'] }}" class="text-primary text-decoration-none">{{ $article['category'] }}</a>
+                            <span>|</span>
+                            <span><i class="far fa-comment"></i></span>
+                        </div>
+                    </div>
+                    <div class="row-img-container">
+                        <img src="{{ $article['image'] }}" class="w-100 h-100 object-fit-cover" alt="Thumb">
+                    </div>
+                </div>
+                @endforeach
             </div>
             
-            <!-- Right Sidebar (Trending, Stocks, Weather) -->
-            <div class="col-lg-4">
-                <div class="row g-4">
-                    <div class="col-12">
-                        @include('components.widgets', ['type' => 'trending'])
+            <!-- Center Column: LIVE TV + Feed -->
+            <div class="col-lg-4 col-md-7 border-start-lg ps-lg-4">
+                <h5 class="headline-font mb-3 fw-bold text-uppercase border-bottom pb-2 border-dark border-2" style="font-size:0.95rem; letter-spacing:0.5px;">Live TV</h5>
+                <div class="position-relative rounded-3 overflow-hidden mb-3" style="aspect-ratio: 16/9; background-color: #000; box-shadow: 0 4px 10px rgba(0,0,0,0.15);">
+                    <img src="https://images.unsplash.com/photo-1585829365295-ab7cd400c167?auto=format&fit=crop&w=600&q=80" class="w-100 h-100 object-fit-cover opacity-75" alt="Live stream cover">
+                    <span class="position-absolute top-0 start-0 m-2 badge bg-danger animate-pulse py-1 px-2 fw-bold fs-9">LIVE TV</span>
+                    <button class="position-absolute top-50 end-50 translate-middle btn btn-danger rounded-circle d-flex align-items-center justify-content-center" style="width: 50px; height: 50px;" onclick="alert('Playing live news broadcast...');" aria-label="Play live feed"><i class="fas fa-play"></i></button>
+                </div>
+
+                @foreach(array_slice($others, 2, 3) as $article)
+                <div class="news-horizontal-row border-0 @if(!$loop->first) border-top border-secondary-subtle @endif py-3">
+                    <div class="row-content">
+                        <h6 class="fw-bold fs-7 mb-2 lh-base">
+                            <a href="/news/{{ $article['slug'] }}" class="text-reset hover-primary">{{ $article['title'] }}</a>
+                        </h6>
+                        <div class="d-flex align-items-center gap-2 text-uppercase fw-bold text-muted" style="font-size:0.65rem; letter-spacing:0.5px;">
+                            <a href="/category/{{ $article['category'] }}" class="text-primary text-decoration-none">{{ $article['category'] }}</a>
+                            <span>|</span>
+                            <span><i class="far fa-comment"></i></span>
+                        </div>
+                    </div>
+                    <div class="row-img-container center-row-thumb">
+                        <img src="{{ $article['image'] }}" class="w-100 h-100 object-fit-cover" alt="Thumb">
                     </div>
                 </div>
+                @endforeach
+            </div>
+
+            <!-- Right Column: Trending stories widget (no numbers) -->
+            <div class="col-lg-3 col-md-5 border-start-lg ps-lg-4">
+                @include('components.widgets', ['type' => 'trending'])
             </div>
         </div>
     </section>
@@ -116,7 +139,7 @@
         <div class="row g-4">
             <!-- Politics Block -->
             <div class="col-lg-6 mb-4">
-                <h4 class="headline-font mb-3 fw-bold text-uppercase border-bottom pb-2 border-primary border-2">Politics</h4>
+                <h4 class="headline-font mb-3 fw-bold text-uppercase border-bottom pb-2 border-dark border-2">Politics</h4>
                 <div class="row g-3">
                     @php
                         $politics = collect($others)->filter(fn($a) => $a['category'] === 'politics')->values();
@@ -149,7 +172,7 @@
 
             <!-- Tech Block -->
             <div class="col-lg-6 mb-4">
-                <h4 class="headline-font mb-3 fw-bold text-uppercase border-bottom pb-2 border-primary border-2">Technology</h4>
+                <h4 class="headline-font mb-3 fw-bold text-uppercase border-bottom pb-2 border-dark border-2">Technology</h4>
                 <div class="row g-3">
                     @php
                         $tech = collect($others)->filter(fn($a) => $a['category'] === 'technology')->values();

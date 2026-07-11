@@ -41,40 +41,15 @@
             <!-- Subtitle -->
             <p class="fs-5 text-muted mb-4 fw-medium" style="line-height: 1.5;">{{ $article['subtitle'] }}</p>
             
-            <!-- Author profile & publish date & reading configurations -->
-            <div class="d-flex flex-wrap align-items-center justify-content-between gap-3 border-top border-bottom py-3 mb-4 border-secondary-subtle">
-                <div class="d-flex align-items-center gap-3">
-                    <img src="{{ $article['author']['avatar'] }}" alt="{{ $article['author']['name'] }}" class="rounded-circle border border-primary" style="width: 50px; height: 50px; object-fit: cover;">
-                    <div>
-                        <h6 class="mb-0 fw-bold"><a href="/author/{{ $article['author_key'] }}" class="text-reset hover-primary">{{ $article['author']['name'] }}</a></h6>
-                        <small class="text-muted">{{ $article['author']['title'] }}</small>
-                    </div>
-                </div>
-                
-                <div class="d-flex align-items-center gap-3 text-muted small">
-                    <div>
-                        <span class="d-block"><i class="far fa-calendar-alt me-1"></i> Published: <strong>{{ $article['published_at'] }}</strong></span>
-                        @if($article['updated_at'] !== $article['published_at'])
-                        <span class="d-block text-secondary-emphasis"><i class="fas fa-edit me-1"></i> Updated: <strong>{{ $article['updated_at'] }}</strong></span>
-                        @endif
-                    </div>
-                    <span class="border-start ps-3 py-2 border-secondary-subtle d-none d-sm-inline">
-                        <i class="far fa-clock me-1"></i> {{ $article['read_time'] }}
-                    </span>
-                </div>
-            </div>
-
-            <!-- Reading Controls bar -->
-            <div class="d-flex align-items-center justify-content-between bg-body-tertiary p-2 rounded-3 mb-4 border border-secondary-subtle">
-                <div class="d-flex align-items-center gap-2">
-                    <span class="small fw-semibold text-muted ms-2"><i class="fas fa-text-height me-1"></i> Text Size:</span>
-                    <button class="btn btn-sm btn-outline-secondary rounded-circle" style="width:30px;height:30px;padding:0;" id="btnFontSizeDec" title="Decrease Font Size">A-</button>
-                    <button class="btn btn-sm btn-outline-secondary rounded-circle" style="width:30px;height:30px;padding:0;" id="btnFontSizeInc" title="Increase Font Size">A+</button>
-                </div>
-                <div class="d-flex gap-2">
-                    <button class="btn btn-sm btn-link text-decoration-none p-0 text-muted me-2" onclick="window.print();"><i class="fas fa-print me-1"></i> Print</button>
-                    <button class="btn btn-sm btn-link text-decoration-none p-0 text-muted" onclick="alert('Article listening simulated... (TTS Engine)');"><i class="fas fa-volume-up me-1"></i> Listen</button>
-                </div>
+            <!-- Clean Metadata Line -->
+            <div class="text-muted small mb-4 py-2 border-bottom border-top border-secondary-subtle d-flex flex-wrap align-items-center gap-2">
+                <span>By <a href="/author/{{ $article['author_key'] }}" class="text-reset fw-semibold text-decoration-none hover-primary">{{ $article['author']['name'] }}</a></span>
+                <span class="text-secondary-subtle">|</span>
+                <span>{{ $article['author']['title'] }}</span>
+                <span class="text-secondary-subtle">|</span>
+                <span>Published: {{ $article['published_at'] }}</span>
+                <span class="text-secondary-subtle">|</span>
+                <span><i class="far fa-clock"></i> {{ $article['read_time'] }}</span>
             </div>
 
             <!-- Large Cover Image -->
@@ -97,13 +72,7 @@
                 <div class="article-body">
                     {!! $article['content'] !!}
                     
-                    <!-- Inline Ad Placeholder -->
-                    <div class="my-4 p-4 text-center rounded-3 bg-secondary bg-opacity-10 border border-secondary border-opacity-25" style="min-height: 120px;">
-                        <span class="text-uppercase fw-bold text-muted d-block mb-1" style="font-size:0.6rem; letter-spacing:1px;">Sponsored Content</span>
-                        <div class="fs-5 fw-bold text-primary mb-1">Rivaaz SaaS Premium Deployments</div>
-                        <p class="text-muted small mb-2">Sell high-fidelity news portals to multi-tenant configurations in minutes.</p>
-                        <a href="/contact" class="btn btn-xs btn-primary rounded-pill py-1 px-3 fw-bold fs-8">Learn More</a>
-                    </div>
+
 
                     <p>Subsequent discussions in public domains indicate solid support for the proposed standard deduction revisions. Retail bank indexes reflected positive growths as household liquidity projections improved for the second quarter. Editorial analysts suggest this framework positions structural investments correctly before international trade shifts occur.</p>
                     
@@ -115,7 +84,7 @@
             <div class="d-flex flex-wrap gap-2 border-top border-bottom py-3 my-4 border-secondary-subtle">
                 <span class="fw-bold text-uppercase fs-8 text-muted d-flex align-items-center"><i class="fas fa-tags me-1"></i> Tags:</span>
                 @foreach($article['tags'] as $tag)
-                <a href="/tag/{{ strtolower($tag) }}" class="badge bg-secondary text-reset text-decoration-none py-2 px-3 fw-semibold">#{{ $tag }}</a>
+                <a href="/tag/{{ strtolower($tag) }}" class="tag-badge">#{{ $tag }}</a>
                 @endforeach
             </div>
 

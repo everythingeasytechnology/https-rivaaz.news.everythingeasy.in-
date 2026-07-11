@@ -55,20 +55,16 @@
     <div class="widget-title">
         <span><i class="fas fa-fire text-danger me-2"></i>Trending Stories</span>
     </div>
-    <div class="d-flex flex-column gap-3">
+    <div class="d-flex flex-column">
         @foreach($trending as $index => $article)
-        <div class="d-flex align-items-start gap-2">
-            <span class="fs-4 fw-extrabold text-secondary-subtle lh-1" style="font-family: var(--font-headlines); width: 25px;">0{{ $loop->iteration }}</span>
-            <div>
-                <span class="badge-category mb-1 py-0 px-1" style="font-size:0.6rem;">{{ $article['category'] }}</span>
-                <h6 class="mb-1 fw-bold fs-7 lh-base">
-                    <a href="/news/{{ $article['slug'] }}" class="text-reset hover-primary">{{ $article['title'] }}</a>
-                </h6>
-                <div class="d-flex align-items-center gap-2 small text-muted" style="font-size:0.7rem;">
-                    <span>{{ $article['views'] }} views</span>
-                    <span>•</span>
-                    <span>{{ $article['read_time'] }}</span>
-                </div>
+        <div class="py-3 @if(!$loop->last) border-bottom @endif">
+            <h6 class="mb-2 fw-bold fs-6 lh-base">
+                <a href="/news/{{ $article['slug'] }}" class="text-reset hover-primary">{{ $article['title'] }}</a>
+            </h6>
+            <div class="d-flex align-items-center gap-2 text-uppercase fw-bold text-muted" style="font-size:0.65rem; letter-spacing:0.5px;">
+                <a href="/category/{{ $article['category'] }}" class="text-primary text-decoration-none">{{ $article['category'] }}</a>
+                <span>|</span>
+                <span><i class="far fa-comment me-1"></i></span>
             </div>
         </div>
         @endforeach
