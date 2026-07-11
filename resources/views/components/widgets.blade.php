@@ -1,0 +1,142 @@
+@php
+    $stocks = \App\Support\MockData::getStocks();
+    $weather = \App\Support\MockData::getWeather();
+    $trending = collect(\App\Support\MockData::getArticles())->sortByDesc('views')->take(5);
+    $liveUpdates = \App\Support\MockData::getLiveEvents();
+    $videos = \App\Support\MockData::getVideos();
+@endphp
+
+<!-- 1. Stock Widget -->
+@if($type === 'stocks')
+<div class="widget-box">
+    <div class="widget-title">
+        <span><i class="fas fa-chart-line text-primary me-2"></i>Stock Market</span>
+        <span class="badge bg-success-subtle text-success border border-success-subtle fs-9">Live Updates</span>
+    </div>
+    <div class="stock-indices-list">
+        @foreach($stocks as $stock)
+        <div class="stock-index-row">
+            <span class="fw-semibold">{{ $stock['name'] }}</span>
+            <div class="text-end">
+                <span class="fw-bold d-block">{{ $stock['value'] }}</span>
+                <small class="{{ $stock['up'] ? 'index-up' : 'index-down' }} fw-medium">
+                    <i class="fas {{ $stock['up'] ? 'fa-caret-up' : 'fa-caret-down' }} me-1"></i>{{ $stock['change'] }} ({{ $stock['pct'] }})
+                </small>
+            </div>
+        </div>
+        @endforeach
+    </div>
+</div>
+@endif
+
+<!-- 2. Weather Widget -->
+@if($type === 'weather')
+<div class="widget-box">
+    <div class="widget-title">
+        <span><i class="fas fa-cloud-sun text-warning me-2"></i>Weather</span>
+    </div>
+    <div class="row align-items-center g-3">
+        @foreach($weather as $city => $data)
+        <div class="col-6 d-flex align-items-center gap-2 mb-2">
+            <div class="fs-4 text-secondary-emphasis"><i class="fas {{ $data['icon'] }} text-primary"></i></div>
+            <div>
+                <span class="fw-semibold fs-7 d-block">{{ $city }}</span>
+                <small class="text-muted">{{ $data['temp'] }} • {{ $data['condition'] }}</small>
+            </div>
+        </div>
+        @endforeach
+    </div>
+</div>
+@endif
+
+<!-- 3. Trending Stories Widget -->
+@if($type === 'trending')
+<div class="widget-box">
+    <div class="widget-title">
+        <span><i class="fas fa-fire text-danger me-2"></i>Trending Stories</span>
+    </div>
+    <div class="d-flex flex-column gap-3">
+        @foreach($trending as $index => $article)
+        <div class="d-flex align-items-start gap-2">
+            <span class="fs-4 fw-extrabold text-secondary-subtle lh-1" style="font-family: var(--font-headlines); width: 25px;">0{{ $loop->iteration }}</span>
+            <div>
+                <span class="badge-category mb-1 py-0 px-1" style="font-size:0.6rem;">{{ $article['category'] }}</span>
+                <h6 class="mb-1 fw-bold fs-7 lh-base">
+                    <a href="/news/{{ $article['slug'] }}" class="text-reset hover-primary">{{ $article['title'] }}</a>
+                </h6>
+                <div class="d-flex align-items-center gap-2 small text-muted" style="font-size:0.7rem;">
+                    <span>{{ $article['views'] }} views</span>
+                    <span>•</span>
+                    <span>{{ $article['read_time'] }}</span>
+                </div>
+            </div>
+        </div>
+        @endforeach
+    </div>
+</div>
+@endif
+
+<!-- 4. Live Updates Timeline -->
+@if($type === 'live_timeline')
+<div class="widget-box">
+    <div class="widget-title">
+        <span><i class="fas fa-broadcast-tower text-danger me-2 animate-pulse"></i>Live Updates</span>
+        <a href="/live-blog/india-union-budget-2026-analysis" class="text-decoration-none fs-8 fw-semibold">View Blog</a>
+    </div>
+    <div class="live-timeline">
+        @foreach($liveUpdates as $event)
+        <div class="live-item @if($loop->first) live-active @endif">
+            <div class="d-flex align-items-center justify-content-between mb-1">
+                <span class="badge bg-secondary-subtle text-secondary fw-bold fs-9">{{ $event['time'] }}</span>
+                @if($event['tag'])
+                <span class="badge bg-primary-subtle text-primary border border-primary-subtle fs-9">#{{ $event['tag'] }}</span>
+                @endif
+            </div>
+            <h6 class="fw-bold fs-7 mb-1">{{ $event['title'] }}</h6>
+            <p class="text-muted fs-8 mb-0 line-clamp-2">{{ $event['content'] }}</p>
+        </div>
+        @endforeach
+    </div>
+</div>
+@endif
+
+<!-- 5. Latest Videos Widget -->
+@if($type === 'latest_videos')
+<div class="widget-box">
+    <div class="widget-title">
+        <span><i class="fas fa-play-circle text-primary me-2"></i>Latest Videos</span>
+        <a href="/videos" class="text-decoration-none fs-8 fw-semibold">More Videos</a>
+    </div>
+    <div class="d-flex flex-column gap-3">
+        @foreach($videos as $video)
+        <div class="news-horizontal-row py-0 border-0">
+            <div class="row-img-container position-relative" style="width: 100px; height: 65px;">
+                <img src="{{ $video['image'] }}" alt="{{ $video['title'] }}">
+                <span class="position-absolute bottom-0 end-0 bg-dark text-white fs-9 px-1 m-1 rounded-1"><i class="fas fa-play me-1 fs-10"></i>{{ $video['duration'] }}</span>
+            </div>
+            <div class="row-content">
+                <h6 class="row-title fw-bold fs-8 line-clamp-2 mb-1">
+                    <a href="/videos" class="text-reset hover-primary">{{ $video['title'] }}</a>
+                </h6>
+                <small class="text-muted fs-9">{{ $video['date'] }}</small>
+            </div>
+        </div>
+        @endforeach
+    </div>
+</div>
+@endif
+
+<!-- 6. Newsletter Widget -->
+@if($type === 'newsletter')
+<div class="widget-box text-center bg-primary-subtle border-primary-subtle text-dark p-4 rounded-4 shadow-sm">
+    <div class="fs-1 text-primary mb-2"><i class="fas fa-envelope-open-text"></i></div>
+    <h5 class="fw-bold">Rivaaz Bulletin</h5>
+    <p class="text-muted small">Subscribe to receive major breaking updates, briefings, and editorials delivered straight to your inbox daily.</p>
+    <form onsubmit="event.preventDefault(); alert('Subscribed to bulletin successfully!'); this.reset();">
+        <div class="mb-2">
+            <input type="email" class="form-control rounded-pill border-0 shadow-sm text-center" placeholder="Enter your email" required>
+        </div>
+        <button type="submit" class="btn btn-primary w-100 rounded-pill fw-bold">Subscribe Now</button>
+    </form>
+</div>
+@endif
