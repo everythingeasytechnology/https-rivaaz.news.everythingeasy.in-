@@ -211,6 +211,10 @@ Route::prefix('admin')->name('admin.')->group(function () {
         return view('admin.dashboard');
     })->name('dashboard');
 
+    Route::get('/news', function () {
+        return view('admin.news.index');
+    })->name('news.index');
+
     Route::get('/news/create', function () {
         return view('admin.news.editor');
     })->name('news.create');

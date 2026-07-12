@@ -193,7 +193,10 @@
             </a>
             
             <div class="menu-section">Content Area</div>
-            <a href="/admin/news/create" class="nav-link-admin {{ Request::is('admin/news/*') ? 'active' : '' }}">
+            <a href="/admin/news" class="nav-link-admin {{ Request::is('admin/news') ? 'active' : '' }}">
+                <i class="fa-solid fa-list-check"></i> <span>Articles List</span>
+            </a>
+            <a href="/admin/news/create" class="nav-link-admin {{ Request::is('admin/news/create') ? 'active' : '' }}">
                 <i class="fa-regular fa-file-lines"></i> <span>Write Article</span>
             </a>
             <a href="/admin/categories" class="nav-link-admin {{ Request::is('admin/categories') ? 'active' : '' }}">

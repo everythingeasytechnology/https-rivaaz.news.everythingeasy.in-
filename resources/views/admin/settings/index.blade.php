@@ -229,6 +229,59 @@
                 </form>
             </div>
 
+            <!-- Multi-Language & Locales Manager -->
+            <div class="card border border-secondary-subtle shadow-sm rounded-3 p-4 mt-4">
+                <h5 class="fw-bold mb-3 border-bottom pb-2">Multi-Language & Locales</h5>
+                
+                <form onsubmit="event.preventDefault(); showNotification('Active language configurations updated.');">
+                    <div class="mb-3">
+                        <label class="form-label small fw-bold">Primary Default Language</label>
+                        <select class="form-select form-select-sm" id="defaultLocaleSelect">
+                            <option value="hi" selected>Hindi (हिन्दी)</option>
+                            <option value="en">English (US)</option>
+                            <option value="es">Spanish (Español)</option>
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label small fw-bold">Active Locales</label>
+                        <div class="row g-2">
+                            <div class="col-6">
+                                <div class="form-check small">
+                                    <input class="form-check-input" type="checkbox" id="langHindi" checked>
+                                    <label class="form-check-label" for="langHindi">Hindi (हिन्दी)</label>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="form-check small">
+                                    <input class="form-check-input" type="checkbox" id="langEnglish" checked>
+                                    <label class="form-check-label" for="langEnglish">English</label>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="form-check small">
+                                    <input class="form-check-input" type="checkbox" id="langSpanish" onchange="showNotification('Spanish locale activated')">
+                                    <label class="form-check-label" for="langSpanish">Spanish</label>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="form-check small">
+                                    <input class="form-check-input" type="checkbox" id="langArabic" onchange="showNotification('Arabic locale activated')">
+                                    <label class="form-check-label" for="langArabic">Arabic (RTL)</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-check form-switch small mb-3">
+                        <input class="form-check-input" type="checkbox" role="switch" id="autoTranslate" checked>
+                        <label class="form-check-label" for="autoTranslate">Translate drafts automatically using AI (DeepL/OpenAI)</label>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary btn-sm rounded-pill px-4 fw-bold">Save Locales Settings</button>
+                </form>
+            </div>
+
         </div>
 
     </div>
