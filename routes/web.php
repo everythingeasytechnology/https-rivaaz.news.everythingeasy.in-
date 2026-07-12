@@ -205,6 +205,61 @@ Route::get('/404-test', function () {
     abort(404);
 });
 
+// Admin Panel Routing Group
+Route::prefix('admin')->name('admin.')->group(function () {
+    Route::get('/', function () {
+        return view('admin.dashboard');
+    })->name('dashboard');
+
+    Route::get('/news/create', function () {
+        return view('admin.news.editor');
+    })->name('news.create');
+
+    Route::get('/categories', function () {
+        return view('admin.categories.index');
+    })->name('categories.index');
+
+    Route::get('/live-blog', function () {
+        return view('admin.live-blog.index');
+    })->name('live-blog.index');
+
+    Route::get('/comments', function () {
+        return view('admin.comments.index');
+    })->name('comments.index');
+
+    Route::get('/ads', function () {
+        return view('admin.ads.index');
+    })->name('ads.index');
+
+    Route::get('/seo', function () {
+        return view('admin.seo.index');
+    })->name('seo.index');
+
+    Route::get('/users', function () {
+        return view('admin.users.index');
+    })->name('users.index');
+
+    Route::get('/media', function () {
+        return view('admin.media.index');
+    })->name('media.index');
+
+    Route::get('/web-stories', function () {
+        return view('admin.web-stories.index');
+    })->name('web-stories.index');
+
+    Route::get('/settings', function () {
+        return view('admin.settings.index');
+    })->name('settings.index');
+
+    Route::get('/code-injections', function () {
+        return view('admin.code-injections.index');
+    })->name('code-injections.index');
+
+    Route::get('/support', function () {
+        return view('admin.support.index');
+    })->name('support.index');
+});
+
 // Fallback route (handles 404 rendering)
 Route::fallback(function () {
     return response()->view('errors.404', [], 404);

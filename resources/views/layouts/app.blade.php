@@ -325,7 +325,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body py-4">
-                    <form onsubmit="event.preventDefault(); alert('Authentication simulated successfully!'); bootstrap.Modal.getInstance(document.getElementById('authModal')).hide();">
+                    <form onsubmit="event.preventDefault(); alert('Authentication simulated successfully! Redirecting to SaaS Admin Panel...'); window.location.href = '/admin';">
                         <div class="mb-3">
                             <label class="form-label small fw-semibold">Email address</label>
                             <input type="email" class="form-control rounded-3" placeholder="name@example.com" required>

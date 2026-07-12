@@ -11,6 +11,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initWebStoriesViewer();
     initSkeletonLoading();
     initLiveBlogSimulation();
+    initAdminController();
 });
 
 /**
@@ -363,4 +364,49 @@ function initLiveBlogSimulation() {
 
         dataIndex++;
     }, 15000);
+}
+
+/**
+ * 8. Admin Control Panel Actions & Simulations
+ */
+function initAdminController() {
+    // A. Collapsible Sidebar
+    const sidebar = document.getElementById('adminSidebar');
+    const wrapper = document.getElementById('adminMainWrapper');
+    const toggleBtn = document.getElementById('sidebarToggleBtn');
+    const mobileToggleBtn = document.getElementById('mobileSidebarToggle');
+    
+    if (toggleBtn && sidebar && wrapper) {
+        toggleBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            sidebar.classList.toggle('collapsed');
+            wrapper.classList.toggle('full-width');
+        });
+    }
+    
+    if (mobileToggleBtn && sidebar) {
+        mobileToggleBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            sidebar.classList.toggle('mobile-open');
+        });
+        
+        // Close sidebar if clicking outside on mobile
+        document.addEventListener('click', (e) => {
+            if (sidebar.classList.contains('mobile-open') && 
+                !sidebar.contains(e.target) && 
+                !mobileToggleBtn.contains(e.target)) {
+                sidebar.classList.remove('mobile-open');
+            }
+        });
+    }
+
+    // B. Realtime Active Counter
+    const countEl = document.getElementById('activeVisitorsCount');
+    if (countEl) {
+        setInterval(() => {
+            const val = parseInt(countEl.innerText);
+            const delta = Math.floor(Math.random() * 7) - 3; // -3 to +3
+            countEl.innerText = Math.max(12, val + delta);
+        }, 4000);
+    }
 }
