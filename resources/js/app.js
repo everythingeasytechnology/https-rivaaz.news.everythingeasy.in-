@@ -339,7 +339,7 @@ function initLiveBlogSimulation() {
         const cardHtml = `
             <div class="live-item live-active fade-in-up">
                 <div class="d-flex align-items-center justify-content-between mb-2">
-                    <span class="badge bg-secondary-subtle text-secondary fw-bold">${data.time}</span>
+                    <span class="badge bg-danger bg-opacity-10 text-danger fw-bold border border-danger border-opacity-25">${data.time}</span>
                     <span class="badge bg-primary-subtle text-primary border border-primary-subtle">#${data.tag}</span>
                 </div>
                 <h5 class="fw-bold mb-2">${data.title}</h5>

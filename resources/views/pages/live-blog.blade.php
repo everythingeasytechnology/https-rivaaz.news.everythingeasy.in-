@@ -45,7 +45,7 @@
                 @foreach($events as $event)
                 <div class="live-item @if($loop->first) live-active @endif bg-body-tertiary bg-opacity-25 rounded-4 p-4 border border-secondary-subtle">
                     <div class="d-flex align-items-center justify-content-between mb-2">
-                        <span class="badge bg-secondary-subtle text-secondary fw-bold">{{ $event['time'] }}</span>
+                        <span class="badge bg-danger bg-opacity-10 text-danger fw-bold border border-danger border-opacity-25">{{ $event['time'] }}</span>
                         @if($event['tag'])
                         <span class="badge bg-primary-subtle text-primary border border-primary-subtle">#{{ $event['tag'] }}</span>
                         @endif
