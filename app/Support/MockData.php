@@ -186,7 +186,7 @@ class MockData
                 'subcategory' => 'AI',
                 'author_key' => 'ananya-sen',
                 'author' => $authors['ananya-sen'],
-                'image' => 'https://images.unsplash.com/photo-1677442136019-21780efad99a?auto=format&fit=crop&w=800&q=80',
+                'image' => '/ai_summit_geneva_banner_1783929961595.jpg',
                 'read_time' => '4 min read',
                 'views' => '28.9K',
                 'published_at' => 'July 11, 2026 12:45 PM',

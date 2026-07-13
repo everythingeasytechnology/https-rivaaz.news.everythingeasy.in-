@@ -177,6 +177,7 @@
     </nav>
     
     <!-- Mobile Search collapse -->
+    {--
     <div class="collapse d-lg-none bg-body-tertiary border-bottom py-2 px-3" id="searchCollapse">
         <form action="/search" method="GET">
             <div class="input-group input-group-sm">
@@ -185,6 +186,7 @@
             </div>
         </form>
     </div>
+    --}
 
     <!-- 3. Main Content Grid -->
     <main class="py-4 fade-in-up">
