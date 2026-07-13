@@ -227,9 +227,6 @@ Route::prefix('admin')->name('admin.')->group(function () {
         return view('admin.live-blog.index');
     })->name('live-blog.index');
 
-    Route::get('/comments', function () {
-        return view('admin.comments.index');
-    })->name('comments.index');
 
     Route::get('/ads', function () {
         return view('admin.ads.index');

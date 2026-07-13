@@ -61,7 +61,6 @@
                     
                     <div class="d-flex gap-3 mt-2">
                         <button class="btn btn-sm btn-link text-decoration-none p-0 text-muted fs-8" onclick="alert('Copied link of this bulletin to clipboard!')"><i class="far fa-share-square me-1"></i> Share</button>
-                        <button class="btn btn-sm btn-link text-decoration-none p-0 text-muted fs-8" onclick="alert('Comment dialog simulated...')"><i class="far fa-comment me-1"></i> Comment</button>
                     </div>
                 </div>
                 @endforeach

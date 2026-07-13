@@ -76,7 +76,7 @@
                 <!-- Utilities: lang, social, auth, subscribe -->
                 <div class="col-md-3">
                     <div class="header-actions">
-                        <div class="dropdown">
+                        <!-- <div class="dropdown">
                             <button class="btn btn-sm btn-link text-decoration-none dropdown-toggle p-0 text-reset fw-semibold" type="button" data-bs-toggle="dropdown">
                                 EN
                             </button>
@@ -85,7 +85,7 @@
                                 <li><a class="dropdown-item fw-medium" href="#">Hindi</a></li>
                                 <li><a class="dropdown-item fw-medium" href="#">Spanish</a></li>
                             </ul>
-                        </div>
+                        </div> -->
                         
                         <div class="d-flex align-items-center gap-2">
                             <a href="#" class="text-reset hover-primary" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
@@ -94,8 +94,8 @@
                         </div>
                         
                         <div class="d-flex align-items-center gap-2 border-start ps-3 border-secondary-subtle">
-                            <a href="#" class="text-reset text-decoration-none fw-semibold" data-bs-toggle="modal" data-bs-target="#authModal">Login</a>
-                            <a href="#" class="btn btn-sm btn-primary rounded-pill fw-bold px-3">Subscribe</a>
+                            <a href="#" class="btn btn-sm btn-primary rounded-pill fw-bold px-3" data-bs-toggle="modal" data-bs-target="#authModal">Login</a>
+                            <!-- <a href="#" class="btn btn-sm btn-primary rounded-pill fw-bold px-3">Subscribe</a> -->
                         </div>
                     </div>
                 </div>
@@ -128,7 +128,7 @@
                     
                     <!-- India Dropdown -->
                     <li class="nav-item dropdown megamenu">
-                        <a class="nav-link dropdown-toggle" href="/category/india" role="button" data-bs-toggle="dropdown">India</a>
+                        <a class="nav-link " href="/category/india" role="button" data-bs-toggle="dropdown">India</a>
                         <div class="dropdown-menu border-0 shadow">
                             <div class="row">
                                 <div class="col-md-3">
@@ -177,7 +177,7 @@
                 
                 <div class="d-none d-lg-flex align-items-center gap-3">
                     <!-- Search widget toggle -->
-                    <div class="dropdown">
+                    <!-- <div class="dropdown">
                         <button class="btn btn-link text-reset p-0 border-0" type="button" data-bs-toggle="dropdown" aria-expanded="false" id="desktopSearchBtn">
                             <i class="fas fa-search fs-5"></i>
                         </button>
@@ -189,7 +189,7 @@
                                 </div>
                             </form>
                         </div>
-                    </div>
+                    </div> -->
                     
                     <!-- Dark mode toggle -->
                     <button class="btn btn-link text-reset p-0 border-0 theme-toggle-btn" aria-label="Toggle theme">

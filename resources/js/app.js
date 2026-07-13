@@ -346,7 +346,6 @@ function initLiveBlogSimulation() {
                 <p class="text-muted">${data.content}</p>
                 <div class="d-flex gap-3 mt-2">
                     <button class="btn btn-sm btn-link text-decoration-none p-0 text-muted fs-8"><i class="far fa-share-square me-1"></i> Share</button>
-                    <button class="btn btn-sm btn-link text-decoration-none p-0 text-muted fs-8"><i class="far fa-comment me-1"></i> Comment</button>
                 </div>
             </div>
         `;

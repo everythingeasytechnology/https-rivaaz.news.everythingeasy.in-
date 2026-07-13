@@ -123,7 +123,7 @@
                     </div>
                     <div class="form-check">
                         <input class="form-check-input" type="checkbox" id="perm4" checked disabled>
-                        <label class="form-check-label fw-semibold" for="perm4">Moderate Comments</label>
+                        <label class="form-check-label fw-semibold" for="perm4">Manage Web Stories</label>
                     </div>
                     <div class="form-check">
                         <input class="form-check-input" type="checkbox" id="perm5" checked disabled>

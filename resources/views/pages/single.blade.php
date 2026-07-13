@@ -80,45 +80,6 @@
                 @endforeach
             </div>
 
-            <!-- Comments Section -->
-            <section class="mb-5">
-                <h4 class="headline-font mb-4 fw-bold border-bottom pb-2">Comments ({{ count($comments) }})</h4>
-                
-                <!-- Comment submission form -->
-                <div class="card border-0 bg-body-tertiary p-3 rounded-4 mb-4">
-                    <h6 class="fw-bold mb-2">Join the Conversation</h6>
-                    <form onsubmit="event.preventDefault(); alert('Thank you for commenting! Your submission is in moderation.'); this.reset();">
-                        <div class="row g-2 mb-2">
-                            <div class="col-md-6">
-                                <input type="text" class="form-control rounded-3" placeholder="Your Name" required>
-                            </div>
-                            <div class="col-md-6">
-                                <input type="email" class="form-control rounded-3" placeholder="Your Email" required>
-                            </div>
-                        </div>
-                        <div class="mb-2">
-                            <textarea class="form-control rounded-3" rows="3" placeholder="Add your perspective..." required></textarea>
-                        </div>
-                        <button type="submit" class="btn btn-primary btn-sm rounded-pill fw-bold px-3">Post Comment</button>
-                    </form>
-                </div>
-
-                <!-- Comments list -->
-                <div class="d-flex flex-column gap-3">
-                    @foreach($comments as $comment)
-                    <div class="d-flex gap-3 bg-body-tertiary bg-opacity-50 p-3 rounded-3 border border-secondary-subtle">
-                        <img src="{{ $comment['avatar'] }}" alt="{{ $comment['name'] }}" class="rounded-circle border" style="width: 40px; height: 40px; object-fit: cover; flex-shrink: 0;">
-                        <div>
-                            <div class="d-flex align-items-center gap-2 mb-1">
-                                <h6 class="mb-0 fw-bold fs-7">{{ $comment['name'] }}</h6>
-                                <small class="text-muted fs-8">{{ $comment['date'] }}</small>
-                            </div>
-                            <p class="mb-0 fs-7 text-secondary-emphasis">{{ $comment['comment'] }}</p>
-                        </div>
-                    </div>
-                    @endforeach
-                </div>
-            </section>
 
             <!-- Related News & Videos -->
             <section class="mb-4">

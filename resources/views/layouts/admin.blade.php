@@ -213,9 +213,6 @@
             </a>
             
             <div class="menu-section">SaaS Placements</div>
-            <a href="/admin/comments" class="nav-link-admin {{ Request::is('admin/comments') ? 'active' : '' }}">
-                <i class="fa-regular fa-comments"></i> <span>Comments Moderator</span>
-            </a>
             <a href="/admin/ads" class="nav-link-admin {{ Request::is('admin/ads') ? 'active' : '' }}">
                 <i class="fa-solid fa-rectangle-ad"></i> <span>Advertisements</span>
             </a>

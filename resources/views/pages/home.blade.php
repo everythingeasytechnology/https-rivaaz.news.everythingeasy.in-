@@ -21,8 +21,6 @@
                     <p class="text-muted small mb-2 order-3">{{ $featured['summary'] }}</p>
                     <div class="d-flex align-items-center gap-2 text-uppercase fw-bold text-muted mb-2 order-4" style="font-size:0.65rem; letter-spacing:0.5px;">
                         <a href="/category/{{ $featured['category'] }}" class="category-label">{{ $featured['category'] }}</a>
-                        <span>|</span>
-                        <span><i class="far fa-comment me-1"></i></span>
                     </div>
                 </div>
 
@@ -37,8 +35,6 @@
                         </h6>
                         <div class="d-flex align-items-center gap-2 text-uppercase fw-bold text-muted" style="font-size:0.65rem; letter-spacing:0.5px;">
                             <a href="/category/{{ $article['category'] }}" class="category-label">{{ $article['category'] }}</a>
-                            <span>|</span>
-                            <span><i class="far fa-comment"></i></span>
                         </div>
                     </div>
                     <div class="row-img-container">
@@ -65,8 +61,6 @@
                         </h6>
                         <div class="d-flex align-items-center gap-2 text-uppercase fw-bold text-muted" style="font-size:0.65rem; letter-spacing:0.5px;">
                             <a href="/category/{{ $article['category'] }}" class="category-label">{{ $article['category'] }}</a>
-                            <span>|</span>
-                            <span><i class="far fa-comment"></i></span>
                         </div>
                     </div>
                     <div class="row-img-container center-row-thumb">
