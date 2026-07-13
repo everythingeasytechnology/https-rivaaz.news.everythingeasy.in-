@@ -96,6 +96,9 @@
                     </div>
                 </div>
                 @include('components.widgets', ['type' => 'weather'])
+                <div class="mt-4">
+                    @include('components.widgets', ['type' => 'newsletter'])
+                </div>
             </div>
         </div>
     </section>
@@ -203,40 +206,6 @@
         </div>
     </section>
 
-    <!-- 6. Video Section -->
-    <section class="mb-5 bg-dark text-white p-4 rounded-4 shadow">
-        <h3 class="headline-font mb-4 fw-bold text-uppercase text-white border-bottom border-secondary pb-2 d-flex align-items-center justify-content-between">
-            <span>Featured Video Gallery</span>
-            <a href="/videos" class="text-decoration-none fs-7 text-primary text-lowercase">More Videos <i class="fas fa-angle-right"></i></a>
-        </h3>
-        <div class="row g-4">
-            <div class="col-lg-7">
-                <div class="video-featured-player">
-                    <div class="video-placeholder-cover" style="background-image: url('{{ $videos[1]['image'] }}')">
-                        <button class="play-btn" onclick="alert('Playing featured video simulation...')" aria-label="Play video"><i class="fas fa-play"></i></button>
-                    </div>
-                </div>
-                <h4 class="headline-font text-white mb-2">{{ $videos[1]['title'] }}</h4>
-                <p class="text-white-50 small mb-0">{{ $videos[1]['views'] }} • {{ $videos[1]['date'] }}</p>
-            </div>
-            <div class="col-lg-5">
-                <div class="d-flex flex-column gap-3">
-                    @foreach(array_slice($videos, 1, 3) as $vid)
-                    <div class="d-flex gap-3 align-items-center bg-secondary bg-opacity-10 p-2 rounded-3 border border-secondary border-opacity-25" style="cursor:pointer;" onclick="alert('Loading video: {{ $vid['title'] }}')">
-                        <div class="position-relative flex-shrink-0" style="width:120px; height:75px; border-radius:6px; overflow:hidden;">
-                            <img src="{{ $vid['image'] }}" class="w-100 h-100 object-fit-cover" alt="Video cover">
-                            <span class="position-absolute bottom-0 end-0 bg-dark text-white fs-9 px-1 m-1 rounded-1"><i class="fas fa-play me-1 fs-10"></i>{{ $vid['duration'] }}</span>
-                        </div>
-                        <div>
-                            <h6 class="text-white mb-1 fw-bold fs-7 line-clamp-2">{{ $vid['title'] }}</h6>
-                            <small class="text-white-50 fs-9">{{ $vid['views'] }}</small>
-                        </div>
-                    </div>
-                    @endforeach
-                </div>
-            </div>
-        </div>
-    </section>
 
 
     <!-- 8. Opinion Section (Authors) -->
@@ -259,36 +228,6 @@
         </div>
     </section> -->
 
-    <!-- 9. Editors Pick & Trending Tags & Newsletter -->
-    <section class="mb-4">
-        <div class="row g-4">
-            <!-- Editors Pick (Left) -->
-            <div class="col-lg-8">
-                <h4 class="headline-font mb-3 fw-bold text-uppercase border-bottom pb-2">Editor's Pick</h4>
-                <div class="row g-3">
-                    @foreach(array_slice($others, 1, 2) as $article)
-                    <div class="col-md-6">
-                        <div class="news-card editors-pick-card">
-                            <div class="card-img-container">
-                                <img src="{{ $article['image'] }}" alt="{{ $article['title'] }}">
-                            </div>
-                            <div class="card-body">
-                                <span class="badge-category mb-2">{{ $article['category'] }}</span>
-                                <h5 class="card-title"><a href="/news/{{ $article['slug'] }}">{{ $article['title'] }}</a></h5>
-                                <p class="text-muted small line-clamp-2">{{ $article['summary'] }}</p>
-                            </div>
-                        </div>
-                    </div>
-                    @endforeach
-                </div>
-            </div>
-
-            <!-- Newsletter only (Right) -->
-            <div class="col-lg-4">
-                @include('components.widgets', ['type' => 'newsletter'])
-            </div>
-        </div>
-    </section>
 
 </div>
 @endsection

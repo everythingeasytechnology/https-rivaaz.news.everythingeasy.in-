@@ -130,15 +130,5 @@
 
 <!-- 6. Newsletter Widget -->
 @if($type === 'newsletter')
-<div class="widget-box text-center bg-primary-subtle border-primary-subtle text-dark p-4 rounded-4 shadow-sm">
-    <div class="fs-1 text-primary mb-2"><i class="fas fa-envelope-open-text"></i></div>
-    <h5 class="fw-bold">Rivaaz Bulletin</h5>
-    <p class="text-muted small">Subscribe to receive major breaking updates, briefings, and editorials delivered straight to your inbox daily.</p>
-    <form onsubmit="event.preventDefault(); alert('Subscribed to bulletin successfully!'); this.reset();">
-        <div class="mb-2">
-            <input type="email" class="form-control rounded-pill border-0 shadow-sm text-center" placeholder="Enter your email" required>
-        </div>
-        <button type="submit" class="btn btn-primary w-100 rounded-pill fw-bold">Subscribe Now</button>
-    </form>
-</div>
+<!-- Newsletter disabled globally -->
 @endif
