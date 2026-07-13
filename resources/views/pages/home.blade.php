@@ -103,6 +103,100 @@
         </div>
     </section>
 
+
+    <!-- 5. Category blocks (Tech, Politics) -->
+    <section class="mb-5">
+        @php
+            $politics = collect($others)->filter(fn($a) => strtolower($a['category']) === 'politics')->values();
+            if ($politics->count() < 5) {
+                $politics = $politics->concat(collect($others)->filter(fn($a) => strtolower($a['category']) !== 'politics'))->unique('id')->values();
+            }
+
+            $tech = collect($others)->filter(fn($a) => strtolower($a['category']) === 'technology')->values();
+            if ($tech->count() < 5) {
+                $tech = $tech->concat(collect($others)->filter(fn($a) => strtolower($a['category']) !== 'technology'))->unique('id')->values();
+            }
+        @endphp
+
+        <!-- Politics Category (Full Width Row) -->
+        <div class="mb-5">
+            <div class="d-flex justify-content-between align-items-center mb-3 border-bottom border-dark border-3 pb-1">
+                <h3 class="headline-font fw-bold text-uppercase mb-0 fs-4 text-dark" style="letter-spacing: 0.5px;">Politics</h3>
+                <a href="/category/politics" class="text-decoration-none text-dark fw-bold fs-8 text-uppercase">Politics News <i class="fas fa-angle-right ms-1"></i></a>
+            </div>
+            <div class="row g-4">
+                <!-- Left: Headline on TOP, Image below -->
+                <div class="col-lg-7">
+                    <div class="featured-block mb-3">
+                        <h4 class="fw-bold mb-3 fs-3" style="line-height: 1.25; letter-spacing: -0.5px;">
+                            <a href="/news/{{ $politics[0]['slug'] }}" class="text-dark text-decoration-none hover-primary">{{ $politics[0]['title'] }}</a>
+                        </h4>
+                        <div class="rounded-3 overflow-hidden" style="aspect-ratio: 16/9; border: 1px solid var(--border-color);">
+                            <img src="{{ $politics[0]['image'] }}" class="w-100 h-100 object-fit-cover" alt="Featured News Image">
+                        </div>
+                    </div>
+                </div>
+                <!-- Right: Stack of 4 horizontal row-list items with image on the right -->
+                <div class="col-lg-5">
+                    <div class="d-flex flex-column gap-3 h-100 justify-content-between">
+                        @foreach($politics->slice(1, 4) as $idx => $art)
+                        <div class="d-flex justify-content-between align-items-center gap-3 pb-3 @if(!$loop->last) border-bottom border-secondary-subtle @endif">
+                            <div class="flex-grow-1">
+                                <h6 class="fw-bold fs-7 mb-1" style="line-height: 1.35;">
+                                    <a href="/news/{{ $art['slug'] }}" class="text-dark text-decoration-none hover-primary">{{ $art['title'] }}</a>
+                                </h6>
+                                <small class="text-muted fs-9">{{ $art['published_at'] ?? $art['read_time'] }}</small>
+                            </div>
+                            <div class="flex-shrink-0" style="width: 100px; height: 60px; border-radius: 6px; overflow: hidden; border: 1px solid var(--border-color);">
+                                <img src="{{ $art['image'] }}" class="w-100 h-100 object-fit-cover" alt="Thumbnail">
+                            </div>
+                        </div>
+                        @endforeach
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Technology Category (Full Width Row) -->
+        <div class="mb-5">
+            <div class="d-flex justify-content-between align-items-center mb-3 border-bottom border-dark border-3 pb-1">
+                <h3 class="headline-font fw-bold text-uppercase mb-0 fs-4 text-dark" style="letter-spacing: 0.5px;">Technology</h3>
+                <a href="/category/technology" class="text-decoration-none text-dark fw-bold fs-8 text-uppercase">Tech News <i class="fas fa-angle-right ms-1"></i></a>
+            </div>
+            <div class="row g-4">
+                <!-- Left: Headline on TOP, Image below -->
+                <div class="col-lg-7">
+                    <div class="featured-block mb-3">
+                        <h4 class="fw-bold mb-3 fs-3" style="line-height: 1.25; letter-spacing: -0.5px;">
+                            <a href="/news/{{ $tech[0]['slug'] }}" class="text-dark text-decoration-none hover-primary">{{ $tech[0]['title'] }}</a>
+                        </h4>
+                        <div class="rounded-3 overflow-hidden" style="aspect-ratio: 16/9; border: 1px solid var(--border-color);">
+                            <img src="{{ $tech[0]['image'] }}" class="w-100 h-100 object-fit-cover" alt="Featured News Image">
+                        </div>
+                    </div>
+                </div>
+                <!-- Right: Stack of 4 horizontal row-list items with image on the right -->
+                <div class="col-lg-5">
+                    <div class="d-flex flex-column gap-3 h-100 justify-content-between">
+                        @foreach($tech->slice(1, 4) as $idx => $art)
+                        <div class="d-flex justify-content-between align-items-center gap-3 pb-3 @if(!$loop->last) border-bottom border-secondary-subtle @endif">
+                            <div class="flex-grow-1">
+                                <h6 class="fw-bold fs-7 mb-1" style="line-height: 1.35;">
+                                    <a href="/news/{{ $art['slug'] }}" class="text-dark text-decoration-none hover-primary">{{ $art['title'] }}</a>
+                                </h6>
+                                <small class="text-muted fs-9">{{ $art['published_at'] ?? $art['read_time'] }}</small>
+                            </div>
+                            <div class="flex-shrink-0" style="width: 100px; height: 60px; border-radius: 6px; overflow: hidden; border: 1px solid var(--border-color);">
+                                <img src="{{ $art['image'] }}" class="w-100 h-100 object-fit-cover" alt="Thumbnail">
+                            </div>
+                        </div>
+                        @endforeach
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- 4. Latest News Grid -->
     <section class="mb-5">
         <h3 class="headline-font mb-4 fw-bold text-uppercase d-flex align-items-center justify-content-between border-bottom pb-2">
@@ -134,79 +228,6 @@
             </button>
         </div>
     </section>
-
-    <!-- 5. Category blocks (Tech, Business, Politics) -->
-    <section class="mb-5">
-        <div class="row g-4">
-            <!-- Politics Block -->
-            <div class="col-lg-6 mb-4">
-                <h4 class="headline-font mb-3 fw-bold text-uppercase border-bottom pb-2 border-dark border-2">Politics</h4>
-                <div class="row g-3">
-                    @php
-                        $politics = collect($others)->filter(fn($a) => $a['category'] === 'politics')->values();
-                    @endphp
-                    @if($politics->count() > 0)
-                        <div class="col-md-6">
-                            <div class="news-card">
-                                <div class="card-img-container" style="aspect-ratio:4/3;">
-                                    <img src="{{ $politics[0]['image'] }}" alt="{{ $politics[0]['title'] }}">
-                                </div>
-                                <div class="card-body">
-                                    <h6 class="card-title fw-bold"><a href="/news/{{ $politics[0]['slug'] }}">{{ $politics[0]['title'] }}</a></h6>
-                                    <small class="text-muted">{{ $politics[0]['published_at'] }}</small>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6 d-flex flex-column gap-2">
-                            @foreach($politics->slice(1, 3) as $side)
-                            <div class="news-horizontal-row py-2">
-                                <div class="row-content">
-                                    <h6 class="row-title fw-bold fs-7 mb-1"><a href="/news/{{ $side['slug'] }}">{{ $side['title'] }}</a></h6>
-                                    <small class="text-muted">{{ $side['read_time'] }}</small>
-                                </div>
-                            </div>
-                            @endforeach
-                        </div>
-                    @endif
-                </div>
-            </div>
-
-            <!-- Tech Block -->
-            <div class="col-lg-6 mb-4">
-                <h4 class="headline-font mb-3 fw-bold text-uppercase border-bottom pb-2 border-dark border-2">Technology</h4>
-                <div class="row g-3">
-                    @php
-                        $tech = collect($others)->filter(fn($a) => $a['category'] === 'technology')->values();
-                    @endphp
-                    @if($tech->count() > 0)
-                        <div class="col-md-6">
-                            <div class="news-card">
-                                <div class="card-img-container" style="aspect-ratio:4/3;">
-                                    <img src="{{ $tech[0]['image'] }}" alt="{{ $tech[0]['title'] }}">
-                                </div>
-                                <div class="card-body">
-                                    <h6 class="card-title fw-bold"><a href="/news/{{ $tech[0]['slug'] }}">{{ $tech[0]['title'] }}</a></h6>
-                                    <small class="text-muted">{{ $tech[0]['published_at'] }}</small>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6 d-flex flex-column gap-2">
-                            @foreach($tech->slice(1, 3) as $side)
-                            <div class="news-horizontal-row py-2">
-                                <div class="row-content">
-                                    <h6 class="row-title fw-bold fs-7 mb-1"><a href="/news/{{ $side['slug'] }}">{{ $side['title'] }}</a></h6>
-                                    <small class="text-muted">{{ $side['read_time'] }}</small>
-                                </div>
-                            </div>
-                            @endforeach
-                        </div>
-                    @endif
-                </div>
-            </div>
-        </div>
-    </section>
-
-
 
     <!-- 8. Opinion Section (Authors) -->
     <!-- <section class="mb-5">
