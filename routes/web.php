@@ -8,7 +8,6 @@ use Illuminate\Http\Request;
 Route::get('/', function () {
     $articles = MockData::getArticles();
     $webStories = MockData::getWebStories();
-    $photos = MockData::getPhotos();
     $videos = MockData::getVideos();
     $tags = MockData::getTrendingTags();
     
@@ -16,7 +15,7 @@ Route::get('/', function () {
     $featured = collect($articles)->firstWhere('is_featured', true) ?? reset($articles);
     $others = collect($articles)->reject(fn($a) => $a['id'] === $featured['id'])->values()->all();
     
-    return view('pages.home', compact('featured', 'others', 'webStories', 'photos', 'videos', 'tags'));
+    return view('pages.home', compact('featured', 'others', 'webStories', 'videos', 'tags'));
 })->name('home');
 
 // 2. Category Page
@@ -153,11 +152,6 @@ Route::get('/archive', function () {
     return view('pages.archive', compact('articles'));
 })->name('archive');
 
-// 9. Photo Gallery Route
-Route::get('/photos', function () {
-    $photos = MockData::getPhotos();
-    return view('pages.photos', compact('photos'));
-})->name('photos');
 
 // 10. Video Gallery Route
 Route::get('/videos', function () {

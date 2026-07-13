@@ -169,7 +169,6 @@
                     <li class="nav-item"><a class="nav-link {{ request()->is('category/entertainment') ? 'active' : '' }}" href="/category/entertainment">Entertainment</a></li>
                     <li class="nav-item"><a class="nav-link {{ request()->is('category/health') ? 'active' : '' }}" href="/category/health">Health</a></li>
                     <li class="nav-item"><a class="nav-link {{ request()->is('category/lifestyle') ? 'active' : '' }}" href="/category/lifestyle">Lifestyle</a></li>
-                    <li class="nav-item"><a class="nav-link {{ request()->is('photos') ? 'active' : '' }}" href="/photos">Photos</a></li>
                     <li class="nav-item"><a class="nav-link {{ request()->is('videos') ? 'active' : '' }}" href="/videos">Videos</a></li>
                 </ul>
                 
@@ -307,10 +306,6 @@
         <a href="/videos" class="bottom-nav-item {{ request()->is('videos') ? 'active' : '' }}">
             <i class="fas fa-play-circle"></i>
             <span>Videos</span>
-        </a>
-        <a href="/photos" class="bottom-nav-item {{ request()->is('photos') ? 'active' : '' }}">
-            <i class="fas fa-images"></i>
-            <span>Photos</span>
         </a>
     </nav>
 

@@ -234,22 +234,6 @@
         </div>
     </section>
 
-    <!-- 7. Photo Gallery Masonry -->
-    <section class="mb-5">
-        <h3 class="headline-font mb-4 fw-bold text-uppercase border-bottom pb-2">Photo Gallery</h3>
-        <div class="masonry-gallery">
-            @foreach($photos as $album)
-            <div class="masonry-item {{ $album['size'] }}" onclick="alert('Viewing photo album: {{ $album['title'] }}')">
-                <img src="{{ $album['image'] }}" alt="{{ $album['title'] }}">
-                <div class="masonry-overlay">
-                    <span class="badge-category badge-gold mb-2 py-0 px-2 align-self-start" style="font-size:0.65rem;">{{ $album['category'] }}</span>
-                    <h5 class="fw-bold text-white mb-1 fs-6">{{ $album['title'] }}</h5>
-                    <small class="text-white-50"><i class="far fa-images me-1"></i> {{ $album['count'] }} Photos</small>
-                </div>
-            </div>
-            @endforeach
-        </div>
-    </section>
 
     <!-- 8. Opinion Section (Authors) -->
     <section class="mb-5">
