@@ -107,9 +107,9 @@
             </a>
             
             <div class="d-flex d-lg-none align-items-center gap-2">
-                <button class="btn btn-sm btn-outline-secondary border-0" id="mobileSearchBtn" data-bs-toggle="collapse" data-bs-target="#searchCollapse" aria-label="Search">
+                <!-- <button class="btn btn-sm btn-outline-secondary border-0" id="mobileSearchBtn" data-bs-toggle="collapse" data-bs-target="#searchCollapse" aria-label="Search">
                     <i class="fas fa-search fs-6"></i>
-                </button>
+                </button> -->
                 <button class="btn btn-sm btn-outline-secondary border-0 theme-toggle-btn" aria-label="Toggle theme">
                     <i class="fas fa-moon fs-6"></i>
                 </button>
@@ -177,16 +177,7 @@
     </nav>
     
     <!-- Mobile Search collapse -->
-    {--
-    <div class="collapse d-lg-none bg-body-tertiary border-bottom py-2 px-3" id="searchCollapse">
-        <form action="/search" method="GET">
-            <div class="input-group input-group-sm">
-                <input type="text" name="q" class="form-control" placeholder="Search news...">
-                <button class="btn btn-primary" type="submit"><i class="fas fa-search"></i></button>
-            </div>
-        </form>
-    </div>
-    --}
+
 
     <!-- 3. Main Content Grid -->
     <main class="py-4 fade-in-up">
