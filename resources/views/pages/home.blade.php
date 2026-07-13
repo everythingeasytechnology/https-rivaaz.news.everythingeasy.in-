@@ -91,7 +91,7 @@
                     </div>
                     <div class="d-flex flex-wrap gap-2">
                         @foreach($tags as $tag)
-                        <a href="/tag/{{ strtolower($tag) }}" class="btn btn-sm btn-outline-secondary rounded-pill fw-medium fs-8">#{{ $tag }}</a>
+                        <a href="/tag/{{ strtolower($tag) }}" class="trending-tag-btn">#{{ $tag }}</a>
                         @endforeach
                     </div>
                 </div>

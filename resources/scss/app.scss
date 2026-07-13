@@ -1026,3 +1026,25 @@ a {
     }
   }
 }
+
+// Adaptive Trending Tag Buttons
+.trending-tag-btn {
+  display: inline-block;
+  padding: 6px 14px;
+  font-size: 0.78rem;
+  font-weight: 500;
+  color: var(--text-color) !important;
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 50px;
+  text-decoration: none;
+  transition: all 0.25s ease;
+  
+  &:hover {
+    color: var(--primary-color) !important;
+    border-color: var(--primary-color);
+    background: var(--primary-color-subtle, rgba(255, 78, 78, 0.08));
+    transform: translateY(-1px);
+  }
+}
+
