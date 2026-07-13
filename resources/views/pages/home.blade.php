@@ -220,13 +220,6 @@
                             <a href="/news/{{ $article['slug'] }}">{{ $article['title'] }}</a>
                         </h5>
                         <p class="latest-card-summary">{{ $article['summary'] }}</p>
-                        <div class="latest-card-author-meta">
-                            <img src="{{ $article['author']['avatar'] ?? 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=80&q=80' }}" alt="{{ $article['author']['name'] ?? 'Author' }}" class="author-avatar-img">
-                            <div class="author-info">
-                                <span class="author-by">By {{ $article['author']['name'] ?? 'Staff' }}</span>
-                                <span class="author-date">{{ isset($article['published_at']) ? date('M d, Y', strtotime($article['published_at'])) : 'May 11, 2025' }}</span>
-                            </div>
-                        </div>
                     </div>
                 </div>
             </div>

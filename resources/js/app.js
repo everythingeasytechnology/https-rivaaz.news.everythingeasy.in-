@@ -241,10 +241,6 @@ function initSkeletonLoading() {
                             <div class="skeleton mb-2" style="height: 10px; width: 30%;"></div>
                             <div class="skeleton mb-2" style="height: 16px; width: 80%;"></div>
                             <div class="skeleton mb-3" style="height: 12px; width: 90%;"></div>
-                            <div class="d-flex align-items-center gap-2">
-                                <div class="skeleton rounded-circle" style="height: 24px; width: 24px;"></div>
-                                <div class="skeleton" style="height: 8px; width: 50%;"></div>
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -257,10 +253,6 @@ function initSkeletonLoading() {
                             <div class="skeleton mb-2" style="height: 10px; width: 30%;"></div>
                             <div class="skeleton mb-2" style="height: 16px; width: 80%;"></div>
                             <div class="skeleton mb-3" style="height: 12px; width: 90%;"></div>
-                            <div class="d-flex align-items-center gap-2">
-                                <div class="skeleton rounded-circle" style="height: 24px; width: 24px;"></div>
-                                <div class="skeleton" style="height: 8px; width: 50%;"></div>
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -286,13 +278,6 @@ function initSkeletonLoading() {
                                 <a href="/news/market-rally-nifty-hits-record-high">Digital Currencies Gain Global Ground</a>
                             </h5>
                             <p class="latest-card-summary">Global regulatory guidelines and decentralized finance innovations drive significant growth across sovereign institutions.</p>
-                            <div class="latest-card-author-meta">
-                                <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=150&q=80" alt="Rajesh Sharma" class="author-avatar-img">
-                                <div class="author-info">
-                                    <span class="author-by">By Rajesh Sharma</span>
-                                    <span class="author-date">Jul 11, 2026</span>
-                                </div>
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -307,13 +292,6 @@ function initSkeletonLoading() {
                                 <a href="/news/tech-quantum-computing-breakthrough">Silicon Foundries Commit expansion</a>
                             </h5>
                             <p class="latest-card-summary">Industry leaders pledge capital investments to transition to sub-2nm fabrication technologies and enhance supply resiliency.</p>
-                            <div class="latest-card-author-meta">
-                                <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=150&q=80" alt="Ananya Sen" class="author-avatar-img">
-                                <div class="author-info">
-                                    <span class="author-by">By Ananya Sen</span>
-                                    <span class="author-date">Jul 11, 2026</span>
-                                </div>
-                            </div>
                         </div>
                     </div>
                 </div>
