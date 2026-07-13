@@ -199,23 +199,34 @@
 
     <!-- 4. Latest News Grid -->
     <section class="mb-5">
-        <h3 class="headline-font mb-4 fw-bold text-uppercase d-flex align-items-center justify-content-between border-bottom pb-2">
-            <span>Latest News Grid</span>
-            <span class="fs-7 text-primary text-lowercase fw-normal">all stories <i class="fas fa-angle-right"></i></span>
+        <h3 class="headline-font mb-4 fw-bold text-uppercase d-flex align-items-end justify-content-between position-relative pb-2" style="border-bottom: 1px solid var(--border-color);">
+            <span class="position-relative pb-2" style="margin-bottom: -9px;">
+                LATEST NEWS
+                <span class="position-absolute start-0 bottom-0 bg-primary" style="height: 3px; width: 40px;"></span>
+            </span>
+            <a href="/archive" class="fs-7 text-primary text-decoration-none text-uppercase fw-bold d-flex align-items-center gap-1">All stories <i class="fas fa-arrow-right"></i></a>
         </h3>
         
-        <div class="row g-3" id="loadMoreContainer">
+        <div class="row g-4" id="loadMoreContainer">
             @foreach(array_slice($others, 0, 6) as $article)
-            <div class="col-6 col-sm-4 col-md-3 col-lg-2">
-                <div class="news-card mini-news-box">
-                    <div class="card-img-container">
+            <div class="col-12 col-md-6 col-lg-4">
+                <div class="latest-news-horizontal-card">
+                    <div class="latest-card-img-wrap">
                         <img src="{{ $article['image'] }}" alt="{{ $article['title'] }}">
                     </div>
-                    <div class="card-body">
-                        <span class="badge-category mb-1">{{ $article['category'] }}</span>
-                        <h6 class="card-title fw-bold">
+                    <div class="latest-card-content">
+                        <span class="latest-card-category text-uppercase">{{ $article['category'] }}</span>
+                        <h5 class="latest-card-title">
                             <a href="/news/{{ $article['slug'] }}">{{ $article['title'] }}</a>
-                        </h6>
+                        </h5>
+                        <p class="latest-card-summary">{{ $article['summary'] }}</p>
+                        <div class="latest-card-author-meta">
+                            <img src="{{ $article['author']['avatar'] ?? 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=80&q=80' }}" alt="{{ $article['author']['name'] ?? 'Author' }}" class="author-avatar-img">
+                            <div class="author-info">
+                                <span class="author-by">By {{ $article['author']['name'] ?? 'Staff' }}</span>
+                                <span class="author-date">{{ isset($article['published_at']) ? date('M d, Y', strtotime($article['published_at'])) : 'May 11, 2025' }}</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

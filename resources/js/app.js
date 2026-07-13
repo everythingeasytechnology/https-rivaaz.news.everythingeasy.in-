@@ -233,16 +233,36 @@ function initSkeletonLoading() {
 
         // 1. Append skeleton loaders
         const skeletonHtml = `
-            <div class="col-6 col-sm-4 col-md-3 col-lg-2 temp-skeleton">
-                <div class="card border-0 h-100">
-                    <div class="skeleton skeleton-img rounded-3 mb-2" style="height:90px; width:100%;"></div>
-                    <div class="skeleton skeleton-title"></div>
+            <div class="col-12 col-md-6 col-lg-4 temp-skeleton">
+                <div class="latest-news-horizontal-card p-2">
+                    <div class="d-flex align-items-center gap-3 w-100 h-100">
+                        <div class="skeleton rounded-3" style="height: 120px; width: 38%; flex-shrink: 0;"></div>
+                        <div class="flex-grow-1" style="width: 62%;">
+                            <div class="skeleton mb-2" style="height: 10px; width: 30%;"></div>
+                            <div class="skeleton mb-2" style="height: 16px; width: 80%;"></div>
+                            <div class="skeleton mb-3" style="height: 12px; width: 90%;"></div>
+                            <div class="d-flex align-items-center gap-2">
+                                <div class="skeleton rounded-circle" style="height: 24px; width: 24px;"></div>
+                                <div class="skeleton" style="height: 8px; width: 50%;"></div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div class="col-6 col-sm-4 col-md-3 col-lg-2 temp-skeleton">
-                <div class="card border-0 h-100">
-                    <div class="skeleton skeleton-img rounded-3 mb-2" style="height:90px; width:100%;"></div>
-                    <div class="skeleton skeleton-title"></div>
+            <div class="col-12 col-md-6 col-lg-4 temp-skeleton">
+                <div class="latest-news-horizontal-card p-2">
+                    <div class="d-flex align-items-center gap-3 w-100 h-100">
+                        <div class="skeleton rounded-3" style="height: 120px; width: 38%; flex-shrink: 0;"></div>
+                        <div class="flex-grow-1" style="width: 62%;">
+                            <div class="skeleton mb-2" style="height: 10px; width: 30%;"></div>
+                            <div class="skeleton mb-2" style="height: 16px; width: 80%;"></div>
+                            <div class="skeleton mb-3" style="height: 12px; width: 90%;"></div>
+                            <div class="d-flex align-items-center gap-2">
+                                <div class="skeleton rounded-circle" style="height: 24px; width: 24px;"></div>
+                                <div class="skeleton" style="height: 8px; width: 50%;"></div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         `;
@@ -255,25 +275,45 @@ function initSkeletonLoading() {
 
             // Append real cards
             const realCardsHtml = `
-                <div class="col-6 col-sm-4 col-md-3 col-lg-2 fade-in-up">
-                    <div class="news-card mini-news-box">
-                        <div class="card-img-container">
+                <div class="col-12 col-md-6 col-lg-4 fade-in-up">
+                    <div class="latest-news-horizontal-card">
+                        <div class="latest-card-img-wrap">
                             <img src="https://images.unsplash.com/photo-1526304640581-d334cdbbf45e?auto=format&fit=crop&w=400&q=80" alt="Finance">
                         </div>
-                        <div class="card-body">
-                            <span class="badge-category mb-1">business</span>
-                            <h6 class="card-title fw-bold"><a href="/news/market-rally-nifty-hits-record-high">Digital Currencies Gain Global Ground</a></h6>
+                        <div class="latest-card-content">
+                            <span class="latest-card-category text-uppercase">business</span>
+                            <h5 class="latest-card-title">
+                                <a href="/news/market-rally-nifty-hits-record-high">Digital Currencies Gain Global Ground</a>
+                            </h5>
+                            <p class="latest-card-summary">Global regulatory guidelines and decentralized finance innovations drive significant growth across sovereign institutions.</p>
+                            <div class="latest-card-author-meta">
+                                <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=150&q=80" alt="Rajesh Sharma" class="author-avatar-img">
+                                <div class="author-info">
+                                    <span class="author-by">By Rajesh Sharma</span>
+                                    <span class="author-date">Jul 11, 2026</span>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div class="col-6 col-sm-4 col-md-3 col-lg-2 fade-in-up">
-                    <div class="news-card mini-news-box">
-                        <div class="card-img-container">
+                <div class="col-12 col-md-6 col-lg-4 fade-in-up">
+                    <div class="latest-news-horizontal-card">
+                        <div class="latest-card-img-wrap">
                             <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=400&q=80" alt="Chips">
                         </div>
-                        <div class="card-body">
-                            <span class="badge-category mb-1">technology</span>
-                            <h6 class="card-title fw-bold"><a href="/news/tech-quantum-computing-breakthrough">Silicon Foundries Commit expansion</a></h6>
+                        <div class="latest-card-content">
+                            <span class="latest-card-category text-uppercase">technology</span>
+                            <h5 class="latest-card-title">
+                                <a href="/news/tech-quantum-computing-breakthrough">Silicon Foundries Commit expansion</a>
+                            </h5>
+                            <p class="latest-card-summary">Industry leaders pledge capital investments to transition to sub-2nm fabrication technologies and enhance supply resiliency.</p>
+                            <div class="latest-card-author-meta">
+                                <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=150&q=80" alt="Ananya Sen" class="author-avatar-img">
+                                <div class="author-info">
+                                    <span class="author-by">By Ananya Sen</span>
+                                    <span class="author-date">Jul 11, 2026</span>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
