@@ -48,19 +48,17 @@
     <header class="top-header d-none d-lg-block">
         <div class="container-xl">
             <div class="row align-items-center">
-                <!-- Date and weather details -->
-                <div class="col-md-5 d-flex align-items-center gap-3">
-                    <span class="fw-semibold"><i class="far fa-calendar-alt text-primary me-1"></i> <span id="currentDate">Saturday, July 11, 2026</span></span>
+                <!-- Date, weather & Breaking news details -->
+                <div class="col-lg-9 d-flex align-items-center gap-3">
+                    <span class="fw-semibold text-nowrap"><i class="far fa-calendar-alt text-primary me-1"></i> <span id="currentDate">Saturday, July 11, 2026</span></span>
                     <span class="text-secondary">|</span>
-                    <span>
+                    <span class="text-nowrap">
                         <i class="fas fa-cloud-sun text-warning me-1"></i> 
                         <span id="headerWeather">New Delhi, 34°C</span>
                     </span>
-                </div>
-                
-                <!-- Breaking news ticker -->
-                <div class="col-md-4">
-                    <div class="breaking-ticker">
+                    <span class="text-secondary">|</span>
+                    
+                    <div class="breaking-ticker flex-grow-1" style="max-width: none;">
                         <span class="ticker-label">Breaking</span>
                         <div class="ticker-wrap">
                             <div class="ticker-content" id="breakingTicker">
@@ -72,7 +70,7 @@
                 </div>
                 
                 <!-- Utilities: lang, social, auth, subscribe -->
-                <div class="col-md-3">
+                <div class="col-lg-3">
                     <div class="header-actions">
                         <!-- <div class="dropdown">
                             <button class="btn btn-sm btn-link text-decoration-none dropdown-toggle p-0 text-reset fw-semibold" type="button" data-bs-toggle="dropdown">

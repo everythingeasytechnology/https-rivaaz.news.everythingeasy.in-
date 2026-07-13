@@ -120,16 +120,16 @@
 
         <!-- Politics Category (Full Width Row) -->
         <div class="mb-5">
-            <div class="d-flex justify-content-between align-items-center mb-3 border-bottom border-dark border-3 pb-1">
-                <h3 class="headline-font fw-bold text-uppercase mb-0 fs-4 text-dark" style="letter-spacing: 0.5px;">Politics</h3>
-                <a href="/category/politics" class="text-decoration-none text-dark fw-bold fs-8 text-uppercase">Politics News <i class="fas fa-angle-right ms-1"></i></a>
+            <div class="d-flex justify-content-between align-items-center mb-3 border-bottom border-secondary border-3 pb-1">
+                <h3 class="headline-font fw-bold text-uppercase mb-0 fs-4 text-body" style="letter-spacing: 0.5px;">Politics</h3>
+                <a href="/category/politics" class="text-decoration-none text-secondary fw-bold fs-8 text-uppercase">Politics News <i class="fas fa-angle-right ms-1"></i></a>
             </div>
             <div class="row g-4">
                 <!-- Left: Headline on TOP, Image below -->
                 <div class="col-lg-7">
                     <div class="featured-block mb-3">
                         <h4 class="fw-bold mb-3 fs-3" style="line-height: 1.25; letter-spacing: -0.5px;">
-                            <a href="/news/{{ $politics[0]['slug'] }}" class="text-dark text-decoration-none hover-primary">{{ $politics[0]['title'] }}</a>
+                            <a href="/news/{{ $politics[0]['slug'] }}" class="text-reset text-decoration-none hover-primary">{{ $politics[0]['title'] }}</a>
                         </h4>
                         <div class="rounded-3 overflow-hidden" style="aspect-ratio: 16/9; border: 1px solid var(--border-color);">
                             <img src="{{ $politics[0]['image'] }}" class="w-100 h-100 object-fit-cover" alt="Featured News Image">
@@ -143,7 +143,7 @@
                         <div class="d-flex justify-content-between align-items-center gap-3 pb-3 @if(!$loop->last) border-bottom border-secondary-subtle @endif">
                             <div class="flex-grow-1">
                                 <h6 class="fw-bold fs-7 mb-1" style="line-height: 1.35;">
-                                    <a href="/news/{{ $art['slug'] }}" class="text-dark text-decoration-none hover-primary">{{ $art['title'] }}</a>
+                                    <a href="/news/{{ $art['slug'] }}" class="text-reset text-decoration-none hover-primary">{{ $art['title'] }}</a>
                                 </h6>
                                 <small class="text-muted fs-9">{{ $art['published_at'] ?? $art['read_time'] }}</small>
                             </div>
@@ -159,16 +159,16 @@
 
         <!-- Technology Category (Full Width Row) -->
         <div class="mb-5">
-            <div class="d-flex justify-content-between align-items-center mb-3 border-bottom border-dark border-3 pb-1">
-                <h3 class="headline-font fw-bold text-uppercase mb-0 fs-4 text-dark" style="letter-spacing: 0.5px;">Technology</h3>
-                <a href="/category/technology" class="text-decoration-none text-dark fw-bold fs-8 text-uppercase">Tech News <i class="fas fa-angle-right ms-1"></i></a>
+            <div class="d-flex justify-content-between align-items-center mb-3 border-bottom border-secondary border-3 pb-1">
+                <h3 class="headline-font fw-bold text-uppercase mb-0 fs-4 text-body" style="letter-spacing: 0.5px;">Technology</h3>
+                <a href="/category/technology" class="text-decoration-none text-secondary fw-bold fs-8 text-uppercase">Tech News <i class="fas fa-angle-right ms-1"></i></a>
             </div>
             <div class="row g-4">
                 <!-- Left: Headline on TOP, Image below -->
                 <div class="col-lg-7">
                     <div class="featured-block mb-3">
                         <h4 class="fw-bold mb-3 fs-3" style="line-height: 1.25; letter-spacing: -0.5px;">
-                            <a href="/news/{{ $tech[0]['slug'] }}" class="text-dark text-decoration-none hover-primary">{{ $tech[0]['title'] }}</a>
+                            <a href="/news/{{ $tech[0]['slug'] }}" class="text-reset text-decoration-none hover-primary">{{ $tech[0]['title'] }}</a>
                         </h4>
                         <div class="rounded-3 overflow-hidden" style="aspect-ratio: 16/9; border: 1px solid var(--border-color);">
                             <img src="{{ $tech[0]['image'] }}" class="w-100 h-100 object-fit-cover" alt="Featured News Image">
@@ -182,7 +182,7 @@
                         <div class="d-flex justify-content-between align-items-center gap-3 pb-3 @if(!$loop->last) border-bottom border-secondary-subtle @endif">
                             <div class="flex-grow-1">
                                 <h6 class="fw-bold fs-7 mb-1" style="line-height: 1.35;">
-                                    <a href="/news/{{ $art['slug'] }}" class="text-dark text-decoration-none hover-primary">{{ $art['title'] }}</a>
+                                    <a href="/news/{{ $art['slug'] }}" class="text-reset text-decoration-none hover-primary">{{ $art['title'] }}</a>
                                 </h6>
                                 <small class="text-muted fs-9">{{ $art['published_at'] ?? $art['read_time'] }}</small>
                             </div>

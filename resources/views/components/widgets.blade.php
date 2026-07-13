@@ -79,7 +79,7 @@
     </div>
     <div class="live-timeline">
         @foreach($liveUpdates as $event)
-        <div class="live-item @if($loop->first) live-active @endif d-flex gap-3 align-items-start py-3 border-bottom border-secondary-subtle">
+        <div class="live-item @if($loop->first) live-active @endif d-flex gap-3 align-items-start py-3">
             <!-- Small image on the side -->
             <div class="flex-shrink-0" style="width: 70px; height: 70px; border-radius: 8px; overflow: hidden; border: 1px solid var(--border-color);">
                 <img src="{{ $event['image'] ?? 'https://images.unsplash.com/photo-1504711434969-e33886168f5c?auto=format&fit=crop&w=150&q=80' }}" class="w-100 h-100 object-fit-cover" alt="Live Event Image">
