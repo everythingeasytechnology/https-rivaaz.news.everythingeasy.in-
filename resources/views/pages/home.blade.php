@@ -236,7 +236,7 @@
 
 
     <!-- 8. Opinion Section (Authors) -->
-    <section class="mb-5">
+    <!-- <section class="mb-5">
         <h3 class="headline-font mb-4 fw-bold text-uppercase border-bottom pb-2">Opinion & Editorials</h3>
         <div class="row g-4">
             @foreach(\App\Support\MockData::getAuthors() as $key => $author)
@@ -253,7 +253,7 @@
             </div>
             @endforeach
         </div>
-    </section>
+    </section> -->
 
     <!-- 9. Editors Pick & Trending Tags & Newsletter -->
     <section class="mb-4">
@@ -264,7 +264,7 @@
                 <div class="row g-3">
                     @foreach(array_slice($others, 1, 2) as $article)
                     <div class="col-md-6">
-                        <div class="news-card">
+                        <div class="news-card editors-pick-card">
                             <div class="card-img-container">
                                 <img src="{{ $article['image'] }}" alt="{{ $article['title'] }}">
                             </div>

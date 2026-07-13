@@ -265,6 +265,19 @@ a {
   }
 }
 
+.editors-pick-card {
+  .card-img-container {
+    aspect-ratio: 21/10 !important;
+  }
+  .card-body {
+    padding: 0.9rem !important;
+  }
+  .card-title {
+    font-size: 0.95rem !important;
+    line-height: 1.35 !important;
+  }
+}
+
 // Horizontal News Row
 .news-horizontal-row {
   display: flex;
