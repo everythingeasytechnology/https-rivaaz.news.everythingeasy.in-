@@ -79,15 +79,23 @@
     </div>
     <div class="live-timeline">
         @foreach($liveUpdates as $event)
-        <div class="live-item @if($loop->first) live-active @endif">
-            <div class="d-flex align-items-center justify-content-between mb-1">
-                <span class="badge bg-danger bg-opacity-10 text-danger fw-bold border border-danger border-opacity-25 fs-9">{{ $event['time'] }}</span>
-                @if($event['tag'])
-                <span class="badge bg-primary-subtle text-primary border border-primary-subtle fs-9">#{{ $event['tag'] }}</span>
-                @endif
+        <div class="live-item @if($loop->first) live-active @endif d-flex gap-3 align-items-start py-3 border-bottom border-secondary-subtle">
+            <!-- Small image on the side -->
+            <div class="flex-shrink-0" style="width: 70px; height: 70px; border-radius: 8px; overflow: hidden; border: 1px solid var(--border-color);">
+                <img src="{{ $event['image'] ?? 'https://images.unsplash.com/photo-1504711434969-e33886168f5c?auto=format&fit=crop&w=150&q=80' }}" class="w-100 h-100 object-fit-cover" alt="Live Event Image">
             </div>
-            <h6 class="fw-bold fs-7 mb-1">{{ $event['title'] }}</h6>
-            <p class="text-muted fs-8 mb-0 line-clamp-2">{{ $event['content'] }}</p>
+
+            <!-- Content Area -->
+            <div class="flex-grow-1">
+                <h6 class="fw-bold fs-7 mb-1" style="line-height: 1.35;">{{ $event['title'] }}</h6>
+                <p class="text-muted fs-8 mb-2 line-clamp-2">{{ $event['content'] }}</p>
+                <div class="d-flex align-items-center gap-2">
+                    <span class="badge bg-danger bg-opacity-10 text-danger fw-bold border border-danger border-opacity-25 fs-9" style="padding: 2px 6px;">{{ $event['time'] }}</span>
+                    @if($event['tag'])
+                    <span class="badge bg-primary-subtle text-primary border border-primary-subtle fs-9">#{{ $event['tag'] }}</span>
+                    @endif
+                </div>
+            </div>
         </div>
         @endforeach
     </div>

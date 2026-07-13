@@ -84,7 +84,17 @@
                 @include('components.widgets', ['type' => 'live_timeline'])
             </div>
             <div class="col-lg-4">
-                @include('components.widgets', ['type' => 'stocks'])
+                <!-- Trending Tags Widget -->
+                <div class="widget-box mb-3">
+                    <div class="widget-title">
+                        <span><i class="fas fa-tags text-primary me-2"></i>Trending Tags</span>
+                    </div>
+                    <div class="d-flex flex-wrap gap-2">
+                        @foreach($tags as $tag)
+                        <a href="/tag/{{ strtolower($tag) }}" class="btn btn-sm btn-outline-secondary rounded-pill fw-medium fs-8">#{{ $tag }}</a>
+                        @endforeach
+                    </div>
+                </div>
                 @include('components.widgets', ['type' => 'weather'])
             </div>
         </div>
@@ -97,24 +107,18 @@
             <span class="fs-7 text-primary text-lowercase fw-normal">all stories <i class="fas fa-angle-right"></i></span>
         </h3>
         
-        <div class="row g-4" id="loadMoreContainer">
-            @foreach(array_slice($others, 0, 4) as $article)
-            <div class="col-md-6 col-lg-3">
-                <div class="news-card">
+        <div class="row g-3" id="loadMoreContainer">
+            @foreach(array_slice($others, 0, 6) as $article)
+            <div class="col-6 col-sm-4 col-md-3 col-lg-2">
+                <div class="news-card mini-news-box">
                     <div class="card-img-container">
                         <img src="{{ $article['image'] }}" alt="{{ $article['title'] }}">
                     </div>
                     <div class="card-body">
-                        <span class="badge-category mb-2">{{ $article['category'] }}</span>
-                        <h5 class="card-title">
+                        <span class="badge-category mb-1">{{ $article['category'] }}</span>
+                        <h6 class="card-title fw-bold">
                             <a href="/news/{{ $article['slug'] }}">{{ $article['title'] }}</a>
-                        </h5>
-                        <p class="text-muted small line-clamp-3 mb-3">{{ $article['summary'] }}</p>
-                        <div class="card-meta">
-                            <span><i class="far fa-user me-1"></i> {{ $article['author']['name'] }}</span>
-                            <span>•</span>
-                            <span>{{ $article['read_time'] }}</span>
-                        </div>
+                        </h6>
                     </div>
                 </div>
             </div>
@@ -279,19 +283,8 @@
                 </div>
             </div>
 
-            <!-- Trending Tags & Newsletter (Right) -->
+            <!-- Newsletter only (Right) -->
             <div class="col-lg-4">
-                <div class="widget-box">
-                    <div class="widget-title">
-                        <span><i class="fas fa-tags text-primary me-2"></i>Trending Tags</span>
-                    </div>
-                    <div class="d-flex flex-wrap gap-2">
-                        @foreach($tags as $tag)
-                        <a href="/tag/{{ strtolower($tag) }}" class="btn btn-sm btn-outline-secondary rounded-pill fw-medium fs-8">#{{ $tag }}</a>
-                        @endforeach
-                    </div>
-                </div>
-                
                 @include('components.widgets', ['type' => 'newsletter'])
             </div>
         </div>

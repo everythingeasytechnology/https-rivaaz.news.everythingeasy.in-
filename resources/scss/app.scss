@@ -278,6 +278,25 @@ a {
   }
 }
 
+.mini-news-box {
+  .card-img-container {
+    aspect-ratio: 16/11 !important;
+  }
+  .card-body {
+    padding: 0.6rem 0.75rem !important;
+  }
+  .card-title {
+    font-size: 0.82rem !important;
+    line-height: 1.3 !important;
+    margin-bottom: 0px !important;
+  }
+  .badge-category {
+    font-size: 0.6rem !important;
+    padding: 1px 5px !important;
+    margin-bottom: 0.35rem !important;
+  }
+}
+
 // Horizontal News Row
 .news-horizontal-row {
   display: flex;

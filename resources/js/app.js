@@ -231,22 +231,18 @@ function initSkeletonLoading() {
         loadMoreBtn.disabled = true;
         loadMoreBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Loading...';
 
-        // 1. Create skeleton cards
+        // 1. Append skeleton loaders
         const skeletonHtml = `
-            <div class="col-md-6 col-lg-3 temp-skeleton">
+            <div class="col-6 col-sm-4 col-md-3 col-lg-2 temp-skeleton">
                 <div class="card border-0 h-100">
-                    <div class="skeleton skeleton-img rounded-3 mb-2" style="height:160px; width:100%;"></div>
+                    <div class="skeleton skeleton-img rounded-3 mb-2" style="height:90px; width:100%;"></div>
                     <div class="skeleton skeleton-title"></div>
-                    <div class="skeleton skeleton-text"></div>
-                    <div class="skeleton skeleton-text" style="width: 50%;"></div>
                 </div>
             </div>
-            <div class="col-md-6 col-lg-3 temp-skeleton">
+            <div class="col-6 col-sm-4 col-md-3 col-lg-2 temp-skeleton">
                 <div class="card border-0 h-100">
-                    <div class="skeleton skeleton-img rounded-3 mb-2" style="height:160px; width:100%;"></div>
+                    <div class="skeleton skeleton-img rounded-3 mb-2" style="height:90px; width:100%;"></div>
                     <div class="skeleton skeleton-title"></div>
-                    <div class="skeleton skeleton-text"></div>
-                    <div class="skeleton skeleton-text" style="width: 50%;"></div>
                 </div>
             </div>
         `;
@@ -259,35 +255,25 @@ function initSkeletonLoading() {
 
             // Append real cards
             const realCardsHtml = `
-                <div class="col-md-6 col-lg-3 fade-in-up">
-                    <div class="news-card">
+                <div class="col-6 col-sm-4 col-md-3 col-lg-2 fade-in-up">
+                    <div class="news-card mini-news-box">
                         <div class="card-img-container">
                             <img src="https://images.unsplash.com/photo-1526304640581-d334cdbbf45e?auto=format&fit=crop&w=400&q=80" alt="Finance">
                         </div>
                         <div class="card-body">
-                            <span class="badge-category mb-2">business</span>
-                            <h5 class="card-title"><a href="/news/market-rally-nifty-hits-record-high">Digital Currencies Gain Global Ground as Regulatory Laws Standardize</a></h5>
-                            <div class="card-meta">
-                                <span>Vikram M.</span>
-                                <span>•</span>
-                                <span>3 min read</span>
-                            </div>
+                            <span class="badge-category mb-1">business</span>
+                            <h6 class="card-title fw-bold"><a href="/news/market-rally-nifty-hits-record-high">Digital Currencies Gain Global Ground</a></h6>
                         </div>
                     </div>
                 </div>
-                <div class="col-md-6 col-lg-3 fade-in-up">
-                    <div class="news-card">
+                <div class="col-6 col-sm-4 col-md-3 col-lg-2 fade-in-up">
+                    <div class="news-card mini-news-box">
                         <div class="card-img-container">
                             <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=400&q=80" alt="Chips">
                         </div>
                         <div class="card-body">
-                            <span class="badge-category mb-2">technology</span>
-                            <h5 class="card-title"><a href="/news/tech-quantum-computing-breakthrough">Silicon Foundries Commit Bilateral Manufacturing expansion</a></h5>
-                            <div class="card-meta">
-                                <span>Ananya S.</span>
-                                <span>•</span>
-                                <span>4 min read</span>
-                            </div>
+                            <span class="badge-category mb-1">technology</span>
+                            <h6 class="card-title fw-bold"><a href="/news/tech-quantum-computing-breakthrough">Silicon Foundries Commit expansion</a></h6>
                         </div>
                     </div>
                 </div>
@@ -337,15 +323,20 @@ function initLiveBlogSimulation() {
         
         // Construct event card
         const cardHtml = `
-            <div class="live-item live-active fade-in-up">
-                <div class="d-flex align-items-center justify-content-between mb-2">
-                    <span class="badge bg-danger bg-opacity-10 text-danger fw-bold border border-danger border-opacity-25">${data.time}</span>
-                    <span class="badge bg-primary-subtle text-primary border border-primary-subtle">#${data.tag}</span>
+            <div class="live-item live-active d-flex gap-3 align-items-start py-3 border-bottom border-secondary-subtle fade-in-up">
+                <!-- Small image on the side -->
+                <div class="flex-shrink-0" style="width: 70px; height: 70px; border-radius: 8px; overflow: hidden; border: 1px solid var(--border-color);">
+                    <img src="https://images.unsplash.com/photo-1504711434969-e33886168f5c?auto=format&fit=crop&w=150&q=80" class="w-100 h-100 object-fit-cover" alt="Live Event Image">
                 </div>
-                <h5 class="fw-bold mb-2">${data.title}</h5>
-                <p class="text-muted">${data.content}</p>
-                <div class="d-flex gap-3 mt-2">
-                    <button class="btn btn-sm btn-link text-decoration-none p-0 text-muted fs-8"><i class="far fa-share-square me-1"></i> Share</button>
+
+                <!-- Content Area -->
+                <div class="flex-grow-1">
+                    <h6 class="fw-bold fs-7 mb-1" style="line-height: 1.35;">${data.title}</h6>
+                    <p class="text-muted fs-8 mb-2 line-clamp-2">${data.content}</p>
+                    <div class="d-flex align-items-center gap-2">
+                        <span class="badge bg-danger bg-opacity-10 text-danger fw-bold border border-danger border-opacity-25 fs-9" style="padding: 2px 6px;">${data.time}</span>
+                        <span class="badge bg-primary-subtle text-primary border border-primary-subtle fs-9">#${data.tag}</span>
+                    </div>
                 </div>
             </div>
         `;
