@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>@yield('title', 'Rivaaz Admin - Enterprise News SaaS')</title>
+    <title>@yield('title', 'The Uttarakhand Now Admin')</title>
     
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -192,7 +192,7 @@
     <!-- 1. Sidebar Navigation -->
     <aside class="admin-sidebar" id="adminSidebar">
         <div class="sidebar-brand">
-            <h5 class="m-0"><i class="fa-solid fa-layer-group text-primary me-2"></i><span>Rivaaz Admin</span></h5>
+            <h5 class="m-0"><i class="fa-solid fa-layer-group text-primary me-2"></i><span>Uttarakhand Now</span></h5>
             <button class="btn btn-link text-white p-0 d-none d-lg-block" id="sidebarToggleBtn" aria-label="Toggle Sidebar">
                 <i class="fa-solid fa-indent"></i>
             </button>
@@ -271,11 +271,11 @@
                 <div class="dropdown">
                     <button class="btn btn-outline-secondary btn-sm dropdown-toggle d-flex align-items-center gap-2 border-secondary-subtle" type="button" id="tenantSelector" data-bs-toggle="dropdown" aria-expanded="false">
                         <i class="fa-solid fa-globe text-primary"></i>
-                        <span>Rivaaz Chronicle</span>
+                        <span>The Uttarakhand Now</span>
                     </button>
                     <ul class="dropdown-menu dropdown-menu-start shadow-sm" aria-labelledby="tenantSelector">
                         <li><h6 class="dropdown-header">Active Tenant Nodes</h6></li>
-                        <li><a class="dropdown-item active" href="#" onclick="switchTenant('Rivaaz Chronicle')"><i class="fa-solid fa-circle-check text-primary me-2"></i> Rivaaz Chronicle (Main)</a></li>
+                        <li><a class="dropdown-item active" href="#" onclick="switchTenant('The Uttarakhand Now')"><i class="fa-solid fa-circle-check text-primary me-2"></i> The Uttarakhand Now (Main)</a></li>
                         <li><a class="dropdown-item" href="#" onclick="switchTenant('Sarkar News')"><i class="fa-solid fa-circle me-2 text-muted small"></i> Sarkar News</a></li>
                         <li><a class="dropdown-item" href="#" onclick="switchTenant('Metro Times')"><i class="fa-solid fa-circle me-2 text-muted small"></i> Metro Times</a></li>
                     </ul>

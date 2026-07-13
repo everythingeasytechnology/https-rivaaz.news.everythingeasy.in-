@@ -6,16 +6,16 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     
     <!-- SEO and Discovery Meta Tags -->
-    <title>@yield('title', 'Rivaaz Chronicle - Premium News Portal')</title>
-    <meta name="description" content="@yield('meta_description', 'Rivaaz Chronicle is a premium, multi-tenant news portal SaaS delivering real-time coverage on Politics, Business, Tech, Sports, and Lifestyle.')">
+    <title>@yield('title', 'The Uttarakhand Now - Premium News Portal')</title>
+    <meta name="description" content="@yield('meta_description', 'The Uttarakhand Now is a premium, multi-tenant news portal SaaS delivering real-time coverage on Politics, Business, Tech, Sports, and Lifestyle.')">
     <meta name="robots" content="index, follow">
     <meta name="googlebot" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
     <meta property="og:locale" content="en_US">
     <meta property="og:type" content="website">
-    <meta property="og:title" content="@yield('title', 'Rivaaz Chronicle - Premium News Portal')">
+    <meta property="og:title" content="@yield('title', 'The Uttarakhand Now - Premium News Portal')">
     <meta property="og:description" content="@yield('meta_description', 'Real-time high-fidelity coverage.')">
     <meta property="og:url" content="{{ request()->url() }}">
-    <meta property="og:site_name" content="Rivaaz Chronicle">
+    <meta property="og:site_name" content="The Uttarakhand Now">
     <meta name="twitter:card" content="summary_large_image">
     
     <!-- FontAwesome for Premium Icons -->
@@ -102,8 +102,8 @@
     <!-- 2. Main Navigation Header -->
     <nav class="navbar navbar-expand-lg main-header py-2 py-lg-3">
         <div class="container-xl">
-            <a class="navbar-brand py-0" href="/">
-                RIVAAZ<span>CHRONICLE</span>
+            <a class="navbar-brand py-0 d-flex align-items-center" href="/">
+                <img src="/logo.jpeg" alt="The Uttarakhand Now" style="height: 42px; width: auto; max-height: 42px; border-radius: 4px;">
             </a>
             
             <div class="d-flex d-lg-none align-items-center gap-2">
@@ -197,7 +197,7 @@
             <div class="row g-4">
                 <!-- Branding column -->
                 <div class="col-lg-4">
-                    <h5 class="headline-font fw-bold mb-3 text-primary">RIVAAZ CHRONICLE</h5>
+                    <img src="/logo.jpeg" alt="The Uttarakhand Now" style="height: 45px; width: auto; max-height: 45px; border-radius: 4px;" class="mb-3">
                     <p class="text-muted small">An enterprise-level multi-tenant News Portal delivering cutting-edge journalism, real-time bulletins, and high-fidelity media galleries across devices.</p>
                     <div class="d-flex gap-2">
                         <a href="#" class="btn btn-sm btn-outline-secondary rounded-circle" style="width:36px;height:36px;display:flex;align-items:center;justify-content:center;"><i class="fab fa-facebook-f"></i></a>
@@ -258,7 +258,7 @@
             
             <div class="row align-items-center">
                 <div class="col-md-6 text-center text-md-start">
-                    <p class="mb-0 text-muted small">&copy; 2026 Rivaaz Chronicle News Portal SaaS. All Rights Reserved. Designed in high fidelity.</p>
+                    <p class="mb-0 text-muted small">&copy; 2026 The Uttarakhand Now. All Rights Reserved. Designed in high fidelity.</p>
                 </div>
                 <div class="col-md-6 text-center text-md-end mt-2 mt-md-0">
                     <a href="/archive" class="text-reset text-decoration-none hover-primary small me-3"><i class="fas fa-history me-1"></i> Archive</a>
