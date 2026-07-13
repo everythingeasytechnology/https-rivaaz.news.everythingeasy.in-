@@ -119,44 +119,25 @@
             </div>
             
             <div class="collapse navbar-collapse" id="mainMenu">
+                <!-- Mobile Menu Drawer Header -->
+                <div class="d-lg-none d-flex justify-content-between align-items-center mb-4 pb-2 border-bottom">
+                    <span class="fw-bold fs-5 text-body">Menu Navigation</span>
+                    <button class="btn btn-link text-reset p-0 border-0" type="button" data-bs-toggle="collapse" data-bs-target="#mainMenu" aria-label="Close menu">
+                        <i class="fas fa-times fs-4"></i>
+                    </button>
+                </div>
                 <ul class="navbar-nav mx-auto mb-2 mb-lg-0 fw-semibold text-uppercase">
                     <li class="nav-item"><a class="nav-link {{ request()->is('/') ? 'active' : '' }}" href="/">Home</a></li>
                     
                     <!-- India Dropdown -->
-                    <li class="nav-item dropdown megamenu">
-                        <a class="nav-link " href="/category/india" role="button" data-bs-toggle="dropdown">India</a>
-                        <div class="dropdown-menu border-0 shadow">
-                            <div class="row">
-                                <div class="col-md-3">
-                                    <h6 class="text-primary text-uppercase fw-bold mb-3">Subcategories</h6>
-                                    <ul class="list-unstyled d-flex flex-column gap-2">
-                                        <li><a href="/category/india" class="text-reset hover-primary text-decoration-none">National News</a></li>
-                                        <li><a href="/category/india" class="text-reset hover-primary text-decoration-none">State Reports</a></li>
-                                        <li><a href="/category/india" class="text-reset hover-primary text-decoration-none">Parliament Debates</a></li>
-                                        <li><a href="/category/india" class="text-reset hover-primary text-decoration-none">Elections</a></li>
-                                    </ul>
-                                </div>
-                                <div class="col-md-5 border-start ps-4">
-                                    <h6 class="text-secondary text-uppercase fw-bold mb-3">Trending in India</h6>
-                                    <div class="news-horizontal-row py-0 border-0">
-                                        <div class="row-content">
-                                            <h6 class="row-title fw-bold"><a href="/news/india-union-budget-2026-analysis">Union Budget 2026: Key Allocations & Sectoral Impact Analysis</a></h6>
-                                            <small class="text-muted">Politics • 2 hours ago</small>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-4 border-start ps-4 d-none d-md-block">
-                                    <h6 class="text-secondary text-uppercase fw-bold mb-3">Live Feed</h6>
-                                    <div class="alert alert-danger border-0 p-3 mb-0 rounded-4">
-                                        <div class="d-flex align-items-center gap-2 mb-2">
-                                            <span class="badge bg-danger animate-pulse">LIVE</span>
-                                            <span class="fw-bold text-uppercase fs-7">Budget Discussion</span>
-                                        </div>
-                                        <p class="mb-0 fs-7 text-dark-emphasis">Parliament proceeds with debate on standard deductions and startup capital limits.</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="/category/india" role="button" data-bs-toggle="dropdown">India</a>
+                        <ul class="dropdown-menu border-0 shadow">
+                            <li><a href="/category/india" class="dropdown-item">National News</a></li>
+                            <li><a href="/category/india" class="dropdown-item">State Reports</a></li>
+                            <li><a href="/category/india" class="dropdown-item">Parliament Debates</a></li>
+                            <li><a href="/category/india" class="dropdown-item">Elections</a></li>
+                        </ul>
                     </li>
                     
                     <li class="nav-item"><a class="nav-link {{ request()->is('category/world') ? 'active' : '' }}" href="/category/world">World</a></li>

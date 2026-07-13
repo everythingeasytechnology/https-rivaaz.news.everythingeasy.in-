@@ -1048,3 +1048,50 @@ a {
   }
 }
 
+// Mobile Slide-in Menu Drawer (Right to Left)
+@media (max-width: 991.98px) {
+  #mainMenu {
+    position: fixed !important;
+    top: 0 !important;
+    right: -290px !important; /* Start fully hidden on the right */
+    width: 280px !important;
+    height: 100vh !important;
+    background-color: var(--card-bg) !important;
+    border-left: 1px solid var(--border-color) !important;
+    z-index: 2050 !important;
+    padding: 1.5rem !important;
+    box-shadow: -5px 0 25px rgba(0, 0, 0, 0.15) !important;
+    display: block !important;
+    visibility: visible !important;
+    transition: right 0.35s cubic-bezier(0.16, 1, 0.3, 1) !important;
+    overflow-y: auto !important;
+
+    &.collapse:not(.show) {
+      right: -290px !important;
+      display: block !important;
+    }
+
+    &.show {
+      right: 0 !important; /* Slide in to 0 position! */
+    }
+
+    .navbar-nav {
+      flex-direction: column !important;
+      align-items: flex-start !important;
+      gap: 0.5rem !important;
+      
+      .nav-item {
+        width: 100% !important;
+        
+        .nav-link {
+          padding: 0.75rem 0 !important;
+          border-bottom: 1px solid var(--border-color) !important;
+          display: block !important;
+          color: var(--text-color) !important;
+        }
+      }
+    }
+  }
+}
+
+
