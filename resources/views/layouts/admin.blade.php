@@ -214,20 +214,11 @@
             <a href="/admin/categories" class="nav-link-admin {{ Request::is('admin/categories') ? 'active' : '' }}">
                 <i class="fa-solid fa-folder-open"></i> <span>Categories & Subs</span>
             </a>
-            <a href="/admin/live-blog" class="nav-link-admin {{ Request::is('admin/live-blog') ? 'active' : '' }}">
-                <i class="fa-solid fa-broadcast-tower"></i> <span>Live Blog & Breaking</span>
-            </a>
-            <a href="/admin/media" class="nav-link-admin {{ Request::is('admin/media') ? 'active' : '' }}">
-                <i class="fa-regular fa-images"></i> <span>Media Library</span>
-            </a>
             <a href="/admin/web-stories" class="nav-link-admin {{ Request::is('admin/web-stories') ? 'active' : '' }}">
                 <i class="fa-solid fa-mobile-screen"></i> <span>Web Stories</span>
             </a>
             
             <div class="menu-section">SaaS Placements</div>
-            <a href="/admin/ads" class="nav-link-admin {{ Request::is('admin/ads') ? 'active' : '' }}">
-                <i class="fa-solid fa-rectangle-ad"></i> <span>Advertisements</span>
-            </a>
             <a href="/admin/seo" class="nav-link-admin {{ Request::is('admin/seo') ? 'active' : '' }}">
                 <i class="fa-solid fa-magnifying-glass-chart"></i> <span>SEO & Sitemaps</span>
             </a>

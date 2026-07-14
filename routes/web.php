@@ -217,14 +217,10 @@ Route::prefix('admin')->name('admin.')->group(function () {
         return view('admin.categories.index');
     })->name('categories.index');
 
-    Route::get('/live-blog', function () {
-        return view('admin.live-blog.index');
-    })->name('live-blog.index');
 
 
-    Route::get('/ads', function () {
-        return view('admin.ads.index');
-    })->name('ads.index');
+
+
 
     Route::get('/seo', function () {
         return view('admin.seo.index');
@@ -234,9 +230,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
         return view('admin.users.index');
     })->name('users.index');
 
-    Route::get('/media', function () {
-        return view('admin.media.index');
-    })->name('media.index');
+
 
     Route::get('/web-stories', function () {
         return view('admin.web-stories.index');
