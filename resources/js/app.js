@@ -9,7 +9,6 @@ document.addEventListener('DOMContentLoaded', () => {
     initFontSizeControls();
     initReadingProgress();
     initWebStoriesViewer();
-    initSkeletonLoading();
     initLiveBlogSimulation();
     initAdminController();
 });
@@ -56,7 +55,7 @@ function initDateAndTime() {
     const dateEl = document.getElementById('currentDate');
     if (dateEl) {
         const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-        dateEl.textContent = new Date().toLocaleDateString('en-US', options);
+        dateEl.textContent = new Date().toLocaleDateString('hi-IN', options);
     }
 }
 
@@ -217,93 +216,7 @@ function initWebStoriesViewer() {
     });
 }
 
-/**
- * 6. Skeleton Screen simulation for "Load More"
- */
-function initSkeletonLoading() {
-    const loadMoreBtn = document.getElementById('loadMoreBtn');
-    const container = document.getElementById('loadMoreContainer');
-    
-    if (!loadMoreBtn || !container) return;
 
-    loadMoreBtn.addEventListener('click', (e) => {
-        e.preventDefault();
-        loadMoreBtn.disabled = true;
-        loadMoreBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Loading...';
-
-        // 1. Append skeleton loaders
-        const skeletonHtml = `
-            <div class="col-12 col-md-6 col-lg-4 temp-skeleton">
-                <div class="latest-news-horizontal-card p-2">
-                    <div class="d-flex align-items-center gap-3 w-100 h-100">
-                        <div class="skeleton rounded-3" style="height: 120px; width: 38%; flex-shrink: 0;"></div>
-                        <div class="flex-grow-1" style="width: 62%;">
-                            <div class="skeleton mb-2" style="height: 10px; width: 30%;"></div>
-                            <div class="skeleton mb-2" style="height: 16px; width: 80%;"></div>
-                            <div class="skeleton mb-3" style="height: 12px; width: 90%;"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-12 col-md-6 col-lg-4 temp-skeleton">
-                <div class="latest-news-horizontal-card p-2">
-                    <div class="d-flex align-items-center gap-3 w-100 h-100">
-                        <div class="skeleton rounded-3" style="height: 120px; width: 38%; flex-shrink: 0;"></div>
-                        <div class="flex-grow-1" style="width: 62%;">
-                            <div class="skeleton mb-2" style="height: 10px; width: 30%;"></div>
-                            <div class="skeleton mb-2" style="height: 16px; width: 80%;"></div>
-                            <div class="skeleton mb-3" style="height: 12px; width: 90%;"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        `;
-        container.insertAdjacentHTML('beforeend', skeletonHtml);
-
-        // 2. Simulate delay then append final items
-        setTimeout(() => {
-            // Remove skeletons
-            document.querySelectorAll('.temp-skeleton').forEach(el => el.remove());
-
-            // Append real cards
-            const realCardsHtml = `
-                <div class="col-12 col-md-6 col-lg-4 fade-in-up">
-                    <div class="latest-news-horizontal-card">
-                        <div class="latest-card-img-wrap">
-                            <img src="https://images.unsplash.com/photo-1526304640581-d334cdbbf45e?auto=format&fit=crop&w=400&q=80" alt="Finance">
-                        </div>
-                        <div class="latest-card-content">
-                            <span class="latest-card-category text-uppercase">business</span>
-                            <h5 class="latest-card-title">
-                                <a href="/news/market-rally-nifty-hits-record-high">Digital Currencies Gain Global Ground</a>
-                            </h5>
-                            <p class="latest-card-summary">Global regulatory guidelines and decentralized finance innovations drive significant growth across sovereign institutions.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-12 col-md-6 col-lg-4 fade-in-up">
-                    <div class="latest-news-horizontal-card">
-                        <div class="latest-card-img-wrap">
-                            <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=400&q=80" alt="Chips">
-                        </div>
-                        <div class="latest-card-content">
-                            <span class="latest-card-category text-uppercase">technology</span>
-                            <h5 class="latest-card-title">
-                                <a href="/news/tech-quantum-computing-breakthrough">Silicon Foundries Commit expansion</a>
-                            </h5>
-                            <p class="latest-card-summary">Industry leaders pledge capital investments to transition to sub-2nm fabrication technologies and enhance supply resiliency.</p>
-                        </div>
-                    </div>
-                </div>
-            `;
-            container.insertAdjacentHTML('beforeend', realCardsHtml);
-            
-            // Restore button
-            loadMoreBtn.disabled = false;
-            loadMoreBtn.innerHTML = 'Load More <i class="fas fa-arrow-down ms-1"></i>';
-        }, 1200);
-    });
-}
 
 /**
  * 7. Live Blog simulation (adds new live timelines dynamically)

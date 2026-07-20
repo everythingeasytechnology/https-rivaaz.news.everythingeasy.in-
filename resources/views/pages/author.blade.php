@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Author - ' . $author['name'] . ' - Rivaaz Chronicle')
+@section('title', 'लेखक - ' . $author['name'] . ' - रीवाज़ क्रॉनिकल')
 
 @section('content')
 <div class="container-xl">
@@ -16,9 +16,9 @@
                 <div class="fw-bold text-primary mb-2 text-uppercase fs-7">{{ $author['title'] }}</div>
                 <p class="text-secondary-emphasis mb-3">{{ $author['bio'] }}</p>
                 <div class="d-flex align-items-center gap-3">
-                    <a href="#" class="btn btn-sm btn-outline-primary rounded-pill fw-semibold px-3" onclick="event.preventDefault(); alert('Following author updates...');"><i class="fas fa-plus me-1"></i> Follow Author</a>
+                    <a href="#" class="btn btn-sm btn-outline-primary rounded-pill fw-semibold px-3" onclick="event.preventDefault(); alert('Following author updates...');"><i class="fas fa-plus me-1"></i> लेखक का अनुसरण करें</a>
                     <a href="#" class="text-reset hover-primary fs-5" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
-                    <span class="text-muted small"><strong>{{ $author['articles_count'] }}</strong> Contributions</span>
+                    <span class="text-muted small"><strong>{{ $author['articles_count'] }}</strong> योगदान</span>
                 </div>
             </div>
         </div>
@@ -28,7 +28,7 @@
     <div class="row g-4">
         <!-- Main list of articles -->
         <div class="col-lg-8">
-            <h3 class="headline-font mb-4 fw-bold text-uppercase border-bottom pb-2">Stories By {{ $author['name'] }}</h3>
+            <h3 class="headline-font mb-4 fw-bold text-uppercase border-bottom pb-2">{{ $author['name'] }} के लेख</h3>
             @if(count($articles) > 0)
             <div class="d-flex flex-column gap-4">
                 @foreach($articles as $article)
@@ -50,8 +50,8 @@
             @else
             <div class="text-center py-5">
                 <div class="fs-1 text-muted"><i class="far fa-newspaper"></i></div>
-                <h5 class="fw-bold mt-3">No articles published by this author yet</h5>
-                <p class="text-muted">Columns and summaries will be synced shortly.</p>
+                <h5 class="fw-bold mt-3">इस लेखक द्वारा अभी तक कोई लेख प्रकाशित नहीं किया गया है</h5>
+                <p class="text-muted">कॉलम और लेख जल्द ही अपडेट किए जाएंगे।</p>
             </div>
             @endif
         </div>

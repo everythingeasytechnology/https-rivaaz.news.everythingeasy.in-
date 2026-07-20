@@ -3,355 +3,219 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>@yield('title', 'The Uttarakhand Now Admin')</title>
-    
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <title>Admin Panel - Rivaaz Chronicle</title>
     
     <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
-    <!-- Inline theme script to prevent dark mode flicker -->
-    <script>
-        (function () {
-            const savedTheme = localStorage.getItem('theme');
-            if (savedTheme) {
-                document.documentElement.setAttribute('data-bs-theme', savedTheme);
-            } else {
-                document.documentElement.setAttribute('data-bs-theme', 'light');
-            }
-        })();
-    </script>
-
-    <!-- Vite Assets -->
+    <!-- Vite assets -->
     @vite(['resources/scss/app.scss', 'resources/js/app.js'])
-
+    @yield('styles')
+    
     <style>
-        /* Compact specific styles for admin console layout elements */
-        :root {
-            --admin-sidebar-width: 260px;
-            --admin-sidebar-collapsed-width: 70px;
-            --admin-sidebar-bg: #111827;
-            --admin-sidebar-color: #9ca3af;
-            --admin-sidebar-hover-bg: #1f2937;
-            --admin-sidebar-active-bg: var(--primary-color);
+        body {
+            background-color: var(--bs-body-bg);
+            font-family: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif;
         }
         
-        body.admin-body {
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            min-height: 100vh;
-            overflow-x: hidden;
-            display: flex;
-        }
-
-        .admin-sidebar {
-            width: var(--admin-sidebar-width);
-            background-color: var(--admin-sidebar-bg);
-            color: var(--admin-sidebar-color);
+        .sidebar {
+            width: 260px;
             height: 100vh;
             position: fixed;
             top: 0;
             left: 0;
-            z-index: 1030;
-            transition: all 0.3s ease;
-            display: flex;
-            flex-direction: column;
-            border-right: 1px solid rgba(255,255,255,0.05);
-        }
-
-        .admin-sidebar.collapsed {
-            width: var(--admin-sidebar-collapsed-width);
-        }
-
-        .admin-sidebar .sidebar-brand {
-            padding: 1.25rem;
-            border-bottom: 1px solid rgba(255,255,255,0.05);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            overflow: hidden;
-            white-space: nowrap;
-        }
-
-        .admin-sidebar .sidebar-brand h5 {
-            margin: 0;
+            background-color: #111418;
             color: #fff;
-            font-size: 1.15rem;
-            font-weight: 700;
+            padding-top: 20px;
+            z-index: 100;
         }
 
-        .admin-sidebar .sidebar-menu {
-            flex-grow: 1;
-            overflow-y: auto;
-            padding: 1rem 0;
-        }
-
-        .admin-sidebar .menu-section {
-            padding: 0.5rem 1.5rem;
-            font-size: 0.65rem;
-            text-transform: uppercase;
-            font-weight: 700;
-            letter-spacing: 0.5px;
-            color: #4b5563;
+        [data-bs-theme="dark"] .sidebar {
+            background-color: #0b0d10;
+            border-right: 1px solid #1a1e24;
         }
         
-        .admin-sidebar.collapsed .menu-section {
-            display: none;
-        }
-
-        .admin-sidebar .nav-link-admin {
+        .sidebar-brand {
+            padding: 10px 24px;
+            font-size: 1.15rem;
+            font-weight: 800;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            color: #fff;
             display: flex;
             align-items: center;
-            padding: 0.65rem 1.5rem;
-            color: #9ca3af;
+            gap: 10px;
+        }
+        
+        .sidebar-menu {
+            margin-top: 30px;
+            list-style: none;
+            padding-left: 0;
+        }
+        
+        .sidebar-menu li a {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 24px;
+            color: #a0aec0;
             text-decoration: none;
+            font-weight: 550;
             transition: all 0.2s ease;
-            font-size: 0.85rem;
-            white-space: nowrap;
             border-left: 3px solid transparent;
         }
-
-        .admin-sidebar .nav-link-admin i {
-            width: 20px;
-            margin-right: 10px;
-            font-size: 1.1rem;
-            text-align: center;
-        }
-
-        .admin-sidebar.collapsed .nav-link-admin span {
-            display: none;
-        }
-
-        .admin-sidebar .nav-link-admin:hover {
-            background-color: var(--admin-sidebar-hover-bg);
+        
+        .sidebar-menu li a:hover,
+        .sidebar-menu li.active a {
             color: #fff;
+            background-color: rgba(255,255,255,0.05);
+            border-left-color: var(--bs-primary);
         }
-
-        .admin-sidebar .nav-link-admin.active {
-            background-color: var(--admin-sidebar-hover-bg);
-            color: #fff;
-            border-left-color: var(--primary-color);
-        }
-
-        .admin-main-wrapper {
-            margin-left: var(--admin-sidebar-width);
-            width: calc(100% - var(--admin-sidebar-width));
+        
+        .main-content {
+            margin-left: 260px;
+            padding: 30px;
             min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            transition: all 0.3s ease;
         }
-
-        .admin-main-wrapper.full-width {
-            margin-left: var(--admin-sidebar-collapsed-width);
-            width: calc(100% - var(--admin-sidebar-collapsed-width));
-        }
-
-        .admin-top-nav {
-            height: 60px;
-            background-color: var(--bs-card-bg);
-            border-bottom: 1px solid var(--border-color);
+        
+        .admin-header {
             display: flex;
-            align-items: center;
             justify-content: space-between;
-            padding: 0 1.5rem;
-            position: sticky;
-            top: 0;
-            z-index: 1020;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--bs-border-color);
         }
-
-        .admin-content {
-            flex-grow: 1;
-            padding: 1.5rem;
-            background-color: var(--bg-color);
+        
+        .admin-card {
+            border-radius: 12px;
+            border: 1px solid var(--bs-border-color);
+            background-color: var(--bs-body-bg);
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.03), 0 2px 4px -1px rgba(0,0,0,0.02);
+            padding: 24px;
         }
-
+        
         @media (max-width: 991.98px) {
-            .admin-sidebar {
-                transform: translateX(-100%);
+            .sidebar {
+                display: none;
             }
-            .admin-sidebar.mobile-open {
-                transform: translateX(0);
-                width: var(--admin-sidebar-width) !important;
-            }
-            .admin-sidebar.mobile-open .nav-link-admin span {
-                display: block !important;
-            }
-            .admin-main-wrapper {
-                margin-left: 0 !important;
-                width: 100% !important;
+            .main-content {
+                margin-left: 0;
+                padding: 15px;
             }
         }
     </style>
 </head>
-<body class="admin-body">
+<body>
 
-    <!-- 1. Sidebar Navigation -->
-    <aside class="admin-sidebar" id="adminSidebar">
+    <!-- Sidebar -->
+    <aside class="sidebar">
         <div class="sidebar-brand">
-            <h5 class="m-0"><i class="fa-solid fa-layer-group text-primary me-2"></i><span>Uttarakhand Now</span></h5>
-            <button class="btn btn-link text-white p-0 d-none d-lg-block" id="sidebarToggleBtn" aria-label="Toggle Sidebar">
-                <i class="fa-solid fa-indent"></i>
-            </button>
+            <i class="fas fa-newspaper text-primary"></i>
+            <span>Rivaaz Admin</span>
         </div>
-        
-        <div class="sidebar-menu">
-            <div class="menu-section">Core Hub</div>
-            <a href="/admin" class="nav-link-admin {{ Request::is('admin') ? 'active' : '' }}">
-                <i class="fa-solid fa-gauge"></i> <span>Dashboard</span>
-            </a>
-            
-            <div class="menu-section">Content Area</div>
-            <a href="/admin/news" class="nav-link-admin {{ Request::is('admin/news') ? 'active' : '' }}">
-                <i class="fa-solid fa-list-check"></i> <span>Articles List</span>
-            </a>
-            <a href="/admin/news/create" class="nav-link-admin {{ Request::is('admin/news/create') ? 'active' : '' }}">
-                <i class="fa-regular fa-file-lines"></i> <span>Write Article</span>
-            </a>
-            <a href="/admin/categories" class="nav-link-admin {{ Request::is('admin/categories') ? 'active' : '' }}">
-                <i class="fa-solid fa-folder-open"></i> <span>Categories & Subs</span>
-            </a>
-            <a href="/admin/web-stories" class="nav-link-admin {{ Request::is('admin/web-stories') ? 'active' : '' }}">
-                <i class="fa-solid fa-mobile-screen"></i> <span>Web Stories</span>
-            </a>
-            
-            <div class="menu-section">SaaS Placements</div>
-            <a href="/admin/seo" class="nav-link-admin {{ Request::is('admin/seo') ? 'active' : '' }}">
-                <i class="fa-solid fa-magnifying-glass-chart"></i> <span>SEO & Sitemaps</span>
-            </a>
-            <a href="/admin/code-injections" class="nav-link-admin {{ Request::is('admin/code-injections') ? 'active' : '' }}">
-                <i class="fa-solid fa-code"></i> <span>Code Injections</span>
-            </a>
-            
-            <div class="menu-section">SaaS Control</div>
-            <a href="/admin/users" class="nav-link-admin {{ Request::is('admin/users') ? 'active' : '' }}">
-                <i class="fa-solid fa-users-gear"></i> <span>Roles & Users</span>
-            </a>
-            <a href="/admin/settings" class="nav-link-admin {{ Request::is('admin/settings') ? 'active' : '' }}">
-                <i class="fa-solid fa-sliders"></i> <span>System Settings</span>
-            </a>
-            <a href="/admin/support" class="nav-link-admin {{ Request::is('admin/support') ? 'active' : '' }}">
-                <i class="fa-solid fa-circle-info"></i> <span>Support & Logs</span>
-            </a>
-            
-            <div class="menu-section">Portal</div>
-            <a href="/" class="nav-link-admin">
-                <i class="fa-solid fa-arrow-up-right-from-square"></i> <span>View Portal UI</span>
-            </a>
-        </div>
-
-        <div class="p-3 border-top border-secondary border-opacity-10 text-center text-muted small">
-            <span class="d-block">SaaS Enterprise v1.2</span>
-        </div>
+        <ul class="sidebar-menu">
+            <li class="{{ request()->routeIs('admin.dashboard') ? 'active' : '' }}">
+                <a href="{{ route('admin.dashboard') }}">
+                    <i class="fas fa-chart-line"></i>
+                    <span>Dashboard</span>
+                </a>
+            </li>
+            <li class="{{ request()->routeIs('admin.articles.*') ? 'active' : '' }}">
+                <a href="{{ route('admin.articles.index') }}">
+                    <i class="fas fa-file-alt"></i>
+                    <span>Articles</span>
+                </a>
+            </li>
+            <li class="{{ request()->routeIs('admin.videos.*') ? 'active' : '' }}">
+                <a href="{{ route('admin.videos.index') }}">
+                    <i class="fas fa-video"></i>
+                    <span>Video News</span>
+                </a>
+            </li>
+            <li class="{{ request()->routeIs('admin.livetv.*') ? 'active' : '' }}">
+                <a href="{{ route('admin.livetv.edit') }}">
+                    <i class="fas fa-broadcast-tower"></i>
+                    <span>Live TV</span>
+                </a>
+            </li>
+            <li class="{{ request()->routeIs('admin.weather.*') ? 'active' : '' }}">
+                <a href="{{ route('admin.weather.edit') }}">
+                    <i class="fas fa-cloud-sun"></i>
+                    <span>Weather API</span>
+                </a>
+            </li>
+            <li class="{{ request()->routeIs('admin.categories.*') ? 'active' : '' }}">
+                <a href="{{ route('admin.categories.index') }}">
+                    <i class="fas fa-list-ul"></i>
+                    <span>Categories</span>
+                </a>
+            </li>
+            @if(Auth::check() && Auth::user()->role === 'super_admin')
+                <li class="{{ request()->routeIs('admin.users.*') ? 'active' : '' }}">
+                    <a href="{{ route('admin.users.index') }}">
+                        <i class="fas fa-users"></i>
+                        <span>Users</span>
+                    </a>
+                </li>
+                <li class="{{ request()->routeIs('admin.settings.*') ? 'active' : '' }}">
+                    <a href="{{ route('admin.settings.edit') }}">
+                        <i class="fas fa-cog"></i>
+                        <span>Settings</span>
+                    </a>
+                </li>
+            @endif
+            <li class="border-top border-secondary border-opacity-25 mt-3 pt-3">
+                <a href="/">
+                    <i class="fas fa-globe"></i>
+                    <span>View Website</span>
+                </a>
+            </li>
+        </ul>
     </aside>
 
-    <!-- 2. Main Wrapper -->
-    <main class="admin-main-wrapper" id="adminMainWrapper">
-        
-        <!-- Top Navigation -->
-        <header class="admin-top-nav">
-            <div class="d-flex align-items-center gap-3">
-                <button class="btn btn-light d-lg-none" id="mobileSidebarToggle" aria-label="Toggle mobile menu">
-                    <i class="fa-solid fa-bars"></i>
-                </button>
-                
-                <!-- Tenant Switcher Dropdown (Multi-Tenant News SaaS) -->
-                <div class="dropdown">
-                    <button class="btn btn-outline-secondary btn-sm dropdown-toggle d-flex align-items-center gap-2 border-secondary-subtle" type="button" id="tenantSelector" data-bs-toggle="dropdown" aria-expanded="false">
-                        <i class="fa-solid fa-globe text-primary"></i>
-                        <span>The Uttarakhand Now</span>
-                    </button>
-                    <ul class="dropdown-menu dropdown-menu-start shadow-sm" aria-labelledby="tenantSelector">
-                        <li><h6 class="dropdown-header">Active Tenant Nodes</h6></li>
-                        <li><a class="dropdown-item active" href="#" onclick="switchTenant('The Uttarakhand Now')"><i class="fa-solid fa-circle-check text-primary me-2"></i> The Uttarakhand Now (Main)</a></li>
-                        <li><a class="dropdown-item" href="#" onclick="switchTenant('Sarkar News')"><i class="fa-solid fa-circle me-2 text-muted small"></i> Sarkar News</a></li>
-                        <li><a class="dropdown-item" href="#" onclick="switchTenant('Metro Times')"><i class="fa-solid fa-circle me-2 text-muted small"></i> Metro Times</a></li>
-                    </ul>
-                </div>
+    <!-- Main Content Panel -->
+    <main class="main-content">
+        <!-- Top bar/header -->
+        <header class="admin-header">
+            <div>
+                <h4 class="fw-bold mb-0">@yield('page_title', 'Admin Dashboard')</h4>
+                <p class="text-muted small mb-0">Manage your portal's categories and SEO settings</p>
             </div>
-
+            
             <div class="d-flex align-items-center gap-3">
-                
-                <!-- User Role switch panel (Role-Based Demo) -->
-                <div class="dropdown d-none d-md-block">
-                    <button class="btn btn-outline-secondary btn-sm dropdown-toggle border-secondary-subtle" type="button" id="roleSelector" data-bs-toggle="dropdown" aria-expanded="false">
-                        <i class="fa-solid fa-user-shield text-danger me-1"></i> Role: <strong id="activeRoleName">Super Admin</strong>
-                    </button>
-                    <ul class="dropdown-menu dropdown-menu-end shadow-sm" aria-labelledby="roleSelector">
-                        <li><h6 class="dropdown-header">Simulate Dashboard Role</h6></li>
-                        <li><a class="dropdown-item" href="#" onclick="switchRole('Super Admin')">Super Admin</a></li>
-                        <li><a class="dropdown-item" href="#" onclick="switchRole('Chief Editor')">Chief Editor</a></li>
-                        <li><a class="dropdown-item" href="#" onclick="switchRole('Reporter')">Reporter</a></li>
-                        <li><a class="dropdown-item" href="#" onclick="switchRole('SEO Manager')">SEO Manager</a></li>
-                        <li><a class="dropdown-item" href="#" onclick="switchRole('Advertiser')">Advertiser</a></li>
-                    </ul>
-                </div>
-
-                <!-- Theme switch trigger -->
-                <button class="btn btn-sm btn-outline-secondary border-0 theme-toggle-btn" aria-label="Toggle theme" id="themeToggleBtn">
-                    <i class="fa-solid fa-moon fs-5"></i>
+                <button class="btn btn-outline-secondary border-0 theme-toggle-btn rounded-circle d-flex align-items-center justify-content-center" style="width: 38px; height: 38px;" aria-label="Toggle theme">
+                    <i class="fas fa-moon"></i>
                 </button>
-
-                <!-- Profile avatar -->
                 <div class="dropdown">
-                    <a href="#" class="d-flex align-items-center gap-2 text-decoration-none dropdown-toggle text-reset" id="profileDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-                        <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=100&q=80" alt="Admin Avatar" class="rounded-circle" style="width: 35px; height: 35px; object-fit: cover;">
-                    </a>
-                    <ul class="dropdown-menu dropdown-menu-end shadow-sm" aria-labelledby="profileDropdown">
-                        <li><h6 class="dropdown-header">Super Admin Node</h6></li>
-                        <li><a class="dropdown-item" href="/admin/settings"><i class="fa-solid fa-gear me-2 text-muted"></i> Settings</a></li>
-                        <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item text-danger" href="#" onclick="alert('Session logged out (Simulated)');"><i class="fa-solid fa-right-from-bracket me-2"></i> Logout</a></li>
+                    <button class="btn btn-light dropdown-toggle rounded-pill px-3 border" type="button" data-bs-toggle="dropdown">
+                        <i class="fas fa-user-circle me-1"></i> {{ Auth::check() ? Auth::user()->name : 'Admin User' }}
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-end border-0 shadow">
+                        <li>
+                            <form action="/logout" method="POST" id="logout-form" class="d-none">
+                                @csrf
+                            </form>
+                            <a class="dropdown-item" href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                <i class="fas fa-sign-out-alt me-2"></i>Logout
+                            </a>
+                        </li>
                     </ul>
                 </div>
-
             </div>
         </header>
 
-        <!-- Content Area -->
-        <section class="admin-content">
-            @yield('admin-content')
-        </section>
+        <!-- Flash Message Alert -->
+        @if(session('success'))
+            <div class="alert alert-success alert-dismissible fade show rounded-3 mb-4" role="alert">
+                <i class="fas fa-check-circle me-2"></i>{{ session('success') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        @endif
 
+        @yield('content')
     </main>
 
-    <!-- Interactive alert notification container -->
-    <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 1080;">
-        <div id="adminToast" class="toast align-items-center text-bg-primary border-0" role="alert" aria-live="assertive" aria-atomic="true">
-            <div class="d-flex">
-                <div class="toast-body" id="toastMessage">
-                    Welcome to the News SaaS Control Panel!
-                </div>
-                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Bootstrap Script setup -->
-    <script>
-        // Inline state switch helpers for Tenant and Role switch simulation
-        function switchTenant(tenantName) {
-            document.querySelector('#tenantSelector span').innerText = tenantName;
-            showNotification(`Switched to active tenant node: ${tenantName}`);
-        }
-        function switchRole(roleName) {
-            document.getElementById('activeRoleName').innerText = roleName;
-            showNotification(`Dashboard permissions adjusted for: ${roleName}`);
-        }
-        function showNotification(message) {
-            document.getElementById('toastMessage').innerText = message;
-            const toastEl = document.getElementById('adminToast');
-            // If bootstrap toast is available
-            if (window.bootstrap) {
-                const toast = new bootstrap.Toast(toastEl);
-                toast.show();
-            } else {
-                alert(message);
-            }
-        }
-    </script>
+    @yield('scripts')
 </body>
 </html>

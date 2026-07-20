@@ -11,52 +11,52 @@ class MockData
     {
         return [
             'india' => [
-                'name' => 'India',
-                'subcategories' => ['National', 'State News', 'Politics', 'Development']
+                'name' => 'भारत',
+                'subcategories' => ['राष्ट्रीय समाचार', 'राज्य समाचार', 'संसद बहस', 'चुनाव']
             ],
             'world' => [
-                'name' => 'World',
-                'subcategories' => ['US & Canada', 'Europe', 'Asia', 'Middle East']
+                'name' => 'विदेश',
+                'subcategories' => ['अमेरिका और कनाडा', 'यूरोप', 'एशिया', 'मध्य पूर्व']
             ],
             'politics' => [
-                'name' => 'Politics',
-                'subcategories' => ['Elections', 'Policy', 'Parliament', 'Debate']
+                'name' => 'राजनीति',
+                'subcategories' => ['चुनाव', 'नीतियां', 'संसद', 'बहस']
             ],
             'business' => [
-                'name' => 'Business',
-                'subcategories' => ['Markets', 'Economy', 'Startups', 'Personal Finance']
+                'name' => 'व्यापार',
+                'subcategories' => ['बाज़ार', 'अर्थव्यवस्था', 'स्टार्टअप', 'व्यक्तिगत वित्त']
             ],
             'technology' => [
-                'name' => 'Technology',
-                'subcategories' => ['AI', 'Gadgets', 'Software', 'Cybersecurity']
+                'name' => 'तकनीकी',
+                'subcategories' => ['एआई', 'गैजेट्स', 'सॉफ्टवेयर', 'साइबर सुरक्षा']
             ],
             'education' => [
-                'name' => 'Education',
-                'subcategories' => ['Admissions', 'Exams', 'Careers', 'E-Learning']
+                'name' => 'शिक्षा',
+                'subcategories' => ['प्रवेश', 'परीक्षा', 'करियर', 'ई-लर्निंग']
             ],
             'entertainment' => [
-                'name' => 'Entertainment',
-                'subcategories' => ['Bollywood', 'Hollywood', 'Web Series', 'Reviews']
+                'name' => 'मनोरंजन',
+                'subcategories' => ['बॉलीवुड', 'हॉलीवुड', 'वेब सीरीज', 'समीक्षाएं']
             ],
             'sports' => [
-                'name' => 'Sports',
-                'subcategories' => ['Cricket', 'Football', 'Olympics', 'Tennis']
+                'name' => 'खेल',
+                'subcategories' => ['क्रिकेट', 'फुटबॉल', 'ओलंपिक', 'टेनिस']
             ],
             'health' => [
-                'name' => 'Health',
-                'subcategories' => ['Wellness', 'Medicine', 'Fitness', 'Mental Health']
+                'name' => 'स्वास्थ्य',
+                'subcategories' => ['वेलनेस', 'चिकित्सा', 'फिटनेस', 'मानसिक स्वास्थ्य']
             ],
             'lifestyle' => [
-                'name' => 'Lifestyle',
-                'subcategories' => ['Fashion', 'Food', 'Relationships', 'Design']
+                'name' => 'लाइफस्टाइल',
+                'subcategories' => ['फैशन', 'भोजन', 'रिश्ते', 'डिजाइन']
             ],
             'travel' => [
-                'name' => 'Travel',
-                'subcategories' => ['Destinations', 'Guides', 'Tips', 'Stays']
+                'name' => 'यात्रा',
+                'subcategories' => ['गंतव्य', 'गाइड', 'टिप्स', 'स्टे']
             ],
             'opinion' => [
-                'name' => 'Opinion',
-                'subcategories' => ['Editorials', 'Columns', 'Reader Voice']
+                'name' => 'विचार',
+                'subcategories' => ['संपादकीय', 'कॉलम', 'पाठकों की आवाज़']
             ],
         ];
     }
@@ -80,24 +80,157 @@ class MockData
      */
     public static function getWeather(): array
     {
-        return [
-            'Delhi' => ['temp' => '34°C', 'condition' => 'Partly Cloudy', 'icon' => 'fa-cloud-sun'],
-            'Mumbai' => ['temp' => '29°C', 'condition' => 'Heavy Rain', 'icon' => 'fa-cloud-showers-heavy'],
-            'Bengaluru' => ['temp' => '24°C', 'condition' => 'Breezy', 'icon' => 'fa-wind'],
-            'London' => ['temp' => '18°C', 'condition' => 'Drizzle', 'icon' => 'fa-cloud-rain'],
-            'New York' => ['temp' => '27°C', 'condition' => 'Sunny', 'icon' => 'fa-sun'],
-        ];
+        $siteSettings = \App\Models\Setting::first();
+        $apiKey = $siteSettings->weather_api_key ?? env('WEATHER_API_KEY');
+        $citiesString = $siteSettings->weather_locations ?? 'Dehradun, Haridwar, Nainital, New Delhi';
+        $cities = array_filter(array_map('trim', explode(',', $citiesString)));
+
+        if (empty($apiKey)) {
+            $simulatedConditions = [
+                ['temp' => '24°C', 'condition' => 'आंशिक रूप से बादल', 'icon' => 'fa-cloud-sun'],
+                ['temp' => '28°C', 'condition' => 'धूप', 'icon' => 'fa-sun'],
+                ['temp' => '22°C', 'condition' => 'हवादार', 'icon' => 'fa-wind'],
+                ['temp' => '26°C', 'condition' => 'साफ मौसम', 'icon' => 'fa-sun'],
+            ];
+            $result = [];
+            $i = 0;
+            foreach ($cities as $city) {
+                $cond = $simulatedConditions[$i % count($simulatedConditions)];
+                $result[$city] = $cond;
+                $i++;
+            }
+            return $result;
+        }
+
+        return \Illuminate\Support\Facades\Cache::remember('live_weather_data', 1800, function () use ($apiKey, $cities) {
+            $weatherData = [];
+
+            foreach ($cities as $city) {
+                try {
+                    $response = \Illuminate\Support\Facades\Http::get("http://api.weatherapi.com/v1/current.json", [
+                        'key' => $apiKey,
+                        'q' => $city,
+                        'aqi' => 'no'
+                    ]);
+
+                    if ($response->successful()) {
+                        $data = $response->json();
+                        $conditionCode = $data['current']['condition']['code'];
+                        $weatherData[$city] = [
+                            'temp' => round($data['current']['temp_c']) . '°C',
+                            'condition' => $data['current']['condition']['text'],
+                            'icon' => self::getWeatherIcon($conditionCode),
+                        ];
+                    }
+                } catch (\Exception $e) {
+                    continue;
+                }
+            }
+
+            // Fallback if API calls failed
+            if (empty($weatherData)) {
+                return [
+                    'Delhi' => ['temp' => '34°C', 'condition' => 'आंशिक रूप से बादल', 'icon' => 'fa-cloud-sun'],
+                    'Mumbai' => ['temp' => '29°C', 'condition' => 'भारी बारिश', 'icon' => 'fa-cloud-showers-heavy'],
+                    'Bengaluru' => ['temp' => '24°C', 'condition' => 'हवादार', 'icon' => 'fa-wind'],
+                    'London' => ['temp' => '18°C', 'condition' => 'बूंदाबांदी', 'icon' => 'fa-cloud-rain'],
+                    'New York' => ['temp' => '27°C', 'condition' => 'धूप', 'icon' => 'fa-sun'],
+                ];
+            }
+
+            return $weatherData;
+        });
     }
 
     /**
-     * Get trending search tags.
+     * Get weather for a specific city.
+     */
+    public static function getCityWeather(string $city): ?array
+    {
+        $allWeather = self::getWeather();
+        
+        foreach ($allWeather as $name => $data) {
+            if (strtolower($name) === strtolower($city)) {
+                return $data;
+            }
+        }
+        
+        $apiKey = env('WEATHER_API_KEY');
+        if (!empty($apiKey)) {
+            return \Illuminate\Support\Facades\Cache::remember('weather_' . strtolower(str_replace(' ', '_', $city)), 1800, function () use ($apiKey, $city) {
+                try {
+                    $response = \Illuminate\Support\Facades\Http::get("http://api.weatherapi.com/v1/current.json", [
+                        'key' => $apiKey,
+                        'q' => $city,
+                        'aqi' => 'no'
+                    ]);
+
+                    if ($response->successful()) {
+                        $data = $response->json();
+                        $conditionCode = $data['current']['condition']['code'];
+                        return [
+                            'temp' => round($data['current']['temp_c']) . '°C',
+                            'condition' => $data['current']['condition']['text'],
+                            'icon' => self::getWeatherIcon($conditionCode),
+                        ];
+                    }
+                } catch (\Exception $e) {
+                    // Ignore
+                }
+                return null;
+            });
+        }
+        
+        return null;
+    }
+
+    /**
+     * Helper to map WeatherAPI condition codes to FontAwesome icons
+     */
+    private static function getWeatherIcon(int $code): string
+    {
+        if ($code == 1000) return 'fa-sun'; // Sunny
+        if (in_array($code, [1003, 1006, 1009])) return 'fa-cloud-sun'; // Partly Cloudy
+        if (in_array($code, [1030, 1135, 1147])) return 'fa-smog'; // Fog/Mist
+        if (in_array($code, [1063, 1180, 1183, 1186, 1189, 1240])) return 'fa-cloud-rain'; // Light rain
+        if (in_array($code, [1087, 1273, 1276])) return 'fa-cloud-showers-water'; // Thunderstorm
+        return 'fa-cloud'; // Default cloudy
+    }
+
+    /**
+     * Get trending search tags dynamically from database articles.
      */
     public static function getTrendingTags(): array
     {
-        return [
-            'Budget2026', 'AIEvolution', 'CricketCup', 'ClimateSummit', 'InflationUpdate', 
-            'MetaverseNext', 'TeslaFSD', 'CleanEnergy', 'GlobalTrade', 'SpaceXLaunch'
-        ];
+        try {
+            $allTags = \App\Models\Article::pluck('tags')
+                ->filter()
+                ->flatMap(function($tagStr) {
+                    return array_map('trim', explode(',', $tagStr));
+                })
+                ->filter()
+                ->groupBy(function($tag) {
+                    return strtolower($tag);
+                })
+                ->map(function($group) {
+                    return [
+                        'name' => $group->first(),
+                        'count' => $group->count()
+                    ];
+                })
+                ->sortByDesc('count')
+                ->take(10)
+                ->pluck('name')
+                ->toArray();
+                
+            if (!empty($allTags)) {
+                return $allTags;
+            }
+        } catch (\Exception $e) {
+            // Ignore database issues
+        }
+
+        return [];
     }
 
     /**

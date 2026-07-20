@@ -6,16 +6,17 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     
     <!-- SEO and Discovery Meta Tags -->
-    <title>@yield('title', 'The Uttarakhand Now - Premium News Portal')</title>
-    <meta name="description" content="@yield('meta_description', 'The Uttarakhand Now is a premium, multi-tenant news portal SaaS delivering real-time coverage on Politics, Business, Tech, Sports, and Lifestyle.')">
+    <title>@yield('title', ($siteSettings->site_name ?? 'The Uttarakhand Now') . ' - Premium News Portal')</title>
+    <meta name="description" content="@yield('meta_description', $siteSettings->footer_text ?? 'The Uttarakhand Now is a premium, multi-tenant news portal SaaS delivering real-time coverage on Politics, Business, Tech, Sports, and Lifestyle.')">
+    <meta name="keywords" content="@yield('meta_keywords', 'news, india, updates, politics, business, tech, sports, entertainment')">
     <meta name="robots" content="index, follow">
     <meta name="googlebot" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
     <meta property="og:locale" content="en_US">
     <meta property="og:type" content="website">
-    <meta property="og:title" content="@yield('title', 'The Uttarakhand Now - Premium News Portal')">
+    <meta property="og:title" content="@yield('title', ($siteSettings->site_name ?? 'The Uttarakhand Now') . ' - Premium News Portal')">
     <meta property="og:description" content="@yield('meta_description', 'Real-time high-fidelity coverage.')">
     <meta property="og:url" content="{{ request()->url() }}">
-    <meta property="og:site_name" content="The Uttarakhand Now">
+    <meta property="og:site_name" content="{{ $siteSettings->site_name ?? 'The Uttarakhand Now' }}">
     <meta name="twitter:card" content="summary_large_image">
     
     <!-- FontAwesome for Premium Icons -->
@@ -53,20 +54,22 @@
                     <span class="fw-semibold text-nowrap"><i class="far fa-calendar-alt text-primary me-1"></i> <span id="currentDate">Saturday, July 11, 2026</span></span>
                     <span class="text-secondary">|</span>
                     <span class="text-nowrap">
-                        <i class="fas fa-cloud-sun text-warning me-1"></i> 
-                        <span id="headerWeather">New Delhi, 34°C</span>
+                        <i class="fas fa-map-marker-alt text-danger me-1"></i> 
+                        <span class="fw-semibold">उत्तराखंड</span>
                     </span>
+                    @if(isset($breakingNews) && $breakingNews->count() > 0)
                     <span class="text-secondary">|</span>
-                    
                     <div class="breaking-ticker flex-grow-1" style="max-width: none;">
-                        <span class="ticker-label">Breaking</span>
+                        <span class="ticker-label">ब्रेकिंग</span>
                         <div class="ticker-wrap">
                             <div class="ticker-content" id="breakingTicker">
-                                <a href="/news/india-union-budget-2026-analysis">Union Budget 2026 outlines major green energy incentives & middle-class tax slab relief.</a>
-                                <a href="/live-blog/india-union-budget-2026-analysis">Live Updates: Stock index Nifty hits record lifetime high post federal budget rally.</a>
+                                @foreach($breakingNews as $art)
+                                    <a href="/news/{{ $art->slug }}">{{ $art->title }}</a>
+                                @endforeach
                             </div>
                         </div>
                     </div>
+                    @endif
                 </div>
                 
                 <!-- Utilities: lang, social, auth, subscribe -->
@@ -84,14 +87,15 @@
                         </div> -->
                         
                         <div class="d-flex align-items-center gap-2">
-                            <a href="#" class="text-reset hover-primary" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
-                            <a href="#" class="text-reset hover-primary" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
-                            <a href="#" class="text-reset hover-primary" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                            <a href="{{ $siteSettings->social_facebook ?? '#' }}" target="_blank" class="text-reset hover-primary" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                            <a href="{{ $siteSettings->social_twitter ?? '#' }}" target="_blank" class="text-reset hover-primary" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                            <a href="{{ $siteSettings->social_instagram ?? '#' }}" target="_blank" class="text-reset hover-primary" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
                         </div>
                         
                         <div class="d-flex align-items-center gap-2 border-start ps-3 border-secondary-subtle">
-                            <a href="#" class="btn btn-sm btn-primary rounded-pill fw-bold px-3" data-bs-toggle="modal" data-bs-target="#authModal">Login</a>
-                            <!-- <a href="#" class="btn btn-sm btn-primary rounded-pill fw-bold px-3">Subscribe</a> -->
+                            <button class="btn btn-link text-reset p-0 border-0 theme-toggle-btn me-2" aria-label="Toggle theme">
+                                <i class="fas fa-moon fs-5"></i>
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -103,7 +107,7 @@
     <nav class="navbar navbar-expand-lg main-header py-2 py-lg-3">
         <div class="container-xl">
             <a class="navbar-brand py-0 d-flex align-items-center" href="/">
-                <img src="/logo.jpeg" alt="The Uttarakhand Now" style="height: 42px; width: auto; max-height: 42px; border-radius: 4px;">
+                <img src="{{ $siteSettings->logo_path ?? '/logo.jpeg' }}" alt="{{ $siteSettings->site_name ?? 'The Uttarakhand Now' }}" style="height: 42px; width: auto; max-height: 42px; border-radius: 4px;">
             </a>
             
             <div class="d-flex d-lg-none align-items-center gap-2">
@@ -121,34 +125,36 @@
             <div class="collapse navbar-collapse" id="mainMenu">
                 <!-- Mobile Menu Drawer Header -->
                 <div class="d-lg-none d-flex justify-content-between align-items-center mb-4 pb-2 border-bottom">
-                    <span class="fw-bold fs-5 text-body">Menu Navigation</span>
+                    <span class="fw-bold fs-5 text-body">नेविगेशन मेनू</span>
                     <button class="btn btn-link text-reset p-0 border-0" type="button" data-bs-toggle="collapse" data-bs-target="#mainMenu" aria-label="Close menu">
                         <i class="fas fa-times fs-4"></i>
                     </button>
                 </div>
                 <ul class="navbar-nav mx-auto mb-2 mb-lg-0 fw-semibold text-uppercase">
-                    <li class="nav-item"><a class="nav-link {{ request()->is('/') ? 'active' : '' }}" href="/">Home</a></li>
+                    <li class="nav-item"><a class="nav-link {{ request()->is('/') ? 'active' : '' }}" href="/">होम</a></li>
                     
-                    <!-- India Dropdown -->
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="/category/india" role="button" data-bs-toggle="dropdown">India</a>
-                        <ul class="dropdown-menu border-0 shadow">
-                            <li><a href="/category/india" class="dropdown-item">National News</a></li>
-                            <li><a href="/category/india" class="dropdown-item">State Reports</a></li>
-                            <li><a href="/category/india" class="dropdown-item">Parliament Debates</a></li>
-                            <li><a href="/category/india" class="dropdown-item">Elections</a></li>
-                        </ul>
-                    </li>
+                    @if(isset($navbarCategories))
+                        @foreach($navbarCategories as $navCat)
+                            @if($navCat->subcategories->count() > 0)
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle {{ request()->is('category/' . $navCat->slug) || request()->is('category/' . $navCat->slug . '/*') ? 'active' : '' }}" href="/category/{{ $navCat->slug }}" role="button" data-bs-toggle="dropdown">{{ $navCat->name }}</a>
+                                    <ul class="dropdown-menu border-0 shadow">
+                                        @foreach($navCat->subcategories as $navSub)
+                                            <li><a href="/category/{{ $navCat->slug }}/{{ $navSub->slug }}" class="dropdown-item">{{ $navSub->name }}</a></li>
+                                        @endforeach
+                                    </ul>
+                                </li>
+                            @else
+                                <li class="nav-item"><a class="nav-link {{ request()->is('category/' . $navCat->slug) ? 'active' : '' }}" href="/category/{{ $navCat->slug }}">{{ $navCat->name }}</a></li>
+                            @endif
+                        @endforeach
+                    @else
+                        <li class="nav-item"><a class="nav-link {{ request()->is('category/india') ? 'active' : '' }}" href="/category/india">भारत</a></li>
+                        <li class="nav-item"><a class="nav-link {{ request()->is('category/world') ? 'active' : '' }}" href="/category/world">विदेश</a></li>
+                        <li class="nav-item"><a class="nav-link {{ request()->is('category/politics') ? 'active' : '' }}" href="/category/politics">राजनीति</a></li>
+                    @endif
                     
-                    <li class="nav-item"><a class="nav-link {{ request()->is('category/world') ? 'active' : '' }}" href="/category/world">World</a></li>
-                    <li class="nav-item"><a class="nav-link {{ request()->is('category/politics') ? 'active' : '' }}" href="/category/politics">Politics</a></li>
-                    <li class="nav-item"><a class="nav-link {{ request()->is('category/business') ? 'active' : '' }}" href="/category/business">Business</a></li>
-                    <li class="nav-item"><a class="nav-link {{ request()->is('category/technology') ? 'active' : '' }}" href="/category/technology">Tech</a></li>
-                    <li class="nav-item"><a class="nav-link {{ request()->is('category/sports') ? 'active' : '' }}" href="/category/sports">Sports</a></li>
-                    <li class="nav-item"><a class="nav-link {{ request()->is('category/entertainment') ? 'active' : '' }}" href="/category/entertainment">Entertainment</a></li>
-                    <li class="nav-item"><a class="nav-link {{ request()->is('category/health') ? 'active' : '' }}" href="/category/health">Health</a></li>
-                    <li class="nav-item"><a class="nav-link {{ request()->is('category/lifestyle') ? 'active' : '' }}" href="/category/lifestyle">Lifestyle</a></li>
-                    <li class="nav-item"><a class="nav-link {{ request()->is('videos') ? 'active' : '' }}" href="/videos">Videos</a></li>
+                    <li class="nav-item"><a class="nav-link {{ request()->is('videos') ? 'active' : '' }}" href="/videos">वीडियो</a></li>
                 </ul>
                 
                 <div class="d-none d-lg-flex align-items-center gap-3">
@@ -167,10 +173,7 @@
                         </div>
                     </div> -->
                     
-                    <!-- Dark mode toggle -->
-                    <button class="btn btn-link text-reset p-0 border-0 theme-toggle-btn" aria-label="Toggle theme">
-                        <i class="fas fa-moon fs-5"></i>
-                    </button>
+
                 </div>
             </div>
         </div>
@@ -189,61 +192,39 @@
         <div class="container-xl">
             <div class="row g-4">
                 <!-- Branding column -->
-                <div class="col-lg-4">
-                    <img src="/logo.jpeg" alt="The Uttarakhand Now" style="height: 45px; width: auto; max-height: 45px; border-radius: 4px;" class="mb-3">
-                    <p class="text-muted small">An enterprise-level multi-tenant News Portal delivering cutting-edge journalism, real-time bulletins, and high-fidelity media galleries across devices.</p>
+                <div class="col-lg-6">
+                    <img src="{{ $siteSettings->logo_path ?? '/logo.jpeg' }}" alt="{{ $siteSettings->site_name ?? 'The Uttarakhand Now' }}" style="height: 45px; width: auto; max-height: 45px; border-radius: 4px;" class="mb-3">
+                    <p class="text-muted small">{{ $siteSettings->footer_text ?? 'An enterprise-level news portal.' }}</p>
                     <div class="d-flex gap-2">
-                        <a href="#" class="btn btn-sm btn-outline-secondary rounded-circle" style="width:36px;height:36px;display:flex;align-items:center;justify-content:center;"><i class="fab fa-facebook-f"></i></a>
-                        <a href="#" class="btn btn-sm btn-outline-secondary rounded-circle" style="width:36px;height:36px;display:flex;align-items:center;justify-content:center;"><i class="fab fa-twitter"></i></a>
-                        <a href="#" class="btn btn-sm btn-outline-secondary rounded-circle" style="width:36px;height:36px;display:flex;align-items:center;justify-content:center;"><i class="fab fa-linkedin-in"></i></a>
-                        <a href="#" class="btn btn-sm btn-outline-secondary rounded-circle" style="width:36px;height:36px;display:flex;align-items:center;justify-content:center;"><i class="fab fa-instagram"></i></a>
+                        <a href="{{ $siteSettings->social_facebook ?? '#' }}" target="_blank" class="btn btn-sm btn-outline-secondary rounded-circle" style="width:36px;height:36px;display:flex;align-items:center;justify-content:center;"><i class="fab fa-facebook-f"></i></a>
+                        <a href="{{ $siteSettings->social_twitter ?? '#' }}" target="_blank" class="btn btn-sm btn-outline-secondary rounded-circle" style="width:36px;height:36px;display:flex;align-items:center;justify-content:center;"><i class="fab fa-twitter"></i></a>
+                        <a href="{{ $siteSettings->social_linkedin ?? '#' }}" target="_blank" class="btn btn-sm btn-outline-secondary rounded-circle" style="width:36px;height:36px;display:flex;align-items:center;justify-content:center;"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="{{ $siteSettings->social_instagram ?? '#' }}" target="_blank" class="btn btn-sm btn-outline-secondary rounded-circle" style="width:36px;height:36px;display:flex;align-items:center;justify-content:center;"><i class="fab fa-instagram"></i></a>
                     </div>
                 </div>
                 
                 <!-- Category Links -->
-                <div class="col-md-4 col-lg-2">
-                    <h6 class="fw-bold text-uppercase mb-3">Categories</h6>
+                <div class="col-md-6 col-lg-3">
+                    <h6 class="fw-bold text-uppercase mb-3">श्रेणियाँ</h6>
                     <ul class="list-unstyled d-flex flex-column gap-2 small">
-                        <li><a href="/category/india" class="text-reset text-decoration-none hover-primary">India News</a></li>
-                        <li><a href="/category/world" class="text-reset text-decoration-none hover-primary">World Affairs</a></li>
-                        <li><a href="/category/politics" class="text-reset text-decoration-none hover-primary">Politics</a></li>
-                        <li><a href="/category/business" class="text-reset text-decoration-none hover-primary">Business & Finance</a></li>
-                        <li><a href="/category/technology" class="text-reset text-decoration-none hover-primary">Technology & AI</a></li>
+                        @if(isset($navbarCategories))
+                            @foreach($navbarCategories->take(5) as $cat)
+                                <li><a href="/category/{{ $cat->slug }}" class="text-reset text-decoration-none hover-primary">{{ $cat->name }}</a></li>
+                            @endforeach
+                        @endif
                     </ul>
                 </div>
                 
                 <!-- Legal & Company Links -->
-                <div class="col-md-4 col-lg-2">
-                    <h6 class="fw-bold text-uppercase mb-3">Information</h6>
+                <div class="col-md-6 col-lg-3">
+                    <h6 class="fw-bold text-uppercase mb-3">जानकारी</h6>
                     <ul class="list-unstyled d-flex flex-column gap-2 small">
-                        <li><a href="/about" class="text-reset text-decoration-none hover-primary">About Us</a></li>
-                        <li><a href="/contact" class="text-reset text-decoration-none hover-primary">Advertise with Us</a></li>
-                        <li><a href="/privacy" class="text-reset text-decoration-none hover-primary">Privacy Policy</a></li>
-                        <li><a href="/terms" class="text-reset text-decoration-none hover-primary">Terms of Service</a></li>
-                        <li><a href="/contact" class="text-reset text-decoration-none hover-primary">Contact & Support</a></li>
+                        <li><a href="/about" class="text-reset text-decoration-none hover-primary">हमारे बारे में</a></li>
+                        <li><a href="/contact" class="text-reset text-decoration-none hover-primary">हमारे साथ विज्ञापन करें</a></li>
+                        <li><a href="/privacy" class="text-reset text-decoration-none hover-primary">गोपनीयता नीति</a></li>
+                        <li><a href="/terms" class="text-reset text-decoration-none hover-primary">सेवा की शर्तें</a></li>
+                        <li><a href="/contact" class="text-reset text-decoration-none hover-primary">संपर्क और सहायता</a></li>
                     </ul>
-                </div>
-                
-                <!-- App Links / Newsletter -->
-                <div class="col-md-4 col-lg-4">
-                    <h6 class="fw-bold text-uppercase mb-3">Download Our App</h6>
-                    <p class="text-muted small">Stay updated on the go with real-time push alerts, offline articles read-time, and video digests.</p>
-                    <div class="d-flex gap-2 mb-3">
-                        <a href="#" class="btn btn-dark btn-sm rounded-3 py-2 px-3 d-flex align-items-center gap-2">
-                            <i class="fab fa-apple fs-4"></i>
-                            <span class="text-start" style="line-height:1.1;">
-                                <small class="text-muted fs-8 d-block">Download on the</small>
-                                <span class="fw-bold fs-7">App Store</span>
-                            </span>
-                        </a>
-                        <a href="#" class="btn btn-dark btn-sm rounded-3 py-2 px-3 d-flex align-items-center gap-2">
-                            <i class="fab fa-google-play fs-4"></i>
-                            <span class="text-start" style="line-height:1.1;">
-                                <small class="text-muted fs-8 d-block">Get it on</small>
-                                <span class="fw-bold fs-7">Google Play</span>
-                            </span>
-                        </a>
-                    </div>
                 </div>
             </div>
             
@@ -251,11 +232,11 @@
             
             <div class="row align-items-center">
                 <div class="col-md-6 text-center text-md-start">
-                    <p class="mb-0 text-muted small">&copy; 2026 The Uttarakhand Now. All Rights Reserved. Designed in high fidelity.</p>
+                    <p class="mb-0 text-muted small">&copy; {{ date('Y') }} {{ $siteSettings->site_name ?? 'द उत्तराखंड नाउ' }}। सर्वाधिकार सुरक्षित।</p>
                 </div>
                 <div class="col-md-6 text-center text-md-end mt-2 mt-md-0">
-                    <a href="/archive" class="text-reset text-decoration-none hover-primary small me-3"><i class="fas fa-history me-1"></i> Archive</a>
-                    <a href="/rss" class="text-reset text-decoration-none hover-primary small"><i class="fas fa-rss text-warning me-1"></i> RSS Feed</a>
+                    <a href="/archive" class="text-reset text-decoration-none hover-primary small me-3"><i class="fas fa-history me-1"></i> अभिलेखागार</a>
+                    <a href="/rss" class="text-reset text-decoration-none hover-primary small"><i class="fas fa-rss text-warning me-1"></i> आरएसएस फीड</a>
                 </div>
             </div>
         </div>
@@ -265,19 +246,19 @@
     <nav class="mobile-bottom-nav d-lg-none">
         <a href="/" class="bottom-nav-item {{ request()->is('/') ? 'active' : '' }}">
             <i class="fas fa-home"></i>
-            <span>Home</span>
+            <span>होम</span>
         </a>
         <a href="/category/india" class="bottom-nav-item {{ request()->is('category/*') ? 'active' : '' }}">
             <i class="fas fa-list-ul"></i>
-            <span>Categories</span>
+            <span>श्रेणियाँ</span>
         </a>
         <a href="/live-blog/india-union-budget-2026-analysis" class="bottom-nav-item">
             <i class="fas fa-broadcast-tower text-danger animate-pulse"></i>
-            <span>Live Blog</span>
+            <span>लाइव ब्लॉग</span>
         </a>
         <a href="/videos" class="bottom-nav-item {{ request()->is('videos') ? 'active' : '' }}">
             <i class="fas fa-play-circle"></i>
-            <span>Videos</span>
+            <span>वीडियो</span>
         </a>
     </nav>
 
@@ -286,23 +267,23 @@
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content rounded-4 border-0 shadow">
                 <div class="modal-header border-0 pb-0">
-                    <h5 class="modal-title fw-bold">Sign In to Rivaaz</h5>
+                    <h5 class="modal-title fw-bold">रीवाज़ में साइन इन करें</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body py-4">
                     <form onsubmit="event.preventDefault(); alert('Authentication simulated successfully! Redirecting to SaaS Admin Panel...'); window.location.href = '/admin';">
                         <div class="mb-3">
-                            <label class="form-label small fw-semibold">Email address</label>
+                            <label class="form-label small fw-semibold">ईमेल पता</label>
                             <input type="email" class="form-control rounded-3" placeholder="name@example.com" required>
                         </div>
                         <div class="mb-3">
-                            <label class="form-label small fw-semibold">Password</label>
+                            <label class="form-label small fw-semibold">पासवर्ड</label>
                             <input type="password" class="form-control rounded-3" required>
                         </div>
-                        <button type="submit" class="btn btn-primary w-100 rounded-pill py-2 fw-bold mt-2">Log In</button>
+                        <button type="submit" class="btn btn-primary w-100 rounded-pill py-2 fw-bold mt-2">लॉग इन</button>
                     </form>
                     <div class="text-center mt-3">
-                        <p class="small text-muted mb-0">Don't have an account? <a href="#" class="fw-bold">Register</a></p>
+                        <p class="small text-muted mb-0">क्या आपका खाता नहीं है? <a href="#" class="fw-bold">पंजीकरण करें</a></p>
                     </div>
                 </div>
             </div>

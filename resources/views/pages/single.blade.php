@@ -9,9 +9,11 @@
     <!-- 1. Breadcrumbs -->
     <nav aria-label="breadcrumb" class="mb-3">
         <ol class="breadcrumb small fw-semibold">
-            <li class="breadcrumb-item"><a href="/">Home</a></li>
-            <li class="breadcrumb-item"><a href="/category/{{ $article['category'] }}">{{ ucfirst($article['category']) }}</a></li>
+            <li class="breadcrumb-item"><a href="/">होम</a></li>
+            <li class="breadcrumb-item"><a href="/category/{{ $article['category'] }}">{{ $article['category_name'] ?? ucfirst($article['category']) }}</a></li>
+            @if(!empty($article['subcategory']))
             <li class="breadcrumb-item"><a href="/category/{{ $article['category'] }}/{{ strtolower(str_replace(' ', '-', $article['subcategory'])) }}">{{ $article['subcategory'] }}</a></li>
+            @endif
             <li class="breadcrumb-item active text-truncate" aria-current="page" style="max-width:250px;">{{ $article['title'] }}</li>
         </ol>
     </nav>
@@ -20,12 +22,11 @@
         <!-- Social Share Sticky (Left Col - 1 Grid Unit Desktop Only) -->
         <div class="col-lg-1 d-none d-lg-block">
             <div class="share-sticky text-center">
-                <small class="text-muted text-uppercase fw-bold d-block mb-2" style="font-size:0.6rem; letter-spacing:0.5px;">Share</small>
-                <a href="#" class="share-btn" aria-label="Share Facebook" onclick="event.preventDefault(); alert('Sharing to Facebook...');"><i class="fab fa-facebook-f"></i></a>
-                <a href="#" class="share-btn" aria-label="Share Twitter" onclick="event.preventDefault(); alert('Sharing to Twitter...');"><i class="fab fa-twitter"></i></a>
-                <a href="#" class="share-btn" aria-label="Share WhatsApp" onclick="event.preventDefault(); alert('Sharing to WhatsApp...');"><i class="fab fa-whatsapp"></i></a>
-                <a href="#" class="share-btn" aria-label="Share LinkedIn" onclick="event.preventDefault(); alert('Sharing to LinkedIn...');"><i class="fab fa-linkedin-in"></i></a>
-                <a href="#" class="share-btn" aria-label="Bookmark" onclick="event.preventDefault(); alert('Article bookmarked!');"><i class="far fa-bookmark"></i></a>
+                <small class="text-muted text-uppercase fw-bold d-block mb-2" style="font-size:0.6rem; letter-spacing:0.5px;">शेयर करें</small>
+                <a href="https://www.facebook.com/sharer/sharer.php?u={{ urlencode(request()->fullUrl()) }}" target="_blank" class="share-btn" aria-label="Share Facebook"><i class="fab fa-facebook-f"></i></a>
+                <a href="https://twitter.com/intent/tweet?url={{ urlencode(request()->fullUrl()) }}&text={{ urlencode($article['title']) }}" target="_blank" class="share-btn" aria-label="Share Twitter"><i class="fab fa-twitter"></i></a>
+                <a href="https://api.whatsapp.com/send?text={{ urlencode($article['title'] . ' ' . request()->fullUrl()) }}" target="_blank" class="share-btn" aria-label="Share WhatsApp"><i class="fab fa-whatsapp"></i></a>
+                <a href="https://www.linkedin.com/shareArticle?mini=true&url={{ urlencode(request()->fullUrl()) }}&title={{ urlencode($article['title']) }}" target="_blank" class="share-btn" aria-label="Share LinkedIn"><i class="fab fa-linkedin-in"></i></a>
             </div>
         </div>
 
@@ -33,7 +34,7 @@
         <div class="col-lg-7">
             
             <!-- Category Badge -->
-            <span class="badge-category badge-gold mb-2">{{ $article['subcategory'] }}</span>
+            <span class="badge-category badge-gold mb-2">{{ $article['subcategory'] ?: ($article['category_name'] ?? '') }}</span>
             
             <!-- Headline -->
             <h1 class="headline-font fw-extrabold mb-3" style="font-size: 2.5rem; line-height: 1.2;">{{ $article['title'] }}</h1>
@@ -43,38 +44,38 @@
             
             <!-- Clean Metadata Line -->
             <div class="text-muted small mb-4 py-2 border-bottom border-top border-secondary-subtle d-flex flex-wrap align-items-center gap-2">
-                <span>By <a href="/author/{{ $article['author_key'] }}" class="text-reset fw-semibold text-decoration-none hover-primary">{{ $article['author']['name'] }}</a></span>
+                <span>द्वारा <a href="/author/{{ $article['author_key'] }}" class="text-reset fw-semibold text-decoration-none hover-primary">{{ $article['author']['name'] }}</a></span>
                 <span class="text-secondary-subtle">|</span>
                 <span>{{ $article['author']['title'] }}</span>
                 <span class="text-secondary-subtle">|</span>
-                <span>Published: {{ $article['published_at'] }}</span>
+                <span>प्रकाशित: {{ $article['published_at'] }}</span>
                 <span class="text-secondary-subtle">|</span>
                 <span><i class="far fa-clock"></i> {{ $article['read_time'] }}</span>
             </div>
 
-            <!-- Large Cover Image -->
-            <div class="mb-4 rounded-4 overflow-hidden shadow-sm" style="aspect-ratio: 16/9;">
-                <img src="{{ $article['image'] }}" class="w-100 h-100 object-fit-cover" alt="Article banner">
+            <!-- Cover Media (Image or Video) -->
+            <div class="mb-4 rounded-4 overflow-hidden shadow-sm position-relative" style="aspect-ratio: 16/9; background: #000;">
+                @if($article['is_video'])
+                    @if($article['media_type'] === 'video_link' && (str_contains($article['video_url'], 'youtube.com') || str_contains($article['video_url'], 'youtube-nocookie.com') || str_contains($article['video_url'], 'vimeo.com') || str_contains($article['video_url'], 'embed')))
+                        <iframe class="w-100 h-100 border-0" src="{{ $article['video_url'] }}" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                    @else
+                        <video src="{{ $article['video_url'] }}" class="w-100 h-100 object-fit-cover" controls playsinline></video>
+                    @endif
+                @else
+                    <img src="{{ $article['image'] }}" class="w-100 h-100 object-fit-cover" alt="Article banner">
+                @endif
             </div>
-
-
 
             <!-- Article Body Content -->
             <article class="article-container font-size-md" id="articleBodyContainer">
                 <div class="article-body">
                     {!! $article['content'] !!}
-                    
-
-
-                    <p>Subsequent discussions in public domains indicate solid support for the proposed standard deduction revisions. Retail bank indexes reflected positive growths as household liquidity projections improved for the second quarter. Editorial analysts suggest this framework positions structural investments correctly before international trade shifts occur.</p>
-                    
-                    <p>In conclusion, the fiscal strategy achieves essential equilibrium points. While opposition elements point to credit reliance as a potential point of caution, capital expenditure numbers provide heavy security buffers for industrial developers.</p>
                 </div>
             </article>
 
             <!-- Tags section -->
             <div class="d-flex flex-wrap gap-2 border-top border-bottom py-3 my-4 border-secondary-subtle">
-                <span class="fw-bold text-uppercase fs-8 text-muted d-flex align-items-center"><i class="fas fa-tags me-1"></i> Tags:</span>
+                <span class="fw-bold text-uppercase fs-8 text-muted d-flex align-items-center"><i class="fas fa-tags me-1"></i> टैग:</span>
                 @foreach($article['tags'] as $tag)
                 <a href="/tag/{{ strtolower($tag) }}" class="tag-badge">#{{ $tag }}</a>
                 @endforeach
@@ -83,7 +84,7 @@
 
             <!-- Related News & Videos -->
             <section class="mb-4">
-                <h4 class="headline-font mb-3 fw-bold border-bottom pb-2 text-uppercase">Related Stories</h4>
+                <h4 class="headline-font mb-3 fw-bold border-bottom pb-2 text-uppercase">संबंधित खबरें</h4>
                 <div class="row g-3">
                     @foreach($related as $rel)
                     <div class="col-md-4">

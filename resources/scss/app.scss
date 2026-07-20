@@ -1101,8 +1101,7 @@ a {
   border: 1px solid var(--border-color);
   border-radius: 10px;
   overflow: hidden;
-  height: 100%;
-  min-height: 140px;
+  height: 135px;
   transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
   
   &:hover {
@@ -1113,6 +1112,7 @@ a {
   
   .latest-card-img-wrap {
     width: 38%;
+    height: 100%;
     flex-shrink: 0;
     position: relative;
     overflow: hidden;
@@ -1121,6 +1121,7 @@ a {
       width: 100%;
       height: 100%;
       object-fit: cover;
+      object-position: center;
       transition: transform 0.4s ease;
     }
   }
