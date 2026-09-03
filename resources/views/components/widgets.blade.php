@@ -1,9 +1,16 @@
 @php
+    $hasArticlesTable = \Illuminate\Support\Facades\Schema::hasTable('articles');
     $stocks = \App\Support\MockData::getStocks();
     $weather = \App\Support\MockData::getWeather();
-    $trending = \App\Models\Article::with('category')->orderByDesc('views')->take(5)->get();
-    $liveUpdates = \App\Models\Article::latest()->take(4)->get();
-    $videos = \App\Models\Article::whereIn('media_type', ['video_file', 'video_link'])->orderByDesc('created_at')->take(4)->get();
+    $trending = $hasArticlesTable
+        ? \App\Models\Article::with('category')->orderByDesc('views')->take(5)->get()
+        : collect();
+    $liveUpdates = $hasArticlesTable
+        ? \App\Models\Article::latest()->take(4)->get()
+        : collect();
+    $videos = $hasArticlesTable
+        ? \App\Models\Article::whereIn('media_type', ['video_file', 'video_link'])->orderByDesc('created_at')->take(4)->get()
+        : collect();
 @endphp
 
 <!-- 1. Stock Widget -->

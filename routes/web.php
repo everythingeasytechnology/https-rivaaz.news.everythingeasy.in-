@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Category;
 use App\Models\Article;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Schema;
 
 function formatArticleForView($articleModel) {
     if (!$articleModel) return null;
@@ -85,10 +86,14 @@ function formatArticleForView($articleModel) {
 
 // 1. Home Page Route
 Route::get('/', function () {
-    $dbArticles = Article::with(['category.parent', 'author'])->get();
+    $dbArticles = Schema::hasTable('articles')
+        ? Article::with(['category.parent', 'author'])->get()
+        : collect();
     $articles = $dbArticles->map(fn($a) => formatArticleForView($a))->toArray();
 
-    $dbCategories = \App\Models\Category::whereNull('parent_id')->get();
+    $dbCategories = Schema::hasTable('categories')
+        ? Category::whereNull('parent_id')->get()
+        : collect();
     if ($dbCategories->count() > 0) {
         $categoriesList = $dbCategories->map(fn($c) => [
             'name' => $c->name,
@@ -109,9 +114,18 @@ Route::get('/', function () {
     $videos = MockData::getVideos();
     $tags = MockData::getTrendingTags();
     
-    // Split articles into featured, trending, category list
-    $featured = collect($articles)->firstWhere('is_featured', true) ?? reset($articles);
-    $others = collect($articles)->reject(fn($a) => $a['id'] === $featured['id'])->values()->all();
+    // Split articles into featured and remaining stories, while allowing an empty homepage state.
+    $featured = collect($articles)->firstWhere('is_featured', true);
+    if (!$featured && !empty($articles)) {
+        $featured = $articles[0];
+    }
+
+    $others = $featured
+        ? collect($articles)
+            ->reject(fn($a) => ($a['id'] ?? null) === ($featured['id'] ?? null))
+            ->values()
+            ->all()
+        : [];
     
     return view('pages.home', compact('featured', 'others', 'articles', 'webStories', 'videos', 'tags', 'categoriesList'));
 })->name('home');

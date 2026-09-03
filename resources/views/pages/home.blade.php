@@ -11,6 +11,7 @@
             <!-- Left Column: TOP NEWS (Large Story + horizontal items) -->
             <div class="col-lg-5 col-md-12">
                 <h5 class="headline-font mb-3 fw-bold text-uppercase border-bottom pb-2 border-dark border-2" style="font-size:0.95rem; letter-spacing:0.5px;">मुख्य समाचार</h5>
+                @if($featured)
                 <div class="mb-4 d-flex flex-column">
                     <a href="/news/{{ $featured['slug'] }}" class="order-2 order-md-1 position-relative d-block">
                         <img src="{{ $featured['image'] }}" class="w-100 rounded-3 mb-3" style="aspect-ratio: 16/10; object-fit: cover;" alt="{{ $featured['title'] }}">
@@ -28,6 +29,12 @@
                         <a href="/category/{{ $featured['category'] }}" class="category-label">{{ $featured['category_name'] ?? ucfirst($featured['category']) }}</a>
                     </div>
                 </div>
+                @else
+                <div class="rounded-3 border border-secondary-subtle bg-body-tertiary p-4 text-center text-muted">
+                    <h6 class="fw-bold mb-2 text-body">अभी कोई मुख्य समाचार उपलब्ध नहीं है</h6>
+                    <p class="mb-0 small">जैसे ही नई खबरें प्रकाशित होंगी, वे यहां दिखाई देंगी।</p>
+                </div>
+                @endif
 
                 @foreach(array_slice($others, 0, 2) as $article)
                 <div class="news-horizontal-row border-0 border-top py-3 border-secondary-subtle">
@@ -248,7 +255,7 @@
         </h3>
         
         <div class="row g-4" id="loadMoreContainer">
-            @foreach(array_slice($others, 0, 6) as $article)
+            @forelse(array_slice($others, 0, 6) as $article)
             <div class="col-12 col-md-6 col-lg-4">
                 <div class="latest-news-horizontal-card">
                     <div class="latest-card-img-wrap position-relative">
@@ -268,7 +275,13 @@
                     </div>
                 </div>
             </div>
-            @endforeach
+            @empty
+            <div class="col-12">
+                <div class="rounded-3 border border-secondary-subtle bg-body-tertiary p-4 text-center text-muted">
+                    ताज़ा ख़बरें अभी उपलब्ध नहीं हैं।
+                </div>
+            </div>
+            @endforelse
         </div>
         
         @if(count($others) > 6)

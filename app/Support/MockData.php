@@ -2,6 +2,8 @@
 
 namespace App\Support;
 
+use Illuminate\Support\Facades\Schema;
+
 class MockData
 {
     /**
@@ -80,7 +82,9 @@ class MockData
      */
     public static function getWeather(): array
     {
-        $siteSettings = \App\Models\Setting::first();
+        $siteSettings = Schema::hasTable('settings')
+            ? \App\Models\Setting::first()
+            : null;
         $apiKey = $siteSettings->weather_api_key ?? env('WEATHER_API_KEY');
         $citiesString = $siteSettings->weather_locations ?? 'Dehradun, Haridwar, Nainital, New Delhi';
         $cities = array_filter(array_map('trim', explode(',', $citiesString)));
