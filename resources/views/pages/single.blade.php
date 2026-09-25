@@ -5,6 +5,32 @@
 @section('meta_image', $article['image'])
 @section('og_type', 'article')
 
+@section('styles')
+<style>
+    /* Editor content may contain fixed dimensions; keep images phone-friendly
+       even when the compiled Vite stylesheet has not yet been rebuilt. */
+    .article-body img {
+        max-width: 100% !important;
+        height: auto !important;
+    }
+    .article-body figure {
+        max-width: 100%;
+        margin-left: 0;
+        margin-right: 0;
+    }
+    @media (max-width: 767.98px) {
+        .article-body img {
+            width: auto !important;
+            max-height: 65vh !important;
+            display: block;
+            margin-left: auto !important;
+            margin-right: auto !important;
+            object-fit: contain;
+        }
+    }
+</style>
+@endsection
+
 @section('content')
 <div class="container-xl">
     

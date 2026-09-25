@@ -33,6 +33,7 @@ class AdminUserController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
+            'phone' => ['nullable', 'string', 'max:20', 'regex:/^[0-9+()\-\s]+$/'],
             'password' => 'required|string|min:6|confirmed',
             'role' => 'required|string|in:super_admin,editor',
         ]);
@@ -40,6 +41,7 @@ class AdminUserController extends Controller
         User::create([
             'name' => $request->name,
             'email' => $request->email,
+            'phone' => $request->phone,
             'password' => bcrypt($request->password),
             'role' => $request->role,
         ]);
@@ -63,6 +65,7 @@ class AdminUserController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users,email,' . $user->id,
+            'phone' => ['nullable', 'string', 'max:20', 'regex:/^[0-9+()\-\s]+$/'],
             'password' => 'nullable|string|min:6|confirmed',
             'role' => 'required|string|in:super_admin,editor',
         ]);
@@ -70,6 +73,7 @@ class AdminUserController extends Controller
         $data = [
             'name' => $request->name,
             'email' => $request->email,
+            'phone' => $request->phone,
             'role' => $request->role,
         ];
 

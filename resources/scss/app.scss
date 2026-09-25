@@ -796,6 +796,34 @@ a {
   }
 }
 
+// Content pasted from the admin editor can contain fixed pixel dimensions.
+// Keep that media inside the article column on phones and narrow screens.
+.article-body {
+  overflow-wrap: anywhere;
+
+  img {
+    max-width: 100% !important;
+    height: auto !important;
+  }
+
+  figure {
+    max-width: 100%;
+    margin-left: 0;
+    margin-right: 0;
+  }
+
+  @media (max-width: 767.98px) {
+    img {
+      width: auto !important;
+      max-height: 65vh !important;
+      display: block;
+      margin-left: auto !important;
+      margin-right: auto !important;
+      object-fit: contain;
+    }
+  }
+}
+
 .share-sticky {
   position: sticky;
   top: 100px;

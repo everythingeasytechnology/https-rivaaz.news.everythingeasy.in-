@@ -35,6 +35,15 @@
                     @enderror
                 </div>
 
+                <!-- Phone Number -->
+                <div class="mb-3">
+                    <label for="phone" class="form-label small fw-bold text-uppercase">Phone Number</label>
+                    <input type="tel" name="phone" id="phone" class="form-control rounded-3 @error('phone') is-invalid @enderror" placeholder="e.g. +91 98765 43210" value="{{ old('phone', $user->phone) }}" inputmode="tel" autocomplete="tel">
+                    @error('phone')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                </div>
+
                 <!-- Password Box (Optional on edit) -->
                 <div class="p-4 rounded-4 bg-body-tertiary border mb-4">
                     <h6 class="fw-bold mb-2">Change Password (Optional)</h6>

@@ -24,6 +24,7 @@
                 <tr>
                     <th scope="col">Name</th>
                     <th scope="col">Email Address</th>
+                    <th scope="col">Phone Number</th>
                     <th scope="col">Role</th>
                     <th scope="col">Joined Date</th>
                     <th scope="col" class="text-end">Actions</th>
@@ -39,6 +40,7 @@
                             @endif
                         </td>
                         <td>{{ $user->email }}</td>
+                        <td>{{ $user->phone ?: '—' }}</td>
                         <td>
                             @if($user->role === 'super_admin')
                                 <span class="badge bg-danger-subtle text-danger border border-danger-subtle rounded-pill">Super Admin</span>
