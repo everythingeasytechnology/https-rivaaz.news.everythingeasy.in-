@@ -5,22 +5,44 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     
-    <!-- SEO and Discovery Meta Tags -->
+    <!-- Comprehensive SEO and Social Sharing (OpenGraph & Twitter Card) Meta Tags -->
     <title>@yield('title', ($siteSettings->site_name ?? 'The Uttarakhand Now') . ' - Premium News Portal')</title>
-    <meta name="description" content="@yield('meta_description', $siteSettings->footer_text ?? 'The Uttarakhand Now is a premium, multi-tenant news portal SaaS delivering real-time coverage on Politics, Business, Tech, Sports, and Lifestyle.')">
-    <meta name="keywords" content="@yield('meta_keywords', 'news, india, updates, politics, business, tech, sports, entertainment')">
-    <meta name="robots" content="index, follow">
+    <meta name="description" content="@yield('meta_description', $siteSettings->footer_text ?? 'The Uttarakhand Now is a premium, multi-tenant news portal delivering real-time coverage.')">
+    <meta name="keywords" content="@yield('meta_keywords', 'news, india, updates, politics, business, tech, sports, entertainment, uttarakhand news')">
+    <meta name="robots" content="index, follow, max-image-preview:large">
     <meta name="googlebot" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
-    <meta property="og:locale" content="en_US">
-    <meta property="og:type" content="website">
-    <meta property="og:title" content="@yield('title', ($siteSettings->site_name ?? 'The Uttarakhand Now') . ' - Premium News Portal')">
-    <meta property="og:description" content="@yield('meta_description', 'Real-time high-fidelity coverage.')">
-    <meta property="og:url" content="{{ request()->url() }}">
+    <link rel="canonical" href="{{ request()->url() }}">
+
+    <!-- OpenGraph Meta Tags for WhatsApp, Facebook, LinkedIn, Telegram Rich Cards -->
     <meta property="og:site_name" content="{{ $siteSettings->site_name ?? 'The Uttarakhand Now' }}">
+    <meta property="og:locale" content="hi_IN">
+    <meta property="og:type" content="@yield('og_type', 'website')">
+    <meta property="og:url" content="{{ request()->fullUrl() }}">
+    <meta property="og:title" content="@yield('title', ($siteSettings->site_name ?? 'The Uttarakhand Now'))">
+    <meta property="og:description" content="@yield('meta_description', $siteSettings->footer_text ?? 'Real-time high-fidelity news coverage.')">
+    @php
+        $shareImage = trim(View::yieldContent('meta_image'));
+        if (empty($shareImage)) {
+            $shareImage = !empty($siteSettings->logo_path) ? asset($siteSettings->logo_path) : asset('/logo.jpeg');
+        } elseif (!str_starts_with($shareImage, 'http://') && !str_starts_with($shareImage, 'https://')) {
+            $shareImage = asset($shareImage);
+        }
+    @endphp
+    <meta property="og:image" content="{{ $shareImage }}">
+    <meta property="og:image:secure_url" content="{{ $shareImage }}">
+    <meta property="og:image:alt" content="@yield('title', ($siteSettings->site_name ?? 'The Uttarakhand Now'))">
+
+    <!-- Twitter / X Card Meta Tags -->
     <meta name="twitter:card" content="summary_large_image">
-    
-    <!-- FontAwesome for Premium Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <meta name="twitter:site" content="@uttarakhandnow">
+    <meta name="twitter:creator" content="@uttarakhandnow">
+    <meta name="twitter:title" content="@yield('title', ($siteSettings->site_name ?? 'The Uttarakhand Now'))">
+    <meta name="twitter:description" content="@yield('meta_description', $siteSettings->footer_text ?? 'Real-time high-fidelity news coverage.')">
+    <meta name="twitter:image" content="{{ $shareImage }}">
+    <meta name="twitter:image:alt" content="@yield('title', ($siteSettings->site_name ?? 'The Uttarakhand Now'))">
+
+    <!-- FontAwesome 6.5.2 for Latest X / Twitter & Social Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     
     <!-- Inline theme script to prevent dark mode flicker -->
     <script>
@@ -37,6 +59,40 @@
     <!-- Vite compiled assets -->
     @vite(['resources/scss/app.scss', 'resources/js/app.js'])
     @yield('styles')
+
+    <style>
+        .theme-toggle-btn {
+            display: inline-flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            border: none !important;
+            background: transparent !important;
+            box-shadow: none !important;
+            color: inherit !important;
+            border-radius: 50% !important;
+            width: 36px;
+            height: 36px;
+            padding: 0 !important;
+            text-decoration: none !important;
+            outline: none !important;
+            transition: transform 0.2s ease, background-color 0.2s ease !important;
+        }
+        .theme-toggle-btn:hover,
+        .theme-toggle-btn:focus,
+        .theme-toggle-btn:active,
+        .theme-toggle-btn:focus-visible {
+            background-color: rgba(128, 128, 128, 0.12) !important;
+            color: var(--bs-primary, #E50000) !important;
+            transform: scale(1.08);
+            box-shadow: none !important;
+            outline: none !important;
+        }
+    </style>
+
+    <!-- Google AdSense Direct Script / Verification -->
+    @if(!empty($siteSettings->adsense_script) && ($siteSettings->adsense_enabled ?? true))
+        {!! $siteSettings->adsense_script !!}
+    @endif
 </head>
 <body>
 
@@ -44,6 +100,13 @@
     <div class="reading-progress-container d-none" id="readingProgress">
         <div class="progress-bar" id="readingProgressBar"></div>
     </div>
+
+    <!-- Google AdSense Header Ad Banner -->
+    @if(!empty($siteSettings->adsense_header_code) && ($siteSettings->adsense_enabled ?? true))
+        <div class="container-xl my-2 text-center adsense-header-container">
+            {!! $siteSettings->adsense_header_code !!}
+        </div>
+    @endif
 
     <!-- 1. Top Header -->
     <header class="top-header d-none d-lg-block">
@@ -114,8 +177,8 @@
                 <!-- <button class="btn btn-sm btn-outline-secondary border-0" id="mobileSearchBtn" data-bs-toggle="collapse" data-bs-target="#searchCollapse" aria-label="Search">
                     <i class="fas fa-search fs-6"></i>
                 </button> -->
-                <button class="btn btn-sm btn-outline-secondary border-0 theme-toggle-btn" aria-label="Toggle theme">
-                    <i class="fas fa-moon fs-6"></i>
+                <button class="btn btn-link text-reset p-1 border-0 theme-toggle-btn" aria-label="Toggle theme">
+                    <i class="fas fa-moon fs-5"></i>
                 </button>
                 <button class="navbar-toggler border-0 shadow-none p-0" type="button" data-bs-toggle="collapse" data-bs-target="#mainMenu">
                     <span class="navbar-toggler-icon"></span>
@@ -179,8 +242,25 @@
         </div>
     </nav>
     
-    <!-- Mobile Search collapse -->
-
+    <!-- Manual Top Leaderboard Banner Ad -->
+    @if(!empty($siteSettings) && ($siteSettings->ad_top_banner_enabled ?? false) && (!empty($siteSettings->ad_top_banner_image) || !empty($siteSettings->ad_top_banner_code)))
+        <div class="container-xl pt-3 pb-1 text-center manual-ad-top-banner">
+            <div class="position-relative d-inline-block w-100" style="max-width: 970px;">
+                <div class="d-flex justify-content-center align-items-center mb-1 px-1">
+                    <span class="text-uppercase text-muted fw-semibold" style="font-size: 0.60rem; letter-spacing: 0.5px;">विज्ञापन / ADVERTISEMENT</span>
+                </div>
+                @if(!empty($siteSettings->ad_top_banner_code))
+                    <div class="overflow-hidden rounded-3 border bg-body-tertiary text-center p-1 shadow-sm">
+                        {!! $siteSettings->ad_top_banner_code !!}
+                    </div>
+                @elseif(!empty($siteSettings->ad_top_banner_image))
+                    <a href="{{ $siteSettings->ad_top_banner_link ?: '#' }}" target="_blank" rel="noopener noreferrer" class="d-inline-block overflow-hidden rounded-3 border shadow-sm bg-body-tertiary">
+                        <img src="{{ $siteSettings->ad_top_banner_image }}" alt="Top Banner Advertisement" class="img-fluid" style="max-height: 120px; object-fit: contain;">
+                    </a>
+                @endif
+            </div>
+        </div>
+    @endif
 
     <!-- 3. Main Content Grid -->
     <main class="py-4 fade-in-up">
@@ -267,7 +347,7 @@
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content rounded-4 border-0 shadow">
                 <div class="modal-header border-0 pb-0">
-                    <h5 class="modal-title fw-bold">रीवाज़ में साइन इन करें</h5>
+                    <h5 class="modal-title fw-bold">उत्तराखंड नाउ में साइन इन करें</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body py-4">
@@ -290,5 +370,83 @@
         </div>
     </div>
 
+    <!-- Share Toast Notification -->
+    <div class="toast-container position-fixed bottom-0 end-0 p-3" style="z-index: 9999;">
+        <div id="shareToast" class="toast align-items-center text-bg-dark border-0 rounded-4 shadow-lg" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="d-flex">
+                <div class="toast-body d-flex align-items-center gap-2">
+                    <i class="fas fa-check-circle text-success fs-5"></i>
+                    <span id="shareToastMessage">खबर का लिंक कॉपी कर लिया गया है!</span>
+                </div>
+                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Global Share Script -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            document.addEventListener('click', function(e) {
+                const btn = e.target.closest('.copy-link-btn');
+                if (!btn) return;
+                
+                e.preventDefault();
+                e.stopPropagation();
+                
+                const url = btn.getAttribute('data-url') || window.location.href;
+                const title = btn.getAttribute('data-title') || document.title;
+                
+                // If on mobile and user clicked a general share button
+                if (navigator.share && window.innerWidth <= 768 && btn.classList.contains('prefer-native-share')) {
+                    navigator.share({
+                        title: title,
+                        url: url
+                    }).catch(function() {
+                        copyToClipboard(url);
+                    });
+                } else {
+                    copyToClipboard(url);
+                }
+            });
+            
+            function copyToClipboard(text) {
+                if (navigator.clipboard && window.isSecureContext) {
+                    navigator.clipboard.writeText(text).then(showToast).catch(function() {
+                        fallbackCopy(text);
+                    });
+                } else {
+                    fallbackCopy(text);
+                }
+            }
+            
+            function fallbackCopy(text) {
+                const textArea = document.createElement("textarea");
+                textArea.value = text;
+                textArea.style.position = "fixed";
+                textArea.style.opacity = "0";
+                document.body.appendChild(textArea);
+                textArea.focus();
+                textArea.select();
+                try {
+                    document.execCommand('copy');
+                    showToast();
+                } catch (err) {
+                    // ignore
+                }
+                document.body.removeChild(textArea);
+            }
+            
+            function showToast() {
+                const toastEl = document.getElementById('shareToast');
+                if (toastEl && typeof bootstrap !== 'undefined' && bootstrap.Toast) {
+                    const toast = new bootstrap.Toast(toastEl, { delay: 2500 });
+                    toast.show();
+                } else {
+                    alert('खबर का लिंक कॉपी हो गया है!');
+                }
+            }
+        });
+    </script>
+    @yield('scripts')
 </body>
 </html>

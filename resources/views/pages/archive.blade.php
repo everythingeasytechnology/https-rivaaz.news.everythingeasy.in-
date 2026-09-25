@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'समाचार अभिलेखागार - रीवाज़ क्रॉनिकल')
+@section('title', 'समाचार अभिलेखागार - उत्तराखंड नाउ')
 
 @section('content')
 <div class="container-xl">
@@ -54,7 +54,15 @@
                         <span class="badge bg-secondary-subtle text-secondary me-2 fs-9">{{ $article['published_at'] }}</span>
                         <a href="/news/{{ $article['slug'] }}" class="fw-bold text-reset hover-primary text-decoration-none">{{ $article['title'] }}</a>
                     </div>
-                    <a href="/news/{{ $article['slug'] }}" class="btn btn-sm btn-outline-secondary rounded-pill py-1 px-3 fw-bold fs-8">पढ़ें</a>
+                    <div class="d-flex align-items-center gap-2 flex-shrink-0">
+                        <a href="https://api.whatsapp.com/send?text={{ urlencode($article['title'] . ' ' . url('/news/' . $article['slug'])) }}" target="_blank" class="text-success text-decoration-none fs-6" title="व्हाट्सएप पर शेयर करें">
+                            <i class="fab fa-whatsapp"></i>
+                        </a>
+                        <button type="button" class="btn btn-sm p-0 text-muted border-0 copy-link-btn" data-url="{{ url('/news/' . $article['slug']) }}" data-title="{{ $article['title'] }}" title="शेयर करें">
+                            <i class="fas fa-share-alt"></i>
+                        </button>
+                        <a href="/news/{{ $article['slug'] }}" class="btn btn-sm btn-outline-secondary rounded-pill py-1 px-3 fw-bold fs-8">पढ़ें</a>
+                    </div>
                 </div>
                 @endforeach
             </div>

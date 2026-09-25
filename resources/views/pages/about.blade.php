@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'About Us - Rivaaz Chronicle')
+@section('title', 'About Us - Uttarakhand Now')
 
 @section('content')
 <div class="container-xl">
@@ -8,14 +8,14 @@
     <!-- About Header -->
     <div class="bg-body-tertiary p-4 rounded-4 mb-4 border border-secondary-subtle">
         <h1 class="headline-font fw-extrabold text-primary mb-2">Our Mission & Legacy</h1>
-        <p class="text-muted mb-0 small">Rivaaz Chronicle is a premium, multi-tenant digital publication SaaS delivering verified bulletins and analysis.</p>
+        <p class="text-muted mb-0 small">Uttarakhand Now is a premium, multi-tenant digital publication SaaS delivering verified bulletins and analysis.</p>
     </div>
 
     <div class="row g-4 mb-5">
         <!-- Main details -->
         <div class="col-lg-8">
             <h3 class="headline-font fw-bold mb-3">Independent. Verified. Real-time.</h3>
-            <p>Rivaaz Chronicle is built on the core foundation of public accountability, ethical reporting, and tech-driven delivery systems. Designed to operate across multiple tenants, our SaaS framework supports dozens of localized bureaus to customize their content, layout hierarchies, and brand guidelines seamlessly.</p>
+            <p>Uttarakhand Now is built on the core foundation of public accountability, ethical reporting, and tech-driven delivery systems. Designed to operate across multiple tenants, our SaaS framework supports dozens of localized bureaus to customize their content, layout hierarchies, and brand guidelines seamlessly.</p>
             
             <p>Our editorial desks cover a wide breadth of domains, bringing readers high-fidelity galleries, interactive live updates, and detailed video reviews on topics spanning national politics, global economics, technology evolutions, wellness, and local sports.</p>
             
@@ -39,27 +39,40 @@
                     <span>Editorial Board</span>
                 </div>
                 <div class="d-flex flex-column gap-3 fs-7">
-                    <div class="d-flex align-items-center gap-3">
-                        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=80&q=80" class="rounded-circle border" style="width:45px;height:45px;object-fit:cover;" alt="Avatar">
-                        <div>
-                            <strong class="d-block text-secondary-emphasis">Rajesh Sharma</strong>
-                            <small class="text-muted">Chief Political Director</small>
+                    @forelse($editorialMembers ?? [] as $member)
+                        <div class="d-flex align-items-center gap-3">
+                            <img src="{{ $member->avatar ?: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=150&q=80' }}" 
+                                 class="rounded-circle border object-fit-cover shadow-sm flex-shrink-0" 
+                                 style="width:45px;height:45px;" 
+                                 alt="{{ $member->name }}">
+                            <div>
+                                <strong class="d-block text-secondary-emphasis">{{ $member->name }}</strong>
+                                <small class="text-muted">{{ $member->designation }}</small>
+                            </div>
                         </div>
-                    </div>
-                    <div class="d-flex align-items-center gap-3">
-                        <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=80&q=80" class="rounded-circle border" style="width:45px;height:45px;object-fit:cover;" alt="Avatar">
-                        <div>
-                            <strong class="d-block text-secondary-emphasis">Ananya Sen</strong>
-                            <small class="text-muted">Technology Desk Lead</small>
+                    @empty
+                        <div class="d-flex align-items-center gap-3">
+                            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=80&q=80" class="rounded-circle border" style="width:45px;height:45px;object-fit:cover;" alt="Rajesh Sharma">
+                            <div>
+                                <strong class="d-block text-secondary-emphasis">Rajesh Sharma</strong>
+                                <small class="text-muted">Chief Political Director</small>
+                            </div>
                         </div>
-                    </div>
-                    <div class="d-flex align-items-center gap-3">
-                        <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=80&q=80" class="rounded-circle border" style="width:45px;height:45px;object-fit:cover;" alt="Avatar">
-                        <div>
-                            <strong class="d-block text-secondary-emphasis">Vikram Malhotra</strong>
-                            <small class="text-muted">Editor-in-Chief (Finance)</small>
+                        <div class="d-flex align-items-center gap-3">
+                            <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=80&q=80" class="rounded-circle border" style="width:45px;height:45px;object-fit:cover;" alt="Ananya Sen">
+                            <div>
+                                <strong class="d-block text-secondary-emphasis">Ananya Sen</strong>
+                                <small class="text-muted">Technology Desk Lead</small>
+                            </div>
                         </div>
-                    </div>
+                        <div class="d-flex align-items-center gap-3">
+                            <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=80&q=80" class="rounded-circle border" style="width:45px;height:45px;object-fit:cover;" alt="Vikram Malhotra">
+                            <div>
+                                <strong class="d-block text-secondary-emphasis">Vikram Malhotra</strong>
+                                <small class="text-muted">Editor-in-Chief (Finance)</small>
+                            </div>
+                        </div>
+                    @endforelse
                 </div>
             </div>
 

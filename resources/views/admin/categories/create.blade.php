@@ -63,7 +63,7 @@
                     <!-- Meta Title -->
                     <div class="mb-3">
                         <label for="meta_title" class="form-label small fw-semibold">Meta Title</label>
-                        <input type="text" name="meta_title" id="meta_title" class="form-control rounded-3" placeholder="e.g. Science & Space Technology News - Rivaaz" value="{{ old('meta_title') }}">
+                        <input type="text" name="meta_title" id="meta_title" class="form-control rounded-3" placeholder="e.g. Science & Space Technology News - Uttarakhand Now" value="{{ old('meta_title') }}">
                     </div>
 
                     <!-- Meta Description -->
@@ -93,7 +93,7 @@
             <h6 class="fw-bold mb-3"><i class="fab fa-google text-danger me-2"></i>Google Search Preview</h6>
             <div class="border rounded-3 p-3 bg-white text-dark shadow-sm" style="font-family: Arial, sans-serif;">
                 <div class="text-truncate text-primary fs-6 mb-1" id="seo-preview-title" style="color: #1a0dab !important; font-weight: normal; cursor: pointer; text-decoration: none;">
-                    New Category News - Rivaaz Chronicle
+                    New Category News - Uttarakhand Now
                 </div>
                 <div class="text-truncate text-success small mb-1" style="color: #006621 !important;">
                     http://127.0.0.1:8000/category/<span id="seo-preview-slug">new-category</span>
@@ -145,7 +145,7 @@
         slugInput.dataset.edited = 'false';
 
         function updatePreview() {
-            previewTitle.textContent = metaTitleInput.value || (nameInput.value ? nameInput.value + ' News - Rivaaz Chronicle' : 'New Category News - Rivaaz Chronicle');
+            previewTitle.textContent = metaTitleInput.value || (nameInput.value ? nameInput.value + ' News - Uttarakhand Now' : 'New Category News - Uttarakhand Now');
             previewDesc.textContent = metaDescInput.value || 'Latest updates and news from the new category page.';
         }
     });

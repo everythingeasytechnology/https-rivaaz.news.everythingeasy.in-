@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', ($seo['meta_title'] ?? $subcategory_slug . ' - ' . $category['name'] . ' समाचार - रीवाज़ क्रॉनिकल'))
+@section('title', ($seo['meta_title'] ?? $subcategory_slug . ' - ' . $category['name'] . ' समाचार - उत्तराखंड नाउ'))
 @section('meta_description', ($seo['meta_description'] ?? $subcategory_slug . ' पर वास्तविक समय की रिपोर्टिंग और गहन विश्लेषण।'))
 @section('meta_keywords', ($seo['meta_keywords'] ?? strtolower($subcategory_slug) . ', ' . strtolower($category['name']) . ', समाचार'))
 
@@ -43,10 +43,20 @@
                                 <a href="/news/{{ $article['slug'] }}">{{ $article['title'] }}</a>
                             </h4>
                             <p class="text-muted small line-clamp-3 mb-3">{{ $article['summary'] }}</p>
-                            <div class="card-meta">
-                                <span><i class="far fa-user me-1"></i> {{ $article['author']['name'] }}</span>
-                                <span>•</span>
-                                <span>{{ $article['read_time'] }}</span>
+                            <div class="card-meta d-flex justify-content-between align-items-center">
+                                <div class="d-flex align-items-center gap-1">
+                                    <span><i class="far fa-user me-1"></i> {{ $article['author']['name'] }}</span>
+                                    <span>•</span>
+                                    <span>{{ $article['read_time'] }}</span>
+                                </div>
+                                <div class="d-flex align-items-center gap-2">
+                                    <a href="https://api.whatsapp.com/send?text={{ urlencode($article['title'] . ' ' . url('/news/' . $article['slug'])) }}" target="_blank" class="text-success text-decoration-none" title="व्हाट्सएप पर शेयर करें">
+                                        <i class="fab fa-whatsapp"></i>
+                                    </a>
+                                    <button type="button" class="btn btn-sm p-0 text-muted border-0 copy-link-btn" data-url="{{ url('/news/' . $article['slug']) }}" data-title="{{ $article['title'] }}" title="शेयर करें">
+                                        <i class="fas fa-share-alt"></i>
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     </div>

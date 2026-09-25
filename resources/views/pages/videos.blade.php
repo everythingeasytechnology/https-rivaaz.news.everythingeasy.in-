@@ -1,13 +1,13 @@
 @extends('layouts.app')
 
-@section('title', 'वीडियो बुलेटिन - रीवाज़ क्रॉनिकल')
+@section('title', 'वीडियो बुलेटिन - उत्तराखंड नाउ')
 
 @section('content')
 <div class="container-xl">
     
-    <!-- Video Portal Header -->
+    <!-- Videos Header -->
     <div class="bg-body-tertiary p-4 rounded-4 mb-4 border border-secondary-subtle">
-        <h1 class="headline-font fw-extrabold text-primary mb-2"><i class="fas fa-play-circle me-2"></i> रीवाज़ टीवी</h1>
+        <h1 class="headline-font fw-extrabold text-primary mb-2"><i class="fas fa-play-circle me-2"></i> उत्तराखंड नाउ टीवी</h1>
         <p class="text-muted mb-0 small">लाइव प्रसारण, साक्षात्कार, वीडियो ब्रीफिंग और विस्तृत जमीनी कवरेज देखें।</p>
     </div>
 
@@ -25,9 +25,18 @@
                 <iframe id="stagePlayer" class="w-100 h-100 border-0 d-none" src="" title="Video Player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen style="z-index: 2;"></iframe>
                 <!-- Local video player -->
                 <video id="stageLocalPlayer" class="w-100 h-100 d-none" controls playsinline style="z-index: 2; object-fit: contain;"></video>
+            <div class="d-flex flex-wrap align-items-center justify-content-between gap-2 mt-3 pb-2 border-bottom border-secondary-subtle">
+                <h2 class="headline-font fw-bold fs-4 mb-0" id="stageTitle">{{ $featured['title'] }}</h2>
+                <div class="d-flex align-items-center gap-2">
+                    <a id="stageWhatsAppShare" href="https://api.whatsapp.com/send?text={{ urlencode($featured['title'] . ' ' . request()->fullUrl()) }}" target="_blank" class="btn btn-sm btn-success rounded-pill px-3 fw-semibold d-inline-flex align-items-center gap-1 shadow-sm" title="व्हाट्सएप">
+                        <i class="fab fa-whatsapp"></i> <span>व्हाट्सएप</span>
+                    </a>
+                    <button type="button" class="btn btn-sm btn-outline-secondary rounded-pill px-3 fw-semibold d-inline-flex align-items-center gap-1 copy-link-btn" data-url="{{ request()->fullUrl() }}" data-title="{{ $featured['title'] }}" title="शेयर करें">
+                        <i class="fas fa-share-alt"></i> <span>शेयर</span>
+                    </button>
+                </div>
             </div>
-            <h2 class="headline-font fw-bold fs-3 mb-2 mt-3" id="stageTitle">{{ $featured['title'] }}</h2>
-            <p class="text-muted small" id="stageMeta">{{ $featured['views'] }} • {{ $featured['date'] }} • {{ $featured['category'] }}</p>
+            <p class="text-muted small mt-2" id="stageMeta">{{ $featured['views'] }} • {{ $featured['date'] }} • {{ $featured['category'] }}</p>
         </div>
 
         <!-- Sidebar Playlist feed (4 units) -->
@@ -100,9 +109,13 @@
         cover.style.backgroundImage = `url('${coverUrl}')`;
         cover.classList.remove('d-none');
         
-        // Update texts
+        // Update texts & share links
         document.getElementById('stageTitle').textContent = title;
         document.getElementById('stageMeta').textContent = `${views} • ${date} • ${category}`;
+        const waBtn = document.getElementById('stageWhatsAppShare');
+        if (waBtn) {
+            waBtn.href = `https://api.whatsapp.com/send?text=${encodeURIComponent(title + ' ' + window.location.href)}`;
+        }
     }
 
     function playStageVideo() {

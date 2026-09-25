@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Page Not Found - Rivaaz Chronicle')
+@section('title', 'Page Not Found - Uttarakhand Now')
 
 @section('content')
 <div class="container-xl py-5 text-center">
@@ -16,7 +16,7 @@
             
             <!-- Inline Search Form -->
             <div class="card border-0 bg-body-tertiary p-4 rounded-4 shadow-sm mb-4 border border-secondary-subtle">
-                <h5 class="fw-bold mb-3"><i class="fas fa-search me-1 text-primary"></i> Search Rivaaz Chronicle</h5>
+                <h5 class="fw-bold mb-3"><i class="fas fa-search me-1 text-primary"></i> Search Uttarakhand Now</h5>
                 <form action="/search" method="GET">
                     <div class="input-group">
                         <input type="text" name="q" class="form-control border-secondary-subtle shadow-none" placeholder="Search keywords (e.g. Budget, AI, Cricket)..." required>

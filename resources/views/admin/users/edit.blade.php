@@ -42,15 +42,25 @@
                     
                     <div class="mb-3">
                         <label for="password" class="form-label small fw-semibold">New Password</label>
-                        <input type="password" name="password" id="password" class="form-control rounded-3 @error('password') is-invalid @enderror" placeholder="••••••••">
-                        @error('password')
-                            <div class="invalid-feedback">{{ $message }}</div>
-                        @enderror
+                        <div class="input-group">
+                            <input type="password" name="password" id="password" class="form-control rounded-start-3 @error('password') is-invalid @enderror" placeholder="••••••••">
+                            <button class="btn btn-outline-secondary rounded-end-3 toggle-password-btn" type="button" data-target="password" title="Show / Hide Password">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                            @error('password')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
                     </div>
 
                     <div class="mb-0">
                         <label for="password_confirmation" class="form-label small fw-semibold">Confirm New Password</label>
-                        <input type="password" name="password_confirmation" id="password_confirmation" class="form-control rounded-3" placeholder="••••••••">
+                        <div class="input-group">
+                            <input type="password" name="password_confirmation" id="password_confirmation" class="form-control rounded-start-3" placeholder="••••••••">
+                            <button class="btn btn-outline-secondary rounded-end-3 toggle-password-btn" type="button" data-target="password_confirmation" title="Show / Hide Password">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                        </div>
                     </div>
                 </div>
 
@@ -82,4 +92,30 @@
         </div>
     </div>
 </div>
+@endsection
+
+@section('scripts')
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    document.querySelectorAll('.toggle-password-btn').forEach(function (button) {
+        button.addEventListener('click', function () {
+            var targetId = this.getAttribute('data-target');
+            var input = document.getElementById(targetId);
+            var icon = this.querySelector('i');
+            
+            if (input) {
+                if (input.type === 'password') {
+                    input.type = 'text';
+                    icon.classList.remove('fa-eye');
+                    icon.classList.add('fa-eye-slash');
+                } else {
+                    input.type = 'password';
+                    icon.classList.remove('fa-eye-slash');
+                    icon.classList.add('fa-eye');
+                }
+            }
+        });
+    });
+});
+</script>
 @endsection

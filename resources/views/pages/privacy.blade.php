@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Privacy Policy - Rivaaz Chronicle')
+@section('title', 'Privacy Policy - Uttarakhand Now')
 
 @section('content')
 <div class="container-xl">
@@ -16,7 +16,7 @@
         <div class="col-lg-8">
             <div class="bg-body-tertiary p-4 rounded-4 border border-secondary-subtle">
                 <h4 class="headline-font fw-bold mb-3">1. Information We Collect</h4>
-                <p>Rivaaz Chronicle collects basic user email data for bulletin subscriptions and custom app notifications. We log diagnostic details, analytics metadata, and local browser settings (like dark mode state and font-size preferences) to optimize visual presentation speeds.</p>
+                <p>Uttarakhand Now collects basic user email data for bulletin subscriptions and custom app notifications. We log diagnostic details, analytics metadata, and local browser settings (like dark mode state and font-size preferences) to optimize visual presentation speeds.</p>
 
                 <h4 class="headline-font fw-bold mt-4 mb-3">2. How We Use Information</h4>
                 <p>Collected information is utilized to customize newsfeeds, enable seamless light/dark rendering cycles, verify active newsletter logins, and monitor server loading metrics to prevent DDOS scenarios.</p>

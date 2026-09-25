@@ -192,9 +192,14 @@
 
                 <!-- Rich WYSIWYG Editor Body -->
                 <div class="mb-4">
-                    <div class="d-flex justify-content-between align-items-center mb-2">
+                    <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-2">
                         <label for="content" class="form-label small fw-bold text-uppercase text-muted mb-0">Full News Article Content Body <span class="text-danger">*</span></label>
-                        <span class="badge bg-primary-subtle text-primary border border-primary-subtle fs-9"><i class="fas fa-edit me-1"></i>Rich WYSIWYG Mode</span>
+                        <div class="d-flex align-items-center gap-2">
+                            <button type="button" class="btn btn-sm btn-dark rounded-pill px-3 py-1 shadow-sm d-inline-flex align-items-center gap-1" id="btnEmbedTweet" style="background-color: #000; border-color: #000;">
+                                <i class="fab fa-x-twitter text-white"></i> <span class="small fw-semibold text-white">Embed X / Twitter Post</span>
+                            </button>
+                            <span class="badge bg-primary-subtle text-primary border border-primary-subtle fs-9"><i class="fas fa-edit me-1"></i>Rich WYSIWYG Mode</span>
+                        </div>
                     </div>
                     <textarea name="content" id="summernote" class="form-control @error('content') is-invalid @enderror" required>{{ old('content') }}</textarea>
                     @error('content')
@@ -269,7 +274,7 @@
                         <img id="previewImage" src="https://images.unsplash.com/photo-1585829365295-ab7cd400c167?auto=format&fit=crop&w=600&q=80" class="w-100 h-100 object-fit-cover" alt="Preview">
                     </div>
                     <h6 class="fw-bold fs-7 mb-1 line-clamp-2" id="previewTitle">Article headline preview will appear here...</h6>
-                    <small class="text-muted fs-9" id="previewMeta">Rivaaz News • Just Now</small>
+                    <small class="text-muted fs-9" id="previewMeta">Uttarakhand Now • Just Now</small>
                 </div>
             </div>
 
@@ -302,6 +307,21 @@
             callbacks: {
                 onChange: function(contents, $editable) {
                     updateArticleMetrics(contents);
+                }
+            }
+        });
+
+        // Embed Tweet / X Post Helper
+        $('#btnEmbedTweet').on('click', function(e) {
+            e.preventDefault();
+            const tweetUrl = prompt('Enter the Twitter / X Post Link:\n(e.g. https://x.com/username/status/123456789 or https://twitter.com/username/status/123456789)');
+            if (tweetUrl && tweetUrl.trim()) {
+                const clean = tweetUrl.trim();
+                if (clean.includes('twitter.com') || clean.includes('x.com')) {
+                    const embedHtml = `<p><br></p><div class="text-center my-3"><blockquote class="twitter-tweet" data-dnt="true"><a href="${clean}"></a></blockquote></div><p><br></p>`;
+                    $('#summernote').summernote('pasteHTML', embedHtml);
+                } else {
+                    alert('Please enter a valid Twitter or X post URL (e.g. https://x.com/user/status/123456789)');
                 }
             }
         });

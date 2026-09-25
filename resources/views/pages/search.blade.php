@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'खोज परिणाम - रीवाज़ क्रॉनिकल')
+@section('title', 'खोज परिणाम - उत्तराखंड नाउ')
 
 @section('content')
 <div class="container-xl">
@@ -43,8 +43,17 @@
                             <h5 class="row-title fw-bold">
                                 <a href="/news/{{ $article['slug'] }}">{{ $article['title'] }}</a>
                             </h5>
-                            <p class="text-muted small line-clamp-2 mb-2">{{ $article['summary'] }}</p>
-                            <small class="text-muted fs-8"><i class="far fa-user me-1"></i> {{ $article['author']['name'] }} • {{ $article['published_at'] }}</small>
+                            <div class="d-flex align-items-center justify-content-between mt-2">
+                                <small class="text-muted fs-8"><i class="far fa-user me-1"></i> {{ $article['author']['name'] }} • {{ $article['published_at'] }}</small>
+                                <div class="d-flex align-items-center gap-2">
+                                    <a href="https://api.whatsapp.com/send?text={{ urlencode($article['title'] . ' ' . url('/news/' . $article['slug'])) }}" target="_blank" class="text-success text-decoration-none" title="व्हाट्सएप पर शेयर करें">
+                                        <i class="fab fa-whatsapp"></i>
+                                    </a>
+                                    <button type="button" class="btn btn-sm p-0 text-muted border-0 copy-link-btn" data-url="{{ url('/news/' . $article['slug']) }}" data-title="{{ $article['title'] }}" title="शेयर करें">
+                                        <i class="fas fa-share-alt"></i>
+                                    </button>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     @endforeach

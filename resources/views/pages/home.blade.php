@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Rivaaz Chronicle - Premium News Portal')
+@section('title', 'Uttarakhand Now - Premium News Portal')
 
 @section('content')
 <div class="container-xl">
@@ -25,8 +25,16 @@
                         <a href="/news/{{ $featured['slug'] }}" class="text-reset hover-primary">{{ $featured['title'] }}</a>
                     </h3>
                     <p class="text-muted small mb-2 order-3">{{ $featured['summary'] }}</p>
-                    <div class="d-flex align-items-center gap-2 text-uppercase fw-bold text-muted mb-2 order-4" style="font-size:0.65rem; letter-spacing:0.5px;">
+                    <div class="d-flex align-items-center justify-content-between gap-2 text-uppercase fw-bold text-muted mb-2 order-4" style="font-size:0.65rem; letter-spacing:0.5px;">
                         <a href="/category/{{ $featured['category'] }}" class="category-label">{{ $featured['category_name'] ?? ucfirst($featured['category']) }}</a>
+                        <div class="d-flex align-items-center gap-2">
+                            <a href="https://api.whatsapp.com/send?text={{ urlencode($featured['title'] . ' ' . url('/news/' . $featured['slug'])) }}" target="_blank" class="text-success text-decoration-none fs-6" title="व्हाट्सएप पर शेयर करें">
+                                <i class="fab fa-whatsapp"></i>
+                            </a>
+                            <button type="button" class="btn btn-sm p-0 text-muted border-0 copy-link-btn" data-url="{{ url('/news/' . $featured['slug']) }}" data-title="{{ $featured['title'] }}" title="शेयर करें">
+                                <i class="fas fa-share-alt"></i>
+                            </button>
+                        </div>
                     </div>
                 </div>
                 @else
@@ -45,8 +53,16 @@
                         <h6 class="fw-bold fs-7 mb-2 lh-base">
                             <a href="/news/{{ $article['slug'] }}" class="text-reset hover-primary">{{ $article['title'] }}</a>
                         </h6>
-                        <div class="d-flex align-items-center gap-2 text-uppercase fw-bold text-muted" style="font-size:0.65rem; letter-spacing:0.5px;">
+                        <div class="d-flex align-items-center justify-content-between text-uppercase fw-bold text-muted" style="font-size:0.65rem; letter-spacing:0.5px;">
                             <a href="/category/{{ $article['category'] }}" class="category-label">{{ $article['category_name'] ?? ucfirst($article['category']) }}</a>
+                            <div class="d-flex align-items-center gap-2">
+                                <a href="https://api.whatsapp.com/send?text={{ urlencode($article['title'] . ' ' . url('/news/' . $article['slug'])) }}" target="_blank" class="text-success text-decoration-none" title="व्हाट्सएप पर शेयर करें">
+                                    <i class="fab fa-whatsapp"></i>
+                                </a>
+                                <button type="button" class="btn btn-sm p-0 text-muted border-0 copy-link-btn" data-url="{{ url('/news/' . $article['slug']) }}" data-title="{{ $article['title'] }}" title="शेयर करें">
+                                    <i class="fas fa-share-alt"></i>
+                                </button>
+                            </div>
                         </div>
                     </div>
                     <div class="row-img-container position-relative">
@@ -89,8 +105,16 @@
                         <h6 class="fw-bold fs-7 mb-2 lh-base">
                             <a href="/news/{{ $article['slug'] }}" class="text-reset hover-primary">{{ $article['title'] }}</a>
                         </h6>
-                        <div class="d-flex align-items-center gap-2 text-uppercase fw-bold text-muted" style="font-size:0.65rem; letter-spacing:0.5px;">
+                        <div class="d-flex align-items-center justify-content-between text-uppercase fw-bold text-muted" style="font-size:0.65rem; letter-spacing:0.5px;">
                             <a href="/category/{{ $article['category'] }}" class="category-label">{{ $article['category_name'] ?? ucfirst($article['category']) }}</a>
+                            <div class="d-flex align-items-center gap-2">
+                                <a href="https://api.whatsapp.com/send?text={{ urlencode($article['title'] . ' ' . url('/news/' . $article['slug'])) }}" target="_blank" class="text-success text-decoration-none" title="व्हाट्सएप पर शेयर करें">
+                                    <i class="fab fa-whatsapp"></i>
+                                </a>
+                                <button type="button" class="btn btn-sm p-0 text-muted border-0 copy-link-btn" data-url="{{ url('/news/' . $article['slug']) }}" data-title="{{ $article['title'] }}" title="शेयर करें">
+                                    <i class="fas fa-share-alt"></i>
+                                </button>
+                            </div>
                         </div>
                     </div>
                     <div class="row-img-container center-row-thumb position-relative">
@@ -105,8 +129,26 @@
                 @endforeach
             </div>
 
-            <!-- Right Column: Trending stories widget (no numbers) -->
+            <!-- Right Column: Trending stories widget + Manual Sidebar Ad 1 -->
             <div class="col-lg-3 col-md-5 border-start-lg ps-lg-4">
+                <!-- Manual Right Sidebar Ad 1 -->
+                @if(!empty($siteSettings) && ($siteSettings->ad_sidebar_1_enabled ?? false) && (!empty($siteSettings->ad_sidebar_1_image) || !empty($siteSettings->ad_sidebar_1_code)))
+                    <div class="mb-4 manual-ad-sidebar-box">
+                        <div class="d-flex justify-content-between align-items-center mb-1">
+                            <span class="text-uppercase text-muted fw-semibold" style="font-size: 0.60rem; letter-spacing: 0.5px;">विज्ञापन / ADVERTISEMENT</span>
+                        </div>
+                        @if(!empty($siteSettings->ad_sidebar_1_code))
+                            <div class="overflow-hidden rounded-3 border bg-body-tertiary text-center p-1 shadow-sm">
+                                {!! $siteSettings->ad_sidebar_1_code !!}
+                            </div>
+                        @elseif(!empty($siteSettings->ad_sidebar_1_image))
+                            <a href="{{ $siteSettings->ad_sidebar_1_link ?: '#' }}" target="_blank" rel="noopener noreferrer" class="d-block overflow-hidden rounded-3 border shadow-sm">
+                                <img src="{{ $siteSettings->ad_sidebar_1_image }}" alt="Sidebar Advertisement" class="w-100 object-fit-cover">
+                            </a>
+                        @endif
+                    </div>
+                @endif
+
                 @include('components.widgets', ['type' => 'trending'])
             </div>
         </div>
@@ -132,6 +174,25 @@
                     </div>
                 </div>
                 @endif
+
+                <!-- Manual Right Sidebar Ad 2 -->
+                @if(!empty($siteSettings) && ($siteSettings->ad_sidebar_2_enabled ?? false) && (!empty($siteSettings->ad_sidebar_2_image) || !empty($siteSettings->ad_sidebar_2_code)))
+                    <div class="mb-4 manual-ad-sidebar-box">
+                        <div class="d-flex justify-content-between align-items-center mb-1">
+                            <span class="text-uppercase text-muted fw-semibold" style="font-size: 0.60rem; letter-spacing: 0.5px;">विज्ञापन / ADVERTISEMENT</span>
+                        </div>
+                        @if(!empty($siteSettings->ad_sidebar_2_code))
+                            <div class="overflow-hidden rounded-3 border bg-body-tertiary text-center p-1 shadow-sm">
+                                {!! $siteSettings->ad_sidebar_2_code !!}
+                            </div>
+                        @elseif(!empty($siteSettings->ad_sidebar_2_image))
+                            <a href="{{ $siteSettings->ad_sidebar_2_link ?: '#' }}" target="_blank" rel="noopener noreferrer" class="d-block overflow-hidden rounded-3 border shadow-sm">
+                                <img src="{{ $siteSettings->ad_sidebar_2_image }}" alt="Sidebar Advertisement" class="w-100 object-fit-cover">
+                            </a>
+                        @endif
+                    </div>
+                @endif
+
                 @include('components.widgets', ['type' => 'weather'])
                 <div class="mt-4">
                     @include('components.widgets', ['type' => 'newsletter'])
@@ -189,9 +250,20 @@
                     <!-- Left: Lead Featured Article -->
                     <div class="col-lg-7">
                         <div class="featured-block mb-3">
-                            <h4 class="fw-bold mb-3 fs-3" style="line-height: 1.25; letter-spacing: -0.5px;">
+                            <h4 class="fw-bold mb-2 fs-3" style="line-height: 1.25; letter-spacing: -0.5px;">
                                 <a href="/news/{{ $catArticles[0]['slug'] }}" class="text-reset text-decoration-none hover-primary">{{ $catArticles[0]['title'] }}</a>
                             </h4>
+                            <div class="d-flex align-items-center justify-content-between mb-2">
+                                <small class="text-muted fs-8">{{ $catArticles[0]['published_at'] ?? $catArticles[0]['read_time'] }}</small>
+                                <div class="d-flex align-items-center gap-2">
+                                    <a href="https://api.whatsapp.com/send?text={{ urlencode($catArticles[0]['title'] . ' ' . url('/news/' . $catArticles[0]['slug'])) }}" target="_blank" class="text-success text-decoration-none" title="व्हाट्सएप पर शेयर करें">
+                                        <i class="fab fa-whatsapp"></i>
+                                    </a>
+                                    <button type="button" class="btn btn-sm p-0 text-muted border-0 copy-link-btn" data-url="{{ url('/news/' . $catArticles[0]['slug']) }}" data-title="{{ $catArticles[0]['title'] }}" title="शेयर करें">
+                                        <i class="fas fa-share-alt"></i>
+                                    </button>
+                                </div>
+                            </div>
                             <div class="rounded-3 overflow-hidden position-relative" style="aspect-ratio: 16/9; border: 1px solid var(--border-color);">
                                 <img src="{{ $catArticles[0]['image'] }}" class="w-100 h-100 object-fit-cover" alt="{{ $catArticles[0]['title'] }}">
                                 @if(!empty($catArticles[0]['is_video']))
@@ -212,7 +284,17 @@
                                     <h6 class="fw-bold fs-7 mb-1" style="line-height: 1.35;">
                                         <a href="/news/{{ $art['slug'] }}" class="text-reset text-decoration-none hover-primary">{{ $art['title'] }}</a>
                                     </h6>
-                                    <small class="text-muted fs-9">{{ $art['published_at'] ?? $art['read_time'] }}</small>
+                                    <div class="d-flex align-items-center justify-content-between mt-1">
+                                        <small class="text-muted fs-9">{{ $art['published_at'] ?? $art['read_time'] }}</small>
+                                        <div class="d-flex align-items-center gap-2">
+                                            <a href="https://api.whatsapp.com/send?text={{ urlencode($art['title'] . ' ' . url('/news/' . $art['slug'])) }}" target="_blank" class="text-success text-decoration-none" title="व्हाट्सएप">
+                                                <i class="fab fa-whatsapp"></i>
+                                            </a>
+                                            <button type="button" class="btn btn-sm p-0 text-muted border-0 copy-link-btn" data-url="{{ url('/news/' . $art['slug']) }}" data-title="{{ $art['title'] }}" title="शेयर करें">
+                                                <i class="fas fa-share-alt"></i>
+                                            </button>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="flex-shrink-0 position-relative" style="width: 100px; height: 60px; border-radius: 6px; overflow: hidden; border: 1px solid var(--border-color);">
                                     <img src="{{ $art['image'] }}" class="w-100 h-100 object-fit-cover" alt="Thumbnail">
@@ -257,8 +339,8 @@
         <div class="row g-4" id="loadMoreContainer">
             @forelse(array_slice($others, 0, 6) as $article)
             <div class="col-12 col-md-6 col-lg-4">
-                <div class="latest-news-horizontal-card">
-                    <div class="latest-card-img-wrap position-relative">
+                <div class="news-card">
+                    <div class="card-img-container position-relative">
                         <img src="{{ $article['image'] }}" alt="{{ $article['title'] }}">
                         @if(!empty($article['is_video']))
                             <span class="position-absolute top-50 start-50 translate-middle d-flex align-items-center justify-content-center bg-dark bg-opacity-75 text-white rounded-circle" style="width: 45px; height: 45px; z-index: 2;">
@@ -266,12 +348,27 @@
                             </span>
                         @endif
                     </div>
-                    <div class="latest-card-content">
-                        <span class="latest-card-category text-uppercase">{{ $article['category_name'] ?? ucfirst($article['category']) }}</span>
-                        <h5 class="latest-card-title">
+                    <div class="card-body">
+                        <span class="badge-category mb-2">{{ $article['subcategory'] ?: ($article['category_name'] ?? '') }}</span>
+                        <h4 class="card-title fw-bold">
                             <a href="/news/{{ $article['slug'] }}">{{ $article['title'] }}</a>
-                        </h5>
-                        <p class="latest-card-summary">{{ $article['summary'] }}</p>
+                        </h4>
+                        <p class="text-muted small line-clamp-3 mb-3">{{ $article['summary'] }}</p>
+                        <div class="card-meta d-flex justify-content-between align-items-center">
+                            <div class="d-flex align-items-center gap-1">
+                                <span><i class="far fa-user me-1"></i> {{ $article['author']['name'] ?? 'स्टाफ रिपोर्टर' }}</span>
+                                <span>•</span>
+                                <span>{{ $article['read_time'] ?? '' }}</span>
+                            </div>
+                            <div class="d-flex align-items-center gap-2">
+                                <a href="https://api.whatsapp.com/send?text={{ urlencode($article['title'] . ' ' . url('/news/' . $article['slug'])) }}" target="_blank" class="text-success text-decoration-none" title="व्हाट्सएप पर शेयर करें">
+                                    <i class="fab fa-whatsapp"></i>
+                                </a>
+                                <button type="button" class="btn btn-sm p-0 text-muted border-0 copy-link-btn" data-url="{{ url('/news/' . $article['slug']) }}" data-title="{{ $article['title'] }}" title="शेयर करें">
+                                    <i class="fas fa-share-alt"></i>
+                                </button>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -318,18 +415,38 @@
                             `;
                         }
                         
+                        const articleUrl = '/news/' + article.slug;
+                        const waUrl = 'https://api.whatsapp.com/send?text=' + encodeURIComponent(article.title + ' ' + window.location.origin + articleUrl);
+                        const authorName = (article.author && article.author.name) ? article.author.name : 'स्टाफ रिपोर्टर';
+                        const categoryBadge = article.subcategory || article.category_name || article.category || '';
+
                         col.innerHTML = `
-                            <div class="latest-news-horizontal-card">
-                                <div class="latest-card-img-wrap position-relative">
+                            <div class="news-card">
+                                <div class="card-img-container position-relative">
                                     <img src="${article.image}" alt="${article.title}">
                                     ${playOverlay}
                                 </div>
-                                <div class="latest-card-content">
-                                    <span class="latest-card-category text-uppercase">${article.category_name || article.category}</span>
-                                    <h5 class="latest-card-title">
-                                        <a href="/news/${article.slug}">${article.title}</a>
-                                    </h5>
-                                    <p class="latest-card-summary">${article.summary || ''}</p>
+                                <div class="card-body">
+                                    <span class="badge-category mb-2">${categoryBadge}</span>
+                                    <h4 class="card-title fw-bold">
+                                        <a href="${articleUrl}">${article.title}</a>
+                                    </h4>
+                                    <p class="text-muted small line-clamp-3 mb-3">${article.summary || ''}</p>
+                                    <div class="card-meta d-flex justify-content-between align-items-center">
+                                        <div class="d-flex align-items-center gap-1">
+                                            <span><i class="far fa-user me-1"></i> ${authorName}</span>
+                                            <span>•</span>
+                                            <span>${article.read_time || ''}</span>
+                                        </div>
+                                        <div class="d-flex align-items-center gap-2">
+                                            <a href="${waUrl}" target="_blank" class="text-success text-decoration-none" title="व्हाट्सएप पर शेयर करें">
+                                                <i class="fab fa-whatsapp"></i>
+                                            </a>
+                                            <button type="button" class="btn btn-sm p-0 text-muted border-0 copy-link-btn" data-url="${window.location.origin + articleUrl}" data-title="${article.title}" title="शेयर करें">
+                                                <i class="fas fa-share-alt"></i>
+                                            </button>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         `;

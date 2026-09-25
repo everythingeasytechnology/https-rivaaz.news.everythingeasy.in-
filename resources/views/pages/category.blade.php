@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', $category['meta_title'] ?? $category['name'] . ' समाचार - रीवाज़ क्रॉनिकल')
+@section('title', $category['meta_title'] ?? $category['name'] . ' समाचार - उत्तराखंड नाउ')
 @section('meta_description', $category['meta_description'] ?? $category['name'] . ' से संबंधित नवीनतम समाचार और अपडेट्स।')
 @section('meta_keywords', $category['meta_keywords'] ?? strtolower($category['name']) . ', समाचार, अपडेट्स')
 
@@ -49,10 +49,20 @@
                                 <a href="/news/{{ $article['slug'] }}">{{ $article['title'] }}</a>
                             </h4>
                             <p class="text-muted small line-clamp-3 mb-3">{{ $article['summary'] }}</p>
-                            <div class="card-meta">
-                                <span><i class="far fa-user me-1"></i> {{ $article['author']['name'] }}</span>
-                                <span>•</span>
-                                <span>{{ $article['read_time'] }}</span>
+                            <div class="card-meta d-flex justify-content-between align-items-center">
+                                <div class="d-flex align-items-center gap-1">
+                                    <span><i class="far fa-user me-1"></i> {{ $article['author']['name'] }}</span>
+                                    <span>•</span>
+                                    <span>{{ $article['read_time'] }}</span>
+                                </div>
+                                <div class="d-flex align-items-center gap-2">
+                                    <a href="https://api.whatsapp.com/send?text={{ urlencode($article['title'] . ' ' . url('/news/' . $article['slug'])) }}" target="_blank" class="text-success text-decoration-none" title="व्हाट्सएप पर शेयर करें">
+                                        <i class="fab fa-whatsapp"></i>
+                                    </a>
+                                    <button type="button" class="btn btn-sm p-0 text-muted border-0 copy-link-btn" data-url="{{ url('/news/' . $article['slug']) }}" data-title="{{ $article['title'] }}" title="शेयर करें">
+                                        <i class="fas fa-share-alt"></i>
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -71,6 +81,24 @@
 
         <!-- Sidebar Column -->
         <div class="col-lg-4">
+            <!-- Manual Right Sidebar Ad 1 -->
+            @if(!empty($siteSettings) && ($siteSettings->ad_sidebar_1_enabled ?? false) && (!empty($siteSettings->ad_sidebar_1_image) || !empty($siteSettings->ad_sidebar_1_code)))
+                <div class="mb-4 manual-ad-sidebar-box">
+                    <div class="d-flex justify-content-between align-items-center mb-1">
+                        <span class="text-uppercase text-muted fw-semibold" style="font-size: 0.60rem; letter-spacing: 0.5px;">विज्ञापन / ADVERTISEMENT</span>
+                    </div>
+                    @if(!empty($siteSettings->ad_sidebar_1_code))
+                        <div class="overflow-hidden rounded-3 border bg-body-tertiary text-center p-1 shadow-sm">
+                            {!! $siteSettings->ad_sidebar_1_code !!}
+                        </div>
+                    @elseif(!empty($siteSettings->ad_sidebar_1_image))
+                        <a href="{{ $siteSettings->ad_sidebar_1_link ?: '#' }}" target="_blank" rel="noopener noreferrer" class="d-block overflow-hidden rounded-3 border shadow-sm">
+                            <img src="{{ $siteSettings->ad_sidebar_1_image }}" alt="Sidebar Advertisement" class="w-100 object-fit-cover">
+                        </a>
+                    @endif
+                </div>
+            @endif
+
             @include('components.widgets', ['type' => 'trending'])
             @include('components.widgets', ['type' => 'newsletter'])
         </div>

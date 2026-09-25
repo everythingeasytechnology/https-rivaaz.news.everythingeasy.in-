@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Panel - Rivaaz Chronicle</title>
+    <title>Admin Panel - Uttarakhand Now</title>
     
     <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -112,7 +112,7 @@
     <aside class="sidebar">
         <div class="sidebar-brand">
             <i class="fas fa-newspaper text-primary"></i>
-            <span>Rivaaz Admin</span>
+            <span>Uttarakhand Now Admin</span>
         </div>
         <ul class="sidebar-menu">
             <li class="{{ request()->routeIs('admin.dashboard') ? 'active' : '' }}">
@@ -149,6 +149,12 @@
                 <a href="{{ route('admin.categories.index') }}">
                     <i class="fas fa-list-ul"></i>
                     <span>Categories</span>
+                </a>
+            </li>
+            <li class="{{ request()->routeIs('admin.editorial-board.*') ? 'active' : '' }}">
+                <a href="{{ route('admin.editorial-board.index') }}">
+                    <i class="fas fa-user-tie"></i>
+                    <span>Editorial Board</span>
                 </a>
             </li>
             @if(Auth::check() && Auth::user()->role === 'super_admin')

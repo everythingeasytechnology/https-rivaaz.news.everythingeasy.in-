@@ -818,10 +818,28 @@ a {
     
     &:hover {
       background-color: var(--primary-color);
-      color: white;
+      color: white !important;
       border-color: var(--primary-color);
       transform: scale(1.1);
     }
+  }
+}
+
+.copy-link-btn {
+  transition: transform 0.2s ease, color 0.2s ease;
+  &:hover {
+    color: var(--primary-color) !important;
+    transform: scale(1.15);
+  }
+  &:active {
+    transform: scale(0.95);
+  }
+}
+
+a .fa-whatsapp {
+  transition: transform 0.2s ease, color 0.2s ease;
+  &:hover {
+    transform: scale(1.2);
   }
 }
 
@@ -1196,5 +1214,36 @@ a {
   }
 }
 
+// Theme Toggle Button Smooth Styling
+.theme-toggle-btn {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  border: none !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  color: var(--bs-body-color, #212529) !important;
+  border-radius: 50% !important;
+  width: 36px;
+  height: 36px;
+  padding: 0 !important;
+  text-decoration: none !important;
+  outline: none !important;
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.2s ease !important;
 
+  &:hover, &:focus, &:active, &:focus-visible {
+    background-color: rgba(128, 128, 128, 0.12) !important;
+    color: var(--primary-color, #E50000) !important;
+    transform: scale(1.08);
+    box-shadow: none !important;
+    outline: none !important;
+  }
 
+  i {
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), color 0.2s ease;
+  }
+
+  &:hover i {
+    transform: rotate(15deg);
+  }
+}

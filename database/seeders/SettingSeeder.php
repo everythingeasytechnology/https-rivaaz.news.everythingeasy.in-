@@ -16,7 +16,7 @@ class SettingSeeder extends Seeder
             'site_name' => 'द उत्तराखंड नाउ',
             'logo_path' => '/logo.jpeg',
             'footer_text' => 'उत्कृष्ट पत्रकारिता, वास्तविक समय के समाचार बुलेटिन और उच्च गुणवत्ता वाली मीडिया दीर्घाओं के साथ एक अग्रणी हिंदी समाचार पोर्टल।',
-            'contact_email' => 'contact@rivaaznews.in',
+            'contact_email' => 'contact@theuttarakhandnow.com',
             'contact_phone' => '+91 98765 43210',
             'contact_address' => 'देहरादून कार्यालय: 12, सुभाष रोड, देहरादून, उत्तराखंड - 248001',
             'weather_locations' => 'Dehradun, Haridwar, Nainital, New Delhi',

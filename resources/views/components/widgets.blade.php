@@ -1,16 +1,9 @@
 @php
-    $hasArticlesTable = \Illuminate\Support\Facades\Schema::hasTable('articles');
     $stocks = \App\Support\MockData::getStocks();
     $weather = \App\Support\MockData::getWeather();
-    $trending = $hasArticlesTable
-        ? \App\Models\Article::with('category')->orderByDesc('views')->take(5)->get()
-        : collect();
-    $liveUpdates = $hasArticlesTable
-        ? \App\Models\Article::latest()->take(4)->get()
-        : collect();
-    $videos = $hasArticlesTable
-        ? \App\Models\Article::whereIn('media_type', ['video_file', 'video_link'])->orderByDesc('created_at')->take(4)->get()
-        : collect();
+    $trending = \App\Models\Article::with('category')->orderByDesc('views')->take(5)->get();
+    $liveUpdates = \App\Models\Article::latest()->take(4)->get();
+    $videos = \App\Models\Article::whereIn('media_type', ['video_file', 'video_link'])->orderByDesc('created_at')->take(4)->get();
 @endphp
 
 <!-- 1. Stock Widget -->
@@ -69,8 +62,16 @@
                 <a href="/news/{{ $article->slug }}" class="text-reset hover-primary">{{ $article->title }}</a>
             </h6>
             @if($article->category)
-            <div class="d-flex align-items-center gap-2 text-uppercase fw-bold text-muted" style="font-size:0.65rem; letter-spacing:0.5px;">
+            <div class="d-flex align-items-center justify-content-between text-uppercase fw-bold text-muted" style="font-size:0.65rem; letter-spacing:0.5px;">
                 <a href="/category/{{ $article->category->slug }}" class="category-label">{{ $article->category->name }}</a>
+                <div class="d-flex align-items-center gap-2">
+                    <a href="https://api.whatsapp.com/send?text={{ urlencode($article->title . ' ' . url('/news/' . $article->slug)) }}" target="_blank" class="text-success text-decoration-none" title="व्हाट्सएप पर शेयर करें">
+                        <i class="fab fa-whatsapp"></i>
+                    </a>
+                    <button type="button" class="btn btn-sm p-0 text-muted border-0 copy-link-btn" data-url="{{ url('/news/' . $article->slug) }}" data-title="{{ $article->title }}" title="शेयर करें">
+                        <i class="fas fa-share-alt"></i>
+                    </button>
+                </div>
             </div>
             @endif
         </div>

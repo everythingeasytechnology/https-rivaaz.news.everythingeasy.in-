@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - Rivaaz Admin Panel</title>
+    <title>Login - Uttarakhand Now Admin Panel</title>
     
     <!-- FontAwesome for Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -46,7 +46,7 @@
     <div class="login-card">
         <div class="logo-container">
             <i class="fas fa-newspaper mb-2"></i>
-            <h4 class="fw-extrabold mb-0">Rivaaz Chronicle</h4>
+            <h4 class="fw-extrabold mb-0">Uttarakhand Now</h4>
             <p class="text-muted small">Sign in to access control panel</p>
         </div>
 

@@ -22,6 +22,30 @@ class Setting extends Model
         'social_linkedin',
         'live_tv_url',
         'live_tv_cover',
+        'adsense_script',
+        'adsense_header_code',
+        'adsense_sidebar_code',
+        'adsense_article_code',
+        'adsense_enabled',
+        'ad_top_banner_enabled',
+        'ad_top_banner_image',
+        'ad_top_banner_link',
+        'ad_top_banner_code',
+        'ad_sidebar_1_enabled',
+        'ad_sidebar_1_image',
+        'ad_sidebar_1_link',
+        'ad_sidebar_1_code',
+        'ad_sidebar_2_enabled',
+        'ad_sidebar_2_image',
+        'ad_sidebar_2_link',
+        'ad_sidebar_2_code',
+    ];
+
+    protected $casts = [
+        'adsense_enabled' => 'boolean',
+        'ad_top_banner_enabled' => 'boolean',
+        'ad_sidebar_1_enabled' => 'boolean',
+        'ad_sidebar_2_enabled' => 'boolean',
     ];
 
     /**

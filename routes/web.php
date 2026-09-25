@@ -52,13 +52,26 @@ function formatArticleForView($articleModel) {
         }
     }
     
+    $content = $articleModel->content ?? '';
+    if (!empty($content)) {
+        // Auto convert standalone Twitter/X status links into <blockquote class="twitter-tweet">
+        $content = preg_replace_callback(
+            '/(?:<p>|<p\s+[^>]*>)?\s*(https?:\/\/(?:twitter\.com|x\.com)\/[a-zA-Z0-9_]+\/status\/[0-9]+(?:\?[^\s<"\']*)?)\s*(?:<\/p>)?/i',
+            function ($matches) {
+                $tweetUrl = $matches[1];
+                return '<div class="d-flex justify-content-center my-4 tweet-embed-container"><blockquote class="twitter-tweet" data-dnt="true"><a href="' . htmlspecialchars($tweetUrl) . '"></a></blockquote></div>';
+            },
+            $content
+        );
+    }
+
     return [
         'id' => $articleModel->id,
         'slug' => $articleModel->slug,
         'title' => $articleModel->title,
         'subtitle' => $articleModel->subtitle,
         'summary' => $articleModel->summary,
-        'content' => $articleModel->content,
+        'content' => $content,
         'category' => $categorySlug,
         'category_name' => $categoryName,
         'subcategory' => $subcategoryName,
@@ -71,7 +84,7 @@ function formatArticleForView($articleModel) {
             'title' => ($articleModel->author && $articleModel->author->role === 'super_admin') ? 'Editor-in-Chief' : 'Staff Reporter',
             'avatar' => 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=150&q=80',
             'bio' => 'Professional reporter covering breaking news.',
-            'twitter' => '@rivaaznews',
+            'twitter' => '@uttarakhandnow',
         ],
         'image' => $imageUrl,
         'read_time' => '4 मिनट पढ़ने का समय',
@@ -286,7 +299,7 @@ Route::get('/author/{slug}', function ($slug) {
             'title' => $dbUser->role === 'super_admin' ? 'Editor-in-Chief' : 'Staff Reporter',
             'avatar' => 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=150&q=80',
             'bio' => 'Professional journalist covering national affairs.',
-            'twitter' => '@rivaaznews',
+            'twitter' => '@uttarakhandnow',
             'articles_count' => Article::where('user_id', $dbUser->id)->count(),
         ];
         
@@ -433,7 +446,14 @@ Route::get('/contact', function () {
 
 // 13. About Page Route
 Route::get('/about', function () {
-    return view('pages.about');
+    $editorialMembers = Schema::hasTable('editorial_members')
+        ? \App\Models\EditorialMember::where('is_active', true)
+            ->orderBy('sort_order', 'asc')
+            ->orderBy('id', 'asc')
+            ->get()
+        : collect();
+
+    return view('pages.about', compact('editorialMembers'));
 })->name('about');
 
 // 14. Privacy Policy Route
@@ -464,6 +484,7 @@ Route::middleware('role')->prefix('admin')->name('admin.')->group(function () {
     Route::resource('categories', \App\Http\Controllers\AdminCategoryController::class);
     Route::resource('articles', \App\Http\Controllers\AdminArticleController::class);
     Route::resource('videos', \App\Http\Controllers\AdminVideoController::class);
+    Route::resource('editorial-board', \App\Http\Controllers\AdminEditorialMemberController::class);
     
     // Live TV Routes
     Route::get('livetv', [\App\Http\Controllers\AdminLiveTvController::class, 'edit'])->name('livetv.edit');

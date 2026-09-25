@@ -1,0 +1,30 @@
+[11-Jul-2026 08:56:40 UTC] PHP Warning:  require(/home/uzu7kgd05u96/rivaaz.news.everythingeasy.in/public/../vendor/autoload.php): Failed to open stream: No such file or directory in /home/uzu7kgd05u96/rivaaz.news.everythingeasy.in/public/index.php on line 14
+[11-Jul-2026 08:56:40 UTC] PHP Fatal error:  Uncaught Error: Failed opening required '/home/uzu7kgd05u96/rivaaz.news.everythingeasy.in/public/../vendor/autoload.php' (include_path='.:/opt/alt/php83/usr/share/pear:/opt/alt/php83/usr/share/php:/usr/share/pear:/usr/share/php') in /home/uzu7kgd05u96/rivaaz.news.everythingeasy.in/public/index.php:14
+Stack trace:
+#0 {main}
+  thrown in /home/uzu7kgd05u96/rivaaz.news.everythingeasy.in/public/index.php on line 14
+[11-Jul-2026 09:01:11 UTC] PHP Warning:  require(/home/uzu7kgd05u96/rivaaz.news.everythingeasy.in/public/../vendor/autoload.php): Failed to open stream: No such file or directory in /home/uzu7kgd05u96/rivaaz.news.everythingeasy.in/public/index.php on line 14
+[11-Jul-2026 09:01:11 UTC] PHP Fatal error:  Uncaught Error: Failed opening required '/home/uzu7kgd05u96/rivaaz.news.everythingeasy.in/public/../vendor/autoload.php' (include_path='.:/opt/alt/php83/usr/share/pear:/opt/alt/php83/usr/share/php:/usr/share/pear:/usr/share/php') in /home/uzu7kgd05u96/rivaaz.news.everythingeasy.in/public/index.php:14
+Stack trace:
+#0 {main}
+  thrown in /home/uzu7kgd05u96/rivaaz.news.everythingeasy.in/public/index.php on line 14
+[11-Jul-2026 09:01:40 UTC] PHP Warning:  require(/home/uzu7kgd05u96/rivaaz.news.everythingeasy.in/public/../vendor/autoload.php): Failed to open stream: No such file or directory in /home/uzu7kgd05u96/rivaaz.news.everythingeasy.in/public/index.php on line 14
+[11-Jul-2026 09:01:40 UTC] PHP Fatal error:  Uncaught Error: Failed opening required '/home/uzu7kgd05u96/rivaaz.news.everythingeasy.in/public/../vendor/autoload.php' (include_path='.:/opt/alt/php83/usr/share/pear:/opt/alt/php83/usr/share/php:/usr/share/pear:/usr/share/php') in /home/uzu7kgd05u96/rivaaz.news.everythingeasy.in/public/index.php:14
+Stack trace:
+#0 {main}
+  thrown in /home/uzu7kgd05u96/rivaaz.news.everythingeasy.in/public/index.php on line 14
+[11-Jul-2026 09:01:42 UTC] PHP Warning:  require(/home/uzu7kgd05u96/rivaaz.news.everythingeasy.in/public/../vendor/autoload.php): Failed to open stream: No such file or directory in /home/uzu7kgd05u96/rivaaz.news.everythingeasy.in/public/index.php on line 14
+[11-Jul-2026 09:01:42 UTC] PHP Fatal error:  Uncaught Error: Failed opening required '/home/uzu7kgd05u96/rivaaz.news.everythingeasy.in/public/../vendor/autoload.php' (include_path='.:/opt/alt/php83/usr/share/pear:/opt/alt/php83/usr/share/php:/usr/share/pear:/usr/share/php') in /home/uzu7kgd05u96/rivaaz.news.everythingeasy.in/public/index.php:14
+Stack trace:
+#0 {main}
+  thrown in /home/uzu7kgd05u96/rivaaz.news.everythingeasy.in/public/index.php on line 14
+[11-Jul-2026 09:02:10 UTC] PHP Warning:  require(/home/uzu7kgd05u96/rivaaz.news.everythingeasy.in/public/../vendor/autoload.php): Failed to open stream: No such file or directory in /home/uzu7kgd05u96/rivaaz.news.everythingeasy.in/public/index.php on line 14
+[11-Jul-2026 09:02:10 UTC] PHP Fatal error:  Uncaught Error: Failed opening required '/home/uzu7kgd05u96/rivaaz.news.everythingeasy.in/public/../vendor/autoload.php' (include_path='.:/opt/alt/php83/usr/share/pear:/opt/alt/php83/usr/share/php:/usr/share/pear:/usr/share/php') in /home/uzu7kgd05u96/rivaaz.news.everythingeasy.in/public/index.php:14
+Stack trace:
+#0 {main}
+  thrown in /home/uzu7kgd05u96/rivaaz.news.everythingeasy.in/public/index.php on line 14
+[11-Jul-2026 09:02:58 UTC] PHP Warning:  require(/home/uzu7kgd05u96/rivaaz.news.everythingeasy.in/public/../vendor/autoload.php): Failed to open stream: No such file or directory in /home/uzu7kgd05u96/rivaaz.news.everythingeasy.in/public/index.php on line 14
+[11-Jul-2026 09:02:58 UTC] PHP Fatal error:  Uncaught Error: Failed opening required '/home/uzu7kgd05u96/rivaaz.news.everythingeasy.in/public/../vendor/autoload.php' (include_path='.:/opt/alt/php83/usr/share/pear:/opt/alt/php83/usr/share/php:/usr/share/pear:/usr/share/php') in /home/uzu7kgd05u96/rivaaz.news.everythingeasy.in/public/index.php:14
+Stack trace:
+#0 {main}
+  thrown in /home/uzu7kgd05u96/rivaaz.news.everythingeasy.in/public/index.php on line 14
