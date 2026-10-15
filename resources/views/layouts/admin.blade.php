@@ -163,6 +163,12 @@
                     <span>Subscribers</span>
                 </a>
             </li>
+            <li class="{{ request()->routeIs('admin.polls.*') ? 'active' : '' }}">
+                <a href="{{ route('admin.polls.index') }}">
+                    <i class="fas fa-square-poll-horizontal"></i>
+                    <span>Poll Management</span>
+                </a>
+            </li>
             @if(Auth::check() && Auth::user()->role === 'super_admin')
                 <li class="{{ request()->routeIs('admin.users.*') ? 'active' : '' }}">
                     <a href="{{ route('admin.users.index') }}">

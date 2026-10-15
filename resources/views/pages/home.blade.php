@@ -10,6 +10,29 @@
         <div class="row g-4">
             <!-- Left Column: TOP NEWS (Large Story + horizontal items) -->
             <div class="col-lg-5 col-md-12">
+                <div id="homepagePoll" class="homepage-poll mb-4 d-none" aria-live="polite">
+                    <div class="d-flex align-items-center justify-content-between gap-2 mb-2">
+                        <span class="homepage-poll-label"><i class="fas fa-poll me-1"></i> आज का पोल</span>
+                        <span id="homepagePollType" class="text-muted" style="font-size: .68rem;"></span>
+                    </div>
+                    <h6 id="homepagePollQuestion" class="fw-bold lh-base mb-3"></h6>
+                    <form id="homepagePollForm">
+                        <div id="homepagePollOptions" class="d-grid gap-2"></div>
+                        <div id="homepagePollMessage" class="small mt-2" role="status"></div>
+                        <button id="homepagePollSubmit" type="submit" class="btn btn-danger btn-sm w-100 fw-bold mt-3">वोट करें</button>
+                    </form>
+                    <div id="homepagePollResults" class="d-none"></div>
+                </div>
+
+                <style>
+                    .homepage-poll { border: 1px solid var(--bs-border-color); border-left: 4px solid var(--bs-danger); border-radius: .75rem; background: var(--bs-body-bg); padding: 1rem; box-shadow: 0 3px 14px rgba(0, 0, 0, .06); }
+                    .homepage-poll-label { color: var(--bs-danger); font-size: .72rem; font-weight: 800; letter-spacing: .04em; text-transform: uppercase; }
+                    .homepage-poll-option { border: 1px solid var(--bs-border-color); border-radius: .55rem; cursor: pointer; font-size: .86rem; padding: .55rem .7rem; transition: border-color .2s, background-color .2s; }
+                    .homepage-poll-option:hover, .homepage-poll-option:has(input:checked) { border-color: var(--bs-danger); background: rgba(var(--bs-danger-rgb), .06); }
+                    .homepage-poll-result-bar { height: 6px; background: var(--bs-secondary-bg); border-radius: 50rem; overflow: hidden; }
+                    .homepage-poll-result-bar > span { display: block; height: 100%; background: var(--bs-danger); border-radius: inherit; }
+                </style>
+
                 <h5 class="headline-font mb-3 fw-bold text-uppercase border-bottom pb-2 border-dark border-2" style="font-size:0.95rem; letter-spacing:0.5px;">मुख्य समाचार</h5>
                 @if($featured)
                 <div class="mb-4 d-flex flex-column">
@@ -485,4 +508,163 @@
 
 
 </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', async function () {
+        const box = document.getElementById('homepagePoll');
+        const form = document.getElementById('homepagePollForm');
+        const optionsBox = document.getElementById('homepagePollOptions');
+        const resultsBox = document.getElementById('homepagePollResults');
+        const message = document.getElementById('homepagePollMessage');
+        const submitButton = document.getElementById('homepagePollSubmit');
+        const storageKey = 'news_portal_answered_polls';
+        const voterKey = 'news_portal_poll_voter_token';
+        let poll = null;
+
+        function readAnsweredPolls() {
+            try {
+                const value = JSON.parse(localStorage.getItem(storageKey) || '[]');
+                return Array.isArray(value) ? value.map(String) : [];
+            } catch (error) {
+                return [];
+            }
+        }
+
+        function voterToken() {
+            let token = localStorage.getItem(voterKey);
+            if (!/^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(token || '')) {
+                token = window.crypto?.randomUUID
+                    ? window.crypto.randomUUID()
+                    : 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (character) {
+                        const random = Math.random() * 16 | 0;
+                        return (character === 'x' ? random : (random & 3 | 8)).toString(16);
+                    });
+                localStorage.setItem(voterKey, token);
+            }
+            return token;
+        }
+
+        function showResults(data, votedMessage = true) {
+            form.classList.add('d-none');
+            resultsBox.classList.remove('d-none');
+            resultsBox.replaceChildren();
+
+            if (votedMessage) {
+                const notice = document.createElement('div');
+                notice.className = 'small text-success fw-semibold mb-3';
+                notice.textContent = 'आप इस पोल में वोट कर चुके हैं।';
+                resultsBox.appendChild(notice);
+            }
+
+            (data.options || []).forEach(function (option) {
+                const row = document.createElement('div');
+                row.className = 'mb-3';
+                const heading = document.createElement('div');
+                heading.className = 'd-flex justify-content-between gap-2 small mb-1';
+                const title = document.createElement('span');
+                title.textContent = option.option_text;
+                const percent = document.createElement('strong');
+                percent.textContent = option.percentage + '%';
+                heading.append(title, percent);
+                const bar = document.createElement('div');
+                bar.className = 'homepage-poll-result-bar';
+                const fill = document.createElement('span');
+                fill.style.width = Math.min(100, Math.max(0, Number(option.percentage) || 0)) + '%';
+                bar.appendChild(fill);
+                row.append(heading, bar);
+                resultsBox.appendChild(row);
+            });
+
+            const total = document.createElement('div');
+            total.className = 'text-muted text-end';
+            total.style.fontSize = '.7rem';
+            total.textContent = 'कुल वोट: ' + (data.total_voters || 0);
+            resultsBox.appendChild(total);
+        }
+
+        try {
+            const response = await fetch('{{ route('polls.active') }}', { headers: { 'Accept': 'application/json' } });
+            if (!response.ok) return;
+            const data = await response.json();
+            poll = data.polls?.[0];
+            if (!poll) return;
+
+            box.classList.remove('d-none');
+            document.getElementById('homepagePollQuestion').textContent = poll.question;
+            document.getElementById('homepagePollType').textContent = poll.choice_type === 'multiple' ? 'एक से अधिक चुनें' : 'एक विकल्प चुनें';
+
+            if (readAnsweredPolls().includes(String(poll.id))) {
+                const resultResponse = await fetch(`/polls/${poll.id}/results`, { headers: { 'Accept': 'application/json' } });
+                if (resultResponse.ok) showResults(await resultResponse.json());
+                return;
+            }
+
+            const inputType = poll.choice_type === 'multiple' ? 'checkbox' : 'radio';
+            poll.options.forEach(function (option) {
+                const label = document.createElement('label');
+                label.className = 'homepage-poll-option d-flex align-items-center gap-2';
+                const input = document.createElement('input');
+                input.type = inputType;
+                input.name = 'poll_option';
+                input.value = option.id;
+                input.className = 'form-check-input m-0 flex-shrink-0';
+                const text = document.createElement('span');
+                text.textContent = option.option_text;
+                label.append(input, text);
+                optionsBox.appendChild(label);
+            });
+        } catch (error) {
+            box.classList.add('d-none');
+        }
+
+        form.addEventListener('submit', async function (event) {
+            event.preventDefault();
+            const selected = [...form.querySelectorAll('input[name="poll_option"]:checked')].map(input => Number(input.value));
+            if (!selected.length) {
+                message.className = 'small mt-2 text-danger';
+                message.textContent = 'कृपया कोई विकल्प चुनें।';
+                return;
+            }
+
+            submitButton.disabled = true;
+            submitButton.textContent = 'सबमिट हो रहा है...';
+            message.textContent = '';
+
+            try {
+                const response = await fetch(`/polls/${poll.id}/vote`, {
+                    method: 'POST',
+                    headers: { 'Accept': 'application/json', 'Content-Type': 'application/json', 'X-CSRF-TOKEN': '{{ csrf_token() }}' },
+                    body: JSON.stringify({ option_ids: selected, voter_token: voterToken() })
+                });
+                const data = await response.json();
+
+                if (response.ok && data.store_local_marker) {
+                    const answered = readAnsweredPolls();
+                    if (!answered.includes(String(poll.id))) answered.push(String(poll.id));
+                    localStorage.setItem(storageKey, JSON.stringify(answered));
+                    showResults(data.results, false);
+                    return;
+                }
+
+                if (response.status === 409 && data.already_voted) {
+                    const answered = readAnsweredPolls();
+                    if (!answered.includes(String(poll.id))) answered.push(String(poll.id));
+                    localStorage.setItem(storageKey, JSON.stringify(answered));
+                    const resultResponse = await fetch(`/polls/${poll.id}/results`, { headers: { 'Accept': 'application/json' } });
+                    if (resultResponse.ok) showResults(await resultResponse.json());
+                    return;
+                }
+
+                message.className = 'small mt-2 text-danger';
+                message.textContent = data.message || 'वोट सबमिट नहीं हो सका।';
+            } catch (error) {
+                message.className = 'small mt-2 text-danger';
+                message.textContent = 'नेटवर्क समस्या के कारण वोट सबमिट नहीं हुआ।';
+            } finally {
+                submitButton.disabled = false;
+                submitButton.textContent = 'वोट करें';
+            }
+        });
+    });
+</script>
 @endsection

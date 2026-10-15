@@ -8,6 +8,7 @@ use App\Models\Article;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Schema;
 
+if (!function_exists('formatArticleForView')) {
 function formatArticleForView($articleModel) {
     if (!$articleModel) return null;
     
@@ -95,6 +96,7 @@ function formatArticleForView($articleModel) {
         'is_featured' => $articleModel->is_featured,
         'is_breaking' => $articleModel->is_breaking,
     ];
+}
 }
 
 // 1. Home Page Route
@@ -482,6 +484,10 @@ Route::post('/subscribe', [\App\Http\Controllers\SubscriptionController::class, 
     ->middleware('throttle:10,1')
     ->name('subscribe.store');
 
+Route::get('/polls/active', [\App\Http\Controllers\PollVoteController::class, 'active'])->name('polls.active');
+Route::get('/polls/{poll}/results', [\App\Http\Controllers\PollVoteController::class, 'results'])->name('polls.results');
+Route::post('/polls/{poll}/vote', [\App\Http\Controllers\PollVoteController::class, 'store'])->middleware('throttle:20,1')->name('polls.vote');
+
 // Admin routes
 Route::middleware('role')->prefix('admin')->name('admin.')->group(function () {
     Route::get('/', [\App\Http\Controllers\AdminDashboardController::class, 'index'])->name('dashboard');
@@ -491,6 +497,8 @@ Route::middleware('role')->prefix('admin')->name('admin.')->group(function () {
     Route::resource('editorial-board', \App\Http\Controllers\AdminEditorialMemberController::class);
     Route::get('subscribers', [\App\Http\Controllers\AdminSubscriberController::class, 'index'])->name('subscribers.index');
     Route::delete('subscribers/{subscriber}', [\App\Http\Controllers\AdminSubscriberController::class, 'destroy'])->name('subscribers.destroy');
+    Route::patch('polls/{poll}/toggle', [\App\Http\Controllers\AdminPollController::class, 'toggle'])->name('polls.toggle');
+    Route::resource('polls', \App\Http\Controllers\AdminPollController::class)->except('show');
     
     // Live TV Routes
     Route::get('livetv', [\App\Http\Controllers\AdminLiveTvController::class, 'edit'])->name('livetv.edit');

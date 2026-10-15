@@ -87,6 +87,24 @@
             box-shadow: none !important;
             outline: none !important;
         }
+        .header-search-toggle {
+            width: 36px;
+            height: 36px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+        }
+        .header-search-menu {
+            width: min(340px, calc(100vw - 2rem));
+        }
+        .mobile-header-search {
+            border-top: 1px solid var(--bs-border-color);
+            background: var(--bs-body-bg);
+        }
+        .header-search-form .form-control {
+            min-width: 0;
+        }
     </style>
 
     <!-- Google AdSense Direct Script / Verification -->
@@ -174,9 +192,9 @@
             </a>
             
             <div class="d-flex d-lg-none align-items-center gap-2">
-                <!-- <button class="btn btn-sm btn-outline-secondary border-0" id="mobileSearchBtn" data-bs-toggle="collapse" data-bs-target="#searchCollapse" aria-label="Search">
+                <button class="btn btn-link text-reset border-0 p-1 header-search-toggle" id="mobileSearchBtn" type="button" data-bs-toggle="collapse" data-bs-target="#mobileHeaderSearch" aria-controls="mobileHeaderSearch" aria-expanded="false" aria-label="समाचार खोजें">
                     <i class="fas fa-search fs-6"></i>
-                </button> -->
+                </button>
                 <button class="btn btn-link text-reset p-1 border-0 theme-toggle-btn" aria-label="Toggle theme">
                     <i class="fas fa-moon fs-5"></i>
                 </button>
@@ -222,22 +240,33 @@
                 
                 <div class="d-none d-lg-flex align-items-center gap-3">
                     <!-- Search widget toggle -->
-                    <!-- <div class="dropdown">
-                        <button class="btn btn-link text-reset p-0 border-0" type="button" data-bs-toggle="dropdown" aria-expanded="false" id="desktopSearchBtn">
+                    <div class="dropdown">
+                        <button class="btn btn-link text-reset p-0 border-0 header-search-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" id="desktopSearchBtn" aria-label="समाचार खोजें">
                             <i class="fas fa-search fs-5"></i>
                         </button>
-                        <div class="dropdown-menu dropdown-menu-end border-0 shadow-lg p-3" style="width: 320px;">
-                            <form action="/search" method="GET">
+                        <div class="dropdown-menu dropdown-menu-end border-0 shadow-lg p-3 header-search-menu">
+                            <form action="{{ route('search') }}" method="GET" class="header-search-form">
+                                <label for="desktopNewsSearch" class="form-label small fw-bold">समाचार खोजें</label>
                                 <div class="input-group">
-                                    <input type="text" name="q" class="form-control border-secondary-subtle shadow-none" placeholder="Search articles...">
-                                    <button class="btn btn-primary" type="submit"><i class="fas fa-search"></i></button>
+                                    <input id="desktopNewsSearch" type="search" name="q" class="form-control border-secondary-subtle shadow-none" placeholder="खबर का नाम लिखें..." value="{{ request('q') }}" maxlength="100" required autocomplete="off">
+                                    <button class="btn btn-primary" type="submit" aria-label="खोजें"><i class="fas fa-search"></i></button>
                                 </div>
                             </form>
                         </div>
-                    </div> -->
-                    
-
+                    </div>
                 </div>
+            </div>
+        </div>
+
+        <div class="collapse d-lg-none mobile-header-search" id="mobileHeaderSearch">
+            <div class="container-xl py-2">
+                <form action="{{ route('search') }}" method="GET" class="header-search-form">
+                    <label for="mobileNewsSearch" class="visually-hidden">समाचार खोजें</label>
+                    <div class="input-group">
+                        <input id="mobileNewsSearch" type="search" name="q" class="form-control border-secondary-subtle shadow-none" placeholder="समाचार खोजें..." value="{{ request('q') }}" maxlength="100" required autocomplete="off">
+                        <button class="btn btn-primary px-3" type="submit" aria-label="खोजें"><i class="fas fa-search"></i></button>
+                    </div>
+                </form>
             </div>
         </div>
     </nav>
