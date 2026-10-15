@@ -1122,6 +1122,59 @@ a .fa-whatsapp {
   }
 }
 
+// First-visit newsletter subscription popup.
+.subscription-modal {
+  .modal-dialog {
+    width: calc(100% - 2rem);
+    max-width: 520px;
+    margin-inline: auto;
+  }
+
+  .modal-content {
+    background: var(--card-bg);
+  }
+
+  .subscription-close {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    z-index: 2;
+  }
+
+  .subscription-icon {
+    width: 68px;
+    height: 68px;
+    display: grid;
+    place-items: center;
+    border-radius: 50%;
+    color: #fff;
+    background: linear-gradient(135deg, var(--primary-color), #ff6b6b);
+    font-size: 1.65rem;
+    box-shadow: 0 10px 25px rgba(229, 0, 0, 0.22);
+  }
+
+  .subscription-input-group {
+    .form-control,
+    .btn {
+      min-height: 48px;
+    }
+  }
+}
+
+@media (max-width: 575.98px) {
+  .subscription-modal .subscription-input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+
+    .form-control,
+    .btn {
+      width: 100%;
+      border-radius: var(--bs-border-radius-lg) !important;
+    }
+  }
+}
+
 // Mobile Slide-in Menu Drawer (Right to Left)
 @media (max-width: 991.98px) {
   #mainMenu {

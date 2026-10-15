@@ -342,6 +342,32 @@
         </a>
     </nav>
 
+    <!-- First-visit newsletter subscription popup -->
+    <div class="modal fade subscription-modal" id="subscriptionModal" tabindex="-1" aria-labelledby="subscriptionModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content rounded-4 border-0 shadow-lg overflow-hidden">
+                <button type="button" class="btn-close subscription-close" data-bs-dismiss="modal" aria-label="बंद करें"></button>
+                <div class="modal-body p-4 p-sm-5 text-center">
+                    <div class="subscription-icon mx-auto mb-3">
+                        <i class="fas fa-envelope-open-text"></i>
+                    </div>
+                    <h2 class="h4 fw-bold mb-2" id="subscriptionModalLabel">हर बड़ी खबर सबसे पहले पाएं</h2>
+                    <p class="text-muted mb-4">उत्तराखंड और देश की महत्वपूर्ण खबरें सीधे अपने इनबॉक्स में पाएं।</p>
+
+                    <form id="subscriptionForm" action="{{ route('subscribe.store') }}" method="POST" novalidate>
+                        @csrf
+                        <div class="input-group subscription-input-group">
+                            <input type="email" name="email" id="subscriptionEmail" class="form-control" placeholder="आपका ईमेल पता" autocomplete="email" required aria-label="ईमेल पता">
+                            <button class="btn btn-primary fw-bold px-4" type="submit" id="subscriptionSubmit">सब्सक्राइब करें</button>
+                        </div>
+                        <div class="small mt-2 text-start d-none" id="subscriptionMessage" role="alert"></div>
+                    </form>
+                    <p class="text-muted mt-3 mb-0" style="font-size: 0.72rem;">कोई स्पैम नहीं। आप कभी भी सदस्यता छोड़ सकते हैं।</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Authentication Modal (Mock) -->
     <div class="modal fade" id="authModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
@@ -445,6 +471,80 @@
                     alert('खबर का लिंक कॉपी हो गया है!');
                 }
             }
+        });
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const modalElement = document.getElementById('subscriptionModal');
+            const form = document.getElementById('subscriptionForm');
+            if (!modalElement || !form || typeof bootstrap === 'undefined') return;
+
+            const subscribedKey = 'uttarakhand_now_newsletter_subscribed';
+            const dismissedKey = 'uttarakhand_now_newsletter_dismissed_at';
+            const dismissalPeriod = 7 * 24 * 60 * 60 * 1000;
+            const message = document.getElementById('subscriptionMessage');
+            const submitButton = document.getElementById('subscriptionSubmit');
+            const modal = bootstrap.Modal.getOrCreateInstance(modalElement);
+            let subscriptionCompleted = false;
+
+            function storageGet(key) {
+                try { return localStorage.getItem(key); } catch (error) { return null; }
+            }
+
+            function storageSet(key, value) {
+                try { localStorage.setItem(key, value); } catch (error) { /* Storage may be disabled. */ }
+            }
+
+            const subscribed = storageGet(subscribedKey) === 'true';
+            const dismissedAt = Number(storageGet(dismissedKey) || 0);
+            const recentlyDismissed = dismissedAt && (Date.now() - dismissedAt < dismissalPeriod);
+
+            if (!subscribed && !recentlyDismissed) {
+                window.setTimeout(function () { modal.show(); }, 1500);
+            }
+
+            modalElement.addEventListener('hidden.bs.modal', function () {
+                if (!subscriptionCompleted && storageGet(subscribedKey) !== 'true') {
+                    storageSet(dismissedKey, String(Date.now()));
+                }
+            });
+
+            form.addEventListener('submit', async function (event) {
+                event.preventDefault();
+                message.classList.add('d-none');
+                submitButton.disabled = true;
+                submitButton.innerHTML = '<span class="spinner-border spinner-border-sm me-1" aria-hidden="true"></span> कृपया प्रतीक्षा करें';
+
+                try {
+                    const response = await fetch(form.action, {
+                        method: 'POST',
+                        headers: {
+                            'Accept': 'application/json',
+                            'X-Requested-With': 'XMLHttpRequest'
+                        },
+                        body: new FormData(form)
+                    });
+                    const data = await response.json();
+
+                    if (!response.ok) {
+                        const emailError = data.errors && data.errors.email ? data.errors.email[0] : null;
+                        throw new Error(emailError || data.message || 'सब्सक्रिप्शन पूरा नहीं हो सका।');
+                    }
+
+                    subscriptionCompleted = true;
+                    storageSet(subscribedKey, 'true');
+                    storageSet(dismissedKey, String(Date.now()));
+                    message.textContent = data.message;
+                    message.className = 'small mt-3 text-success fw-semibold';
+                    form.querySelector('.subscription-input-group').classList.add('d-none');
+                    window.setTimeout(function () { modal.hide(); }, 1600);
+                } catch (error) {
+                    message.textContent = error.message || 'कुछ गलत हुआ। कृपया दोबारा कोशिश करें।';
+                    message.className = 'small mt-2 text-danger text-start';
+                    submitButton.disabled = false;
+                    submitButton.textContent = 'सब्सक्राइब करें';
+                }
+            });
         });
     </script>
     @yield('scripts')

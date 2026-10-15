@@ -478,6 +478,10 @@ Route::get('/login', [\App\Http\Controllers\AuthController::class, 'showLogin'])
 Route::post('/login', [\App\Http\Controllers\AuthController::class, 'login']);
 Route::post('/logout', [\App\Http\Controllers\AuthController::class, 'logout'])->name('logout');
 
+Route::post('/subscribe', [\App\Http\Controllers\SubscriptionController::class, 'store'])
+    ->middleware('throttle:10,1')
+    ->name('subscribe.store');
+
 // Admin routes
 Route::middleware('role')->prefix('admin')->name('admin.')->group(function () {
     Route::get('/', [\App\Http\Controllers\AdminDashboardController::class, 'index'])->name('dashboard');
@@ -485,6 +489,8 @@ Route::middleware('role')->prefix('admin')->name('admin.')->group(function () {
     Route::resource('articles', \App\Http\Controllers\AdminArticleController::class);
     Route::resource('videos', \App\Http\Controllers\AdminVideoController::class);
     Route::resource('editorial-board', \App\Http\Controllers\AdminEditorialMemberController::class);
+    Route::get('subscribers', [\App\Http\Controllers\AdminSubscriberController::class, 'index'])->name('subscribers.index');
+    Route::delete('subscribers/{subscriber}', [\App\Http\Controllers\AdminSubscriberController::class, 'destroy'])->name('subscribers.destroy');
     
     // Live TV Routes
     Route::get('livetv', [\App\Http\Controllers\AdminLiveTvController::class, 'edit'])->name('livetv.edit');

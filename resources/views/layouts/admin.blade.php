@@ -157,6 +157,12 @@
                     <span>Editorial Board</span>
                 </a>
             </li>
+            <li class="{{ request()->routeIs('admin.subscribers.*') ? 'active' : '' }}">
+                <a href="{{ route('admin.subscribers.index') }}">
+                    <i class="fas fa-envelope-open-text"></i>
+                    <span>Subscribers</span>
+                </a>
+            </li>
             @if(Auth::check() && Auth::user()->role === 'super_admin')
                 <li class="{{ request()->routeIs('admin.users.*') ? 'active' : '' }}">
                     <a href="{{ route('admin.users.index') }}">
