@@ -209,11 +209,11 @@
         $dropdownCats = array_slice($categoriesList, 6);
     @endphp
     <section class="mb-5">
-        <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3 mb-4 pb-2 border-bottom border-primary border-3">
+        <div class="category-news-header d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3 mb-4 pb-2 border-bottom border-primary border-3">
             <h3 class="headline-font fw-bold text-uppercase mb-0 fs-4 text-body" style="letter-spacing: 0.5px;">
                 <i class="fas fa-layer-group text-primary me-2"></i>श्रेणी अनुसार खबरें
             </h3>
-            <ul class="nav nav-pills category-news-tabs flex-nowrap align-items-center pb-1 overflow-visible" id="categoryNewsTab" role="tablist">
+            <ul class="nav nav-pills category-news-tabs flex-wrap flex-md-nowrap align-items-center pb-1" id="categoryNewsTab" role="tablist">
                 @foreach($visibleCats as $index => $cat)
                 <li class="nav-item" role="presentation">
                     <button class="nav-link rounded-pill fw-bold fs-7 px-3 py-1 me-1 text-nowrap @if($index === 0) active @endif" id="cat-tab-{{ $cat['slug'] }}" data-bs-toggle="pill" data-bs-target="#cat-pane-{{ $cat['slug'] }}" type="button" role="tab" aria-controls="cat-pane-{{ $cat['slug'] }}" aria-selected="{{ $index === 0 ? 'true' : 'false' }}">{{ $cat['name'] }}</button>

@@ -1094,6 +1094,34 @@ a .fa-whatsapp {
   }
 }
 
+// Category news tabs: keep the tab row inside the viewport on small screens.
+.category-news-header,
+.category-news-tabs {
+  min-width: 0;
+}
+
+.category-news-tabs {
+  justify-content: flex-end;
+  row-gap: 0.5rem;
+}
+
+@media (max-width: 767.98px) {
+  .category-news-tabs {
+    width: 100%;
+    justify-content: flex-start;
+
+    .nav-item {
+      max-width: 100%;
+    }
+
+    .nav-link {
+      max-width: 100%;
+      padding-inline: 0.75rem !important;
+      font-size: 0.82rem !important;
+    }
+  }
+}
+
 // Mobile Slide-in Menu Drawer (Right to Left)
 @media (max-width: 991.98px) {
   #mainMenu {
