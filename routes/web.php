@@ -100,7 +100,10 @@ function formatArticleForView($articleModel) {
 // 1. Home Page Route
 Route::get('/', function () {
     $dbArticles = Schema::hasTable('articles')
-        ? Article::with(['category.parent', 'author'])->get()
+        ? Article::with(['category.parent', 'author'])
+            ->orderByDesc('published_at')
+            ->orderByDesc('id')
+            ->get()
         : collect();
     $articles = $dbArticles->map(fn($a) => formatArticleForView($a))->toArray();
 
@@ -126,12 +129,9 @@ Route::get('/', function () {
     $webStories = MockData::getWebStories();
     $videos = MockData::getVideos();
     $tags = MockData::getTrendingTags();
-    
-    // Split articles into featured and remaining stories, while allowing an empty homepage state.
-    $featured = collect($articles)->firstWhere('is_featured', true);
-    if (!$featured && !empty($articles)) {
-        $featured = $articles[0];
-    }
+
+    // The newest published story must always lead the "मुख्य समाचार" section.
+    $featured = $articles[0] ?? null;
 
     $others = $featured
         ? collect($articles)
