@@ -105,6 +105,9 @@
         .header-search-form .form-control {
             min-width: 0;
         }
+        .navbar-subscribe-btn {
+            white-space: nowrap;
+        }
     </style>
 
     <!-- Google AdSense Direct Script / Verification -->
@@ -237,6 +240,10 @@
                     
                     <li class="nav-item"><a class="nav-link {{ request()->is('videos') ? 'active' : '' }}" href="/videos">वीडियो</a></li>
                 </ul>
+
+                <button class="btn btn-primary navbar-subscribe-btn d-lg-none w-100 mt-2 mb-3 fw-semibold" type="button" data-bs-toggle="modal" data-bs-target="#subscriptionModal">
+                    <i class="fas fa-envelope me-2"></i>सब्सक्राइब करें
+                </button>
                 
                 <div class="d-none d-lg-flex align-items-center gap-3">
                     <!-- Search widget toggle -->
@@ -254,6 +261,9 @@
                             </form>
                         </div>
                     </div>
+                    <button class="btn btn-primary btn-sm navbar-subscribe-btn fw-semibold px-3" type="button" data-bs-toggle="modal" data-bs-target="#subscriptionModal">
+                        <i class="fas fa-envelope me-1"></i>सब्सक्राइब करें
+                    </button>
                 </div>
             </div>
         </div>
