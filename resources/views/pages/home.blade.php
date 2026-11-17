@@ -10,29 +10,6 @@
         <div class="row g-4">
             <!-- Left Column: TOP NEWS (Large Story + horizontal items) -->
             <div class="col-lg-5 col-md-12">
-                <div id="homepagePoll" class="homepage-poll mb-4 d-none" aria-live="polite">
-                    <div class="d-flex align-items-center justify-content-between gap-2 mb-2">
-                        <span class="homepage-poll-label"><i class="fas fa-poll me-1"></i> आज का पोल</span>
-                        <span id="homepagePollType" class="text-muted" style="font-size: .68rem;"></span>
-                    </div>
-                    <h6 id="homepagePollQuestion" class="fw-bold lh-base mb-3"></h6>
-                    <form id="homepagePollForm">
-                        <div id="homepagePollOptions" class="d-grid gap-2"></div>
-                        <div id="homepagePollMessage" class="small mt-2" role="status"></div>
-                        <button id="homepagePollSubmit" type="submit" class="btn btn-danger btn-sm w-100 fw-bold mt-3">वोट करें</button>
-                    </form>
-                    <div id="homepagePollResults" class="d-none"></div>
-                </div>
-
-                <style>
-                    .homepage-poll { border: 1px solid var(--bs-border-color); border-left: 4px solid var(--bs-danger); border-radius: .75rem; background: var(--bs-body-bg); padding: 1rem; box-shadow: 0 3px 14px rgba(0, 0, 0, .06); }
-                    .homepage-poll-label { color: var(--bs-danger); font-size: .72rem; font-weight: 800; letter-spacing: .04em; text-transform: uppercase; }
-                    .homepage-poll-option { border: 1px solid var(--bs-border-color); border-radius: .55rem; cursor: pointer; font-size: .86rem; padding: .55rem .7rem; transition: border-color .2s, background-color .2s; }
-                    .homepage-poll-option:hover, .homepage-poll-option:has(input:checked) { border-color: var(--bs-danger); background: rgba(var(--bs-danger-rgb), .06); }
-                    .homepage-poll-result-bar { height: 6px; background: var(--bs-secondary-bg); border-radius: 50rem; overflow: hidden; }
-                    .homepage-poll-result-bar > span { display: block; height: 100%; background: var(--bs-danger); border-radius: inherit; }
-                </style>
-
                 <h5 class="headline-font mb-3 fw-bold text-uppercase border-bottom pb-2 border-dark border-2" style="font-size:0.95rem; letter-spacing:0.5px;">मुख्य समाचार</h5>
                 @if($featured)
                 <div class="mb-4 d-flex flex-column">
@@ -154,6 +131,29 @@
 
             <!-- Right Column: Trending stories widget + Manual Sidebar Ad 1 -->
             <div class="col-lg-3 col-md-5 border-start-lg ps-lg-4">
+                <div id="homepagePoll" class="homepage-poll mb-4 d-none" aria-live="polite">
+                    <div class="d-flex align-items-center justify-content-between gap-2 mb-2">
+                        <span class="homepage-poll-label"><i class="fas fa-poll me-1"></i> आज का पोल</span>
+                        <span id="homepagePollType" class="text-muted" style="font-size: .68rem;"></span>
+                    </div>
+                    <h6 id="homepagePollQuestion" class="fw-bold lh-base mb-3"></h6>
+                    <form id="homepagePollForm">
+                        <div id="homepagePollOptions" class="d-grid gap-2"></div>
+                        <div id="homepagePollMessage" class="small mt-2" role="status"></div>
+                        <button id="homepagePollSubmit" type="submit" class="btn btn-danger btn-sm w-100 fw-bold mt-3">वोट करें</button>
+                    </form>
+                    <div id="homepagePollResults" class="d-none"></div>
+                </div>
+
+                <style>
+                    .homepage-poll { border: 1px solid var(--bs-border-color); border-radius: .75rem; background: var(--bs-body-bg); padding: 1rem; box-shadow: 0 3px 14px rgba(0, 0, 0, .06); }
+                    .homepage-poll-label { color: var(--bs-danger); font-size: .72rem; font-weight: 800; letter-spacing: .04em; text-transform: uppercase; }
+                    .homepage-poll-option { border: 1px solid var(--bs-border-color); border-radius: .55rem; cursor: pointer; font-size: .86rem; padding: .55rem .7rem; transition: border-color .2s, background-color .2s; }
+                    .homepage-poll-option:hover, .homepage-poll-option:has(input:checked) { border-color: var(--bs-danger); background: rgba(var(--bs-danger-rgb), .06); }
+                    .homepage-poll-result-bar { height: 6px; background: var(--bs-secondary-bg); border-radius: 50rem; overflow: hidden; }
+                    .homepage-poll-result-bar > span { display: block; height: 100%; background: var(--bs-danger); border-radius: inherit; }
+                </style>
+
                 <!-- Manual Right Sidebar Ad 1 -->
                 @if(!empty($siteSettings) && ($siteSettings->ad_sidebar_1_enabled ?? false) && (!empty($siteSettings->ad_sidebar_1_image) || !empty($siteSettings->ad_sidebar_1_code)))
                     <div class="mb-4 manual-ad-sidebar-box">
