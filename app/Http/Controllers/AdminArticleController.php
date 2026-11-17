@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Jobs\SendArticleNewsletter;
 use App\Models\Article;
 use App\Models\Category;
 use Illuminate\Http\Request;
@@ -93,7 +94,7 @@ class AdminArticleController extends Controller
             $mediaLink = $request->media_link;
         }
 
-        Article::create([
+        $article = Article::create([
             'title' => $request->title,
             'slug' => $slug,
             'subtitle' => $request->subtitle,
@@ -111,7 +112,9 @@ class AdminArticleController extends Controller
             'published_at' => $request->published_at ?: now(),
         ]);
 
-        return redirect()->route('admin.articles.index')->with('success', 'Article created successfully!');
+        SendArticleNewsletter::dispatch($article->id);
+
+        return redirect()->route('admin.articles.index')->with('success', 'Article created successfully! Subscriber emails are being sent.');
     }
 
     /**
